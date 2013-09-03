@@ -102,9 +102,7 @@ the default definitions will have to be present!
 ;======================================07=======================================
 ;same instructions as problem 02.
 (define p7
-  "NO
-    ANSWER"
-)
+  "Parentheses around the definition name turns it into a procedure with no arguments.")
 
 ;======================================08=======================================
 (define p8
