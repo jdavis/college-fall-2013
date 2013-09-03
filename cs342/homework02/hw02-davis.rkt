@@ -65,8 +65,19 @@ the default definitions will have to be present!
 ;you will need to have solved problem 3. The values x,y,z are not parameters
 ;of this function!
 (define (p4)
-  'UNIMPLEMENTED
-)
+  (+
+    (cond
+      ((> x y) x)
+      ((> y x) y)
+      (else 0))
+    (cond
+      ((> x z) x)
+      ((> z x) z)
+      (else 0))
+    (cond
+      ((> y z) y)
+      ((> z y) z)
+      (else 0))))
 
 ;======================================05=======================================
 (define (p5)
