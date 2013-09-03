@@ -106,9 +106,7 @@ the default definitions will have to be present!
 
 ;======================================08=======================================
 (define p8
-  "NO
-    ANSWER"
-)
+  "It turns anything that follows the ' into data which isn't evaluated.")
 
 ;======================================09=======================================
 (define p9
