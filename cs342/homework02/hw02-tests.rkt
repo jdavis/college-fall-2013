@@ -5,7 +5,7 @@
 
 ;if you rename the answer sheet to conform with the submission requirements
 ;you will have to change this line so that the tests can find the
-(#%require "hw02-answer-sheet.rkt")
+(#%require "hw02-davis.rkt")
 
 ;to run the tests, evaluate:
 ;>(test all)
@@ -80,3 +80,5 @@
      )
     )
 )
+
+(test all)
