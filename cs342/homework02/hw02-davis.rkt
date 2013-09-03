@@ -81,7 +81,19 @@ the default definitions will have to be present!
 
 ;======================================05=======================================
 (define (p5)
-  'UNIMPLEMENTED)
+  (+
+    (cond
+      ((> x y) y)
+      ((> y x) x)
+      (else 0))
+    (cond
+      ((> x z) z)
+      ((> z x) x)
+      (else 0))
+    (cond
+      ((> y z) z)
+      ((> z y) y)
+      (else 0))))
 
 ;======================================06=======================================
 (define (p6)
