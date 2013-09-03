@@ -1,0 +1,293 @@
+                               COM S 342
+                            - Fall 2013 Homework 02 -
+
+Guidelines:
+This file should be accompanied by three source files:
+  hw02-answer-sheet.rkt
+  hw02-tests.rkt
+  test-infrastructure.rkt
+
+All of the above files will have to be in the same folder for the tests to work.
+
+The questions that require you to write code are accompanied by test cases. You can
+see in the description of the test case for which problem it is. To run the tests
+check the "hw02-tests.rkt" file for further instructions.
+
+The tests are written using the small library defined in "test-infrastructure.rkt".
+Check that file for further details about the testing infrastructure.
+--
+Submission guidelines:
+  - write your answers in the accompanying answer sheet.
+  - RENAME the answer sheet to "hw02-yourlastname.rkt"
+  - upload *only* the answer sheet.
+
+Possible penalties:
+  - 5% of the total points for not renaming the answer sheet
+  - up to 10% for submitting a file that does not compile (to compile, hit
+    the "Run" button from the DrRacket UI when your file is open). See the answer
+    sheet for further details.
+ ================================================================================
+Before starting on this homework we suggest that you check the "Running Scheme/Racket"
+section on blackboard.
+
+--
+In Racket/Scheme, all expressions are written between a pair of parentheses.
+Whenever the interpreter encounters an open parenthesis, e.g.:
+(+ 3 4)
+it will expect that the first element of the list to be a function (except when
+using the ' (quote) function); in Scheme operators are also functions (we will
+cover this in more detail).
+
+The implication of this uniform way of treating things is that mathematical
+expression have to be written in infix notation (the operator comes first, the operands later) as opposed to the infix notation we see in Java. But, this allows for addition
+to take an arbitrary number of operands:
+>(+ 1 2 3 4)
+10
+
+The ">" symbol is an indication that the expression following it is evaluated
+in the interpreter.
+================================================================================
+1.(3pts)
+
+Translate the following algebraic formulas into Scheme's notation.
+Type the translation into Scheme's interaction window for checking.
+((3 + 3) * 9)
+((6 * 9) / ((4 + 2) + (4 * 3)))       
+(2* ((20 - (91 / 7)) * (45 - 42)))
+================================================================================
+2.(3pts)
+
+Describe in words how to translate an algebraic formula into Scheme's notation.
+Be sure to handle the general case.
+================================================================================
+3.(3pts)
+
+Using Scheme's define special form, write definitions of variables x, y and z,
+such that x has a value of 2 and y has a value of 3 and z has a value of 4.
+================================================================================
+4. (5pts)
+
+Write and evaluate an if (or cond) expression in Scheme that uses
+the variables x, y and z, and that has as its value the sum of the
+two largest variables, and, if all are of the same value, the value
+of the function is 0 (zero).
+
+================================================================================
+5.(5pts)
+
+Evaluate a similar if (or cond) expression that has as its value the sum of the two
+smallest of x, y and z, if all three are of the same value, the value of the function
+is 0 (zero).
+================================================================================
+6.(5pts)
+
+Without using an if (or cond) expression, write an expression that uses both
+variables x and y, and that has as its value #t if the values of x and y are equal,
+and #f otherwise.
+
+================================================================================
+7. (3pts)
+What is de difference between the following two statements:
+
+(define forty-two 42)
+(define (forty-two) 42)
+================================================================================
+
+Scheme offers a "one size fits all collection", list. It is a homogeneous collection,
+i.e. it can store any number of types of values at the same time. Very important
+for you to remember is that lists are immutable; all operations on lists (car, cdr
+cons) do not modify the original list, but rather construct a new one. We will
+study the implications this fact has on our programming style in later homework.
+For now, we will focus only on constructing lists.
+
+================================================================================
+8. (3pts)
+
+Experiment with ' (quote) in the Scheme interpreter.  Try, for example 'name, '+,
+'(/ 4 2), 'gargleblaster, and unquoted versions of expressions.
+In English, give a precise answer the following question: what does ' do?
+================================================================================
+9. (3pts)
+
+A similar procedure to ' (quote) is list. What is the difference between ' and list?
+Hint: try using variables and function calls in conjunction with the two.
+================================================================================
+10. (3pts)
+
+What can you do with a string in Scheme that you can't do with a symbol?  
+Why is there a distinction between strings and symbols in Scheme?   
+(Hint: look at the Revised Report on Scheme, available from the Racket and from
+the course resources web page, to see the operations that Scheme defines for these
+types.)
+================================================================================
+11.(9pts)
+ 
+Using *only* the Scheme procedure 'list' and numbers and quoted symbols (such as '*, 'name, and 'james), write Scheme expressions to make the following lists.
+
+(Note that the line breaks and indentation in the last of these lists do not matter;
+the interpreter will print out the value of your answer without this indentation,
+which is OK.  We are asking for you to create the values displayed below, not the
+printing displayed below.  So don't use \newline or #\space in your answer.)
+ 
+(4 2 6 9)
+
+(spaceship
+       (name(serenity))
+       (class(firefly)))
+
+(2 * ((20 - (91 / 7)) * (45 - 42)))
+================================================================================
+12. (12pts)
+Suppose we are writing code for a procedure in which the variable "lst" is bound to a
+list of numbers.  Suppose further that lst has the value:
+
+    (a b c)
+For each of the following, write an expression that uses lst and makes the given list:
+
+    (d a b c)
+    (a b d a b)
+    (b c d a)
+
+Hint:
+use the functions cons, car and cdr or other list accessor shorthands
+found here:
+http://docs.racket-lang.org/reference/pairs.html?q=cadr&q=rackunit#(part._.Pair_.Accessor_.Shorthands)
+================================================================================
+13. (3pts)
+
+The standard library provides two functions eq? and equal? (the question mark
+is part of the name). Experiment with these two functions and concisely describe
+the difference between them.
+================================================================================
+14. (10pts)
+
+Using string manipulation function like: string-append, number->string and symbol->string
+Define the function create-error-msg that behaves in the following manner:
+
+(check-correctness '(answer-to-everything 10))
+"This is a custom error message we will be using next. Symbol 'answer-to-everything was not paired with value 42"
+
+You may assume that the first argument is always a symbol and that the second one is
+always a number.
+================================================================================
+15. (10pts)
+
+For testing purposes we will use exceptions instead of errors (as you might notice
+from your textbook). We will never go into detail of how to handle them; all you need to know is that you "raise" an exception with the following statement:
+
+> (raise 42)
+uncaught exception: 42
+
+> (raise '(42 42))
+uncaught exception: '(42 42)
+
+> (raise "forty two")
+uncaught exception: "forty two"
+
+Where the first argument can be any Scheme value. In later homework you will be asked
+to write functions that result in specific error messages and we will use the value
+of the parameter to automatically check the intended semantics.
+--
+Write a function, check-correctness, that takes a 2 element list, from here on out
+referred to as a pair or 2-tuple, with the following contract:
+
+>(check-correctness '(answer-to-everything 42))
+#t
+
+>(check-correctness '(symbol-other-than-the-previous-one 42))
+#f
+
+>(check-correctness '(test 30))
+#f
+
+;if the symbol is 'answer-to-everything then you will raise an exception with
+;the error message that you create with the function defined for the previous
+;question
+>(check-correctness '(answer-to-everything 10))
+uncaught exception: "This is a custom error message we will be using next. Symbol
+'answer-to-everything was not paired with value 42"
+================================================================================
+16. 
+
+A fast and useful debugging tool is printing out relevant information. Two
+functions you will encounter during this course are:
+
+>(display 42)
+42
+
+>(print 42)
+42
+
+The semantic difference between the two is not relevant for this course. You are,
+however, encouraged to look into this matter by yourself.
+
+To print a newline evaluate the function:
+>(newline)
+
+Because the branches of an "if" instruction can contain only one instruction each,
+in order to print any relevant information from any branch and still do computation
+you can use the "begin" instruction:
+
+>(if true 
+      (begin (print "computing 42") (newline) (+ 12 30))
+      (print "dead code")           
+   )
+
+A begin instruction can contain 0 or more instructions. The value of the begin
+instruction is *always* the value of the last instruction. As you can see from
+th above example, the first two instructions produce side effects (printing)
+while the last instruction computes a value which is then returned as the 
+value of the "begin" instruction and then as the value of the "if" instruction.
+You do not have to do anything for this problem, just experiment a bit.
+================================================================================
+17. (4 pts)
+
+Name two types of errors that in Java are detected at compile time
+but in Scheme/Racket are not. Write an example for each. You can
+also use any standard library function in your example.
+================================================================================
+
+18. Pascal's Triangle (16 pts)
+
+Problem from "Structure and Interpretation of Computer Programs", exercise 1.12
+
+The pattern you see below called Pascal's Triangle:
+      1
+     1 1
+    1 2 1
+   1 3 3 1
+  1 4 6 4 1
+
+The numbers at the edge of the triangle are all 1, and each number inside the triangle
+is the sum of the two numbers above it. 
+
+Write a function with the behavior:
+>(pascal 1)
+((1))
+
+>(pascal 2)
+(  ( 1 )
+  ( 1 1 )
+)
+
+>(pascal 3)
+(   ( 1 )
+   ( 1 1 )
+  ( 1 2 1 )
+)
+
+>(pascal 4)
+(   ( 1 )
+   ( 1 1 )
+  ( 1 2 1 )
+ ( 1 3 3 1 )
+)
+
+You may assume:
+ -that the argument will always be a natural number >= 1.
+
+Output properties:
+ - output does not have to be pretty-printed and it must contain NO spaces at 
+   the head and tail of the list
+
+
