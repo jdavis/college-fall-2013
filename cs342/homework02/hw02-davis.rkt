@@ -26,29 +26,40 @@ the default definitions will have to be present!
 ;((3 + 3) * 9)
 ;equal to 54
 (define (p1-1)
-  'UNIMPLEMENTED
-)
+  (*
+    9
+    (+ 3 3)))
 
 ;((6 * 9) / ((4 + 2) + (4 * 3)))
 ;equal to 3
 (define (p1-2)
-  'UNIMPLEMENTED
-)
+  (/
+    (* 6 9)
+    (+
+      (+ 4 2)
+      (* 4 3))))
 
 ;(2* ((20 - (91 / 7)) * (45 - 42)))
 ;equal to 42
 (define (p1-3)
-  'UNIMPLEMENTED
-)
+  (*
+    2
+    (- 45 42)
+    (*
+      (-
+        20
+        (/ 91 7)))))
 ;======================================02=======================================
 ;write your answer as a string; you do not need to write any special escape
 ;characters to distinguish new lines.
 (define p2
-  "NO
-    ANSWER"
-)
+  "Using order of operations, parse the formula into a tree & construct it back together in prefix notation.")
 ;======================================03=======================================
 ;;Write the definitions of x,y,z here:
+
+(define x 2)
+(define y 3)
+(define z 4)
 
 ;======================================04=======================================
 ;you will need to have solved problem 3. The values x,y,z are not parameters
