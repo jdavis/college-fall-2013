@@ -126,9 +126,9 @@ the default definitions will have to be present!
 ;======================================10=======================================
 
 (define p10
-  "NO
-    ANSWER"
-)
+  "A string is mutable while a symbol is essentially an immutable string that
+  is 'interned', which means any other symbol with the same name as the symbol
+  are equal (eq?)")
 
 ;======================================11=======================================
 ;(4 2 6 9)
