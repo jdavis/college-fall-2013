@@ -121,9 +121,7 @@ the default definitions will have to be present!
 ;======================================09=======================================
 
 (define p9
-  "NO
-    ANSWER"
-)
+  "quote can turn any expression into data, while list will evaluate things into a list")
 
 ;======================================10=======================================
 
