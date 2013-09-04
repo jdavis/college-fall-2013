@@ -134,14 +134,16 @@ the default definitions will have to be present!
 ;(4 2 6 9)
 
 (define (p11-1)
-  '(4 2 6 9))
+  (list 4 2 6 9))
 
 ;(spaceship
 ;  (name(serenity))
 ;  (class(firefly)))
 ;
 (define (p11-2)
-  'UNIMPLEMENTED
+  '(spaceship
+     (name (serenity))
+     (class (firefly)))
 )
 
 ;(2 * ((20 - (91 / 7)) * (45 - 42)))
