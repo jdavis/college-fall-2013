@@ -211,25 +211,16 @@ the default definitions will have to be present!
   (cons '(1)
         '()))
 
+; TODO
 ; Undefined symbols
 (define (p17-example-2)
   'hi)
 
 ;===================================18===========================================
 
-(define (pascal n)
-  (define
-    (pascal-row
-      lst)
-      (cond
-        ((null? lst) lst)
-        (else lst)))
-  (cond
-    ((= n 1) '(1))
-    (else
-      (define prev (pascal (- n 1)))
-      (cons (list prev)
-              (list (pascal-row (car prev)))))))
+(define (pascal n) n)
 
 (pascal 1)
 (pascal 2)
+(pascal 3)
+(pascal 4)
