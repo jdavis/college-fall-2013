@@ -195,7 +195,9 @@ the default definitions will have to be present!
     ((string=? "answer-to-everything" (symbol->string (car pair)))
      (cond
        ((eq? 42 (car pair)) #t)
-       (else #f)
+       (else (create-error-msg
+               (car pair)
+               42))))
     ((eq? (car pair) (car (cdr pair))) #t)
     (else #f)))
 
