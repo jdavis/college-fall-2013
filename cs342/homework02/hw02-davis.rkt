@@ -208,13 +208,10 @@ the default definitions will have to be present!
 ;======================================17=======================================
 ;;write two examples that fail *only* at runtime here:
 
-; Ensuring procedures can operate on given parameter types
 (define (p17-example-1)
   (cons '(1)
         '()))
 
-; TODO
-; Undefined symbols
 (define (p17-example-2)
   (number->string "hello"))
 
