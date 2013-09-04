@@ -185,7 +185,7 @@ the default definitions will have to be present!
 (define (create-error-msg sym val)
   (string-append "This is a custom error message we will be using next. Symbol '"
                  (symbol->string sym)
-                 "was not paired with value "
+                 " was not paired with value "
                  (number->string val)))
 
 ;======================================15=======================================
