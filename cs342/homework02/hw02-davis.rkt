@@ -71,13 +71,13 @@ the default definitions will have to be present!
 ;of this function!
 
 (define (p4)
-  (+
-    (cond
-      ((< x y z) (+ y z)))
-    (cond
-      ((< y x z) (+ x z)))
-    (cond
-      ((< z x y) (+ x y)))))
+  (cond
+    ((< x y z) (+ y z))
+    ((< x z y) (+ z y))
+    ((< y x z) (+ x z))
+    ((< y z x) (+ z x))
+    ((< z y x) (+ y x))
+    ((< z x y) (+ x y))))
 
 ;======================================05=======================================
 
