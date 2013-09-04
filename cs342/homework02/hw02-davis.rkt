@@ -84,17 +84,11 @@ the default definitions will have to be present!
 (define (p5)
   (+
     (cond
-      ((> x y) y)
-      ((> y x) x)
-      (else 0))
+      ((> x y z) (+ y z)))
     (cond
-      ((> x z) z)
-      ((> z x) x)
-      (else 0))
+      ((> y x z) (+ x z)))
     (cond
-      ((> y z) z)
-      ((> z y) y)
-      (else 0))))
+      ((> z x y) (+ x y)))))
 
 ;======================================06=======================================
 
