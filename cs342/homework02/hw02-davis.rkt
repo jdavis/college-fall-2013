@@ -216,7 +216,7 @@ the default definitions will have to be present!
 ; TODO
 ; Undefined symbols
 (define (p17-example-2)
-  'hi)
+  (number->string "hello"))
 
 ;===================================18===========================================
 
