@@ -179,36 +179,50 @@ the default definitions will have to be present!
 ;======================================13=======================================
 
 (define p13
-  "NO
-    ANSWER"
-)
+  "equal? has a 'coarser' relation than eq?")
 
 ;======================================14=======================================
 
 (define (create-error-msg sym val)
-  'UNIMPLEMENTED
-)
+  (string-append "This is a custom error message we will be using next. Symbol '"
+                 (symbol->string sym)
+                 "was not paired with value "
+                 (number->string val)))
+
 ;======================================15=======================================
 
 (define (check-correctness pair)
-  'UNIMPLEMENTED
-)
+  'UND)
 
 ;======================================16=======================================
 ;No answer necessary
 ;======================================17=======================================
 ;;write two examples that fail *only* at runtime here:
 
+; Ensuring procedures can operate on given parameter types
 (define (p17-example-1)
-  'UNIMPLEMENTED
-)
+  (cons '(1)
+        '()))
 
+; Undefined symbols
 (define (p17-example-2)
-  'UNIMPLEMENTED
-)
+  'hi)
 
 ;===================================18===========================================
 
 (define (pascal n)
- 'UNIMPLEMENTED
-)
+  (define
+    (pascal-row
+      lst)
+      (cond
+        ((null? lst) lst)
+        (else lst)))
+  (cond
+    ((= n 1) '(1))
+    (else
+      (define prev (pascal (- n 1)))
+      (cons (list prev)
+              (list (pascal-row (car prev)))))))
+
+(pascal 1)
+(pascal 2)
