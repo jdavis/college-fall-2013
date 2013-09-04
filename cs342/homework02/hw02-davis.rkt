@@ -73,17 +73,11 @@ the default definitions will have to be present!
 (define (p4)
   (+
     (cond
-      ((> x y) x)
-      ((> y x) y)
-      (else 0))
+      ((< x y z) (+ y z)))
     (cond
-      ((> x z) x)
-      ((> z x) z)
-      (else 0))
+      ((< y x z) (+ x z)))
     (cond
-      ((> y z) y)
-      ((> z y) z)
-      (else 0))))
+      ((< z x y) (+ x y)))))
 
 ;======================================05=======================================
 
