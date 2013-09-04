@@ -191,7 +191,13 @@ the default definitions will have to be present!
 ;======================================15=======================================
 
 (define (check-correctness pair)
-  'UND)
+  (cond
+    ((string=? "answer-to-everything" (symbol->string (car pair)))
+     (cond
+       ((eq? 42 (car pair)) #t)
+       (else #f)
+    ((eq? (car pair) (car (cdr pair))) #t)
+    (else #f)))
 
 ;======================================16=======================================
 ;No answer necessary
