@@ -153,14 +153,28 @@ the default definitions will have to be present!
 (define (p12-2 lst)
   (cons
     (car lst)
-    )
-)
+    (cons
+      (cadr lst)
+      (cons
+        'd
+        (cons
+          (car lst)
+          (cons
+            (cadr lst)
+            '()))))))
 
 ;(b c d a)
 
 (define (p12-3 lst)
-  'UNIMPLEMENTED
-)
+  (cons
+    (cadr lst)
+    (cons
+      (caddr lst)
+      (cons
+        'd
+        (cons
+          (car lst)
+          '())))))
 
 
 ;======================================13=======================================
