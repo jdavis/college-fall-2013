@@ -136,8 +136,7 @@ the default definitions will have to be present!
 ;(4 2 6 9)
 
 (define (p11-1)
-  'UNIMPLEMENTED
-)
+  '(4 2 6 9))
 
 ;(spaceship
 ;  (name(serenity))
@@ -150,8 +149,7 @@ the default definitions will have to be present!
 ;(2 * ((20 - (91 / 7)) * (45 - 42)))
 
 (define (p11-3)
-  'UNIMPLEMENTED
-)
+  '(* 2 (- 45 42) (* (- 20 (/ 91 7)))))
 
 ;======================================12=======================================
 
@@ -160,13 +158,14 @@ the default definitions will have to be present!
 ;(d a b c)
 
 (define (p12-1 lst)
-  'UNIMPLEMENTED
-)
+  (cons 'd lst))
 
 ;(a b d a b)
 
 (define (p12-2 lst)
-  'UNIMPLEMENTED
+  (cons
+    (car lst)
+    )
 )
 
 ;(b c d a)
