@@ -52,7 +52,7 @@ in the interpreter.
 Translate the following algebraic formulas into Scheme's notation.
 Type the translation into Scheme's interaction window for checking.
 ((3 + 3) * 9)
-((6 * 9) / ((4 + 2) + (4 * 3)))       
+((6 * 9) / ((4 + 2) + (4 * 3)))
 (2* ((20 - (91 / 7)) * (45 - 42)))
 ================================================================================
 2.(3pts)
@@ -114,21 +114,21 @@ Hint: try using variables and function calls in conjunction with the two.
 ================================================================================
 10. (3pts)
 
-What can you do with a string in Scheme that you can't do with a symbol?  
-Why is there a distinction between strings and symbols in Scheme?   
+What can you do with a string in Scheme that you can't do with a symbol?
+Why is there a distinction between strings and symbols in Scheme?
 (Hint: look at the Revised Report on Scheme, available from the Racket and from
 the course resources web page, to see the operations that Scheme defines for these
 types.)
 ================================================================================
 11.(9pts)
- 
+
 Using *only* the Scheme procedure 'list' and numbers and quoted symbols (such as '*, 'name, and 'james), write Scheme expressions to make the following lists.
 
 (Note that the line breaks and indentation in the last of these lists do not matter;
 the interpreter will print out the value of your answer without this indentation,
 which is OK.  We are asking for you to create the values displayed below, not the
 printing displayed below.  So don't use \newline or #\space in your answer.)
- 
+
 (4 2 6 9)
 
 (spaceship
@@ -207,7 +207,7 @@ referred to as a pair or 2-tuple, with the following contract:
 uncaught exception: "This is a custom error message we will be using next. Symbol
 'answer-to-everything was not paired with value 42"
 ================================================================================
-16. 
+16.
 
 A fast and useful debugging tool is printing out relevant information. Two
 functions you will encounter during this course are:
@@ -228,15 +228,15 @@ Because the branches of an "if" instruction can contain only one instruction eac
 in order to print any relevant information from any branch and still do computation
 you can use the "begin" instruction:
 
->(if true 
+>(if true
       (begin (print "computing 42") (newline) (+ 12 30))
-      (print "dead code")           
+      (print "dead code")
    )
 
 A begin instruction can contain 0 or more instructions. The value of the begin
 instruction is *always* the value of the last instruction. As you can see from
 th above example, the first two instructions produce side effects (printing)
-while the last instruction computes a value which is then returned as the 
+while the last instruction computes a value which is then returned as the
 value of the "begin" instruction and then as the value of the "if" instruction.
 You do not have to do anything for this problem, just experiment a bit.
 ================================================================================
@@ -259,7 +259,7 @@ The pattern you see below called Pascal's Triangle:
   1 4 6 4 1
 
 The numbers at the edge of the triangle are all 1, and each number inside the triangle
-is the sum of the two numbers above it. 
+is the sum of the two numbers above it.
 
 Write a function with the behavior:
 >(pascal 1)
@@ -287,7 +287,7 @@ You may assume:
  -that the argument will always be a natural number >= 1.
 
 Output properties:
- - output does not have to be pretty-printed and it must contain NO spaces at 
+ - output does not have to be pretty-printed and it must contain NO spaces at
    the head and tail of the list
 
 
