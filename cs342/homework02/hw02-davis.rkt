@@ -25,6 +25,7 @@ the default definitions will have to be present!
 ;======================================01=======================================
 ;((3 + 3) * 9)
 ;equal to 54
+
 (define (p1-1)
   (*
     9
@@ -32,6 +33,7 @@ the default definitions will have to be present!
 
 ;((6 * 9) / ((4 + 2) + (4 * 3)))
 ;equal to 3
+
 (define (p1-2)
   (/
     (* 6 9)
@@ -41,6 +43,7 @@ the default definitions will have to be present!
 
 ;(2* ((20 - (91 / 7)) * (45 - 42)))
 ;equal to 42
+
 (define (p1-3)
   (*
     2
@@ -52,8 +55,10 @@ the default definitions will have to be present!
 ;======================================02=======================================
 ;write your answer as a string; you do not need to write any special escape
 ;characters to distinguish new lines.
+
 (define p2
   "Using order of operations, parse the formula into a tree & construct it back together in prefix notation.")
+
 ;======================================03=======================================
 ;;Write the definitions of x,y,z here:
 
@@ -64,6 +69,7 @@ the default definitions will have to be present!
 ;======================================04=======================================
 ;you will need to have solved problem 3. The values x,y,z are not parameters
 ;of this function!
+
 (define (p4)
   (+
     (cond
@@ -80,6 +86,7 @@ the default definitions will have to be present!
       (else 0))))
 
 ;======================================05=======================================
+
 (define (p5)
   (+
     (cond
@@ -96,25 +103,30 @@ the default definitions will have to be present!
       (else 0))))
 
 ;======================================06=======================================
+
 (define (p6)
   (not (- x y)))
 
 ;======================================07=======================================
 ;same instructions as problem 02.
+
 (define p7
   "Parentheses around the definition name turns it into a procedure with no arguments.")
 
 ;======================================08=======================================
+
 (define p8
   "It turns anything that follows the ' into data which isn't evaluated.")
 
 ;======================================09=======================================
+
 (define p9
   "NO
     ANSWER"
 )
 
 ;======================================10=======================================
+
 (define p10
   "NO
     ANSWER"
@@ -122,6 +134,7 @@ the default definitions will have to be present!
 
 ;======================================11=======================================
 ;(4 2 6 9)
+
 (define (p11-1)
   'UNIMPLEMENTED
 )
@@ -129,45 +142,54 @@ the default definitions will have to be present!
 ;(spaceship
 ;  (name(serenity))
 ;  (class(firefly)))
+;
 (define (p11-2)
   'UNIMPLEMENTED
 )
 
 ;(2 * ((20 - (91 / 7)) * (45 - 42)))
+
 (define (p11-3)
   'UNIMPLEMENTED
 )
 
 ;======================================12=======================================
+
 (define example '(a b c))
 
 ;(d a b c)
+
 (define (p12-1 lst)
   'UNIMPLEMENTED
 )
 
 ;(a b d a b)
+
 (define (p12-2 lst)
   'UNIMPLEMENTED
 )
 
 ;(b c d a)
+
 (define (p12-3 lst)
   'UNIMPLEMENTED
 )
 
 
 ;======================================13=======================================
+
 (define p13
   "NO
     ANSWER"
 )
 
 ;======================================14=======================================
+
 (define (create-error-msg sym val)
   'UNIMPLEMENTED
 )
 ;======================================15=======================================
+
 (define (check-correctness pair)
   'UNIMPLEMENTED
 )
