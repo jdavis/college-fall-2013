@@ -1,0 +1,6 @@
+*.sw[po]
+*.py[co]
+a.out
+*.aux
+*.log
+*.synctex.gz
