@@ -217,9 +217,27 @@ the default definitions will have to be present!
 
 ;===================================18===========================================
 
-(define (pascal n) n)
 
-(pascal 1)
-(pascal 2)
-(pascal 3)
-(pascal 4)
+(define (pascal n)
+  (define (cdlr l)
+    (cond
+      (null? (cdr l)) (car l)
+      (else (cdlr (cdr l)))))
+  (define (pascal-row row)
+    (define last 0)
+    (append
+      (map (lambda (x)
+             (define temp last)
+             (set! last x)
+             (+ temp x))
+           row)
+      '(1)))
+  (define prev '(1))
+  (define result (list prev))
+  (for ([i (in-range (- n 1))])
+       (set! prev (pascal-row prev))
+       (set! result
+         (cons
+           prev
+           result)))
+  (reverse result))
