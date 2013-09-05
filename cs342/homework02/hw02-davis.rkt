@@ -219,10 +219,6 @@ the default definitions will have to be present!
 
 
 (define (pascal n)
-  (define (cdlr l)
-    (cond
-      (null? (cdr l)) (car l)
-      (else (cdlr (cdr l)))))
   (define (pascal-row row)
     (define last 0)
     (append
