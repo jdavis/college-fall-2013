@@ -134,8 +134,7 @@
     Identify a useful invariant \(I_0\) for the outer loop, that is, a loop
     invariant which will allow you to complete parts \(b\) through \(d\).
 
-    \begin{proof}
-    \end{proof}
+    \textbf{Solution}
 
     \textbf{Part B}
 
@@ -174,6 +173,41 @@
     \]
 
     \begin{proof}
+
+    To prove that \((A - B) \cup C = (A \cup B) - C\), we must show that \((A -
+    B) \cup C \subseteq (A \cup B) - C\) and that \((A \cup B) - C \subseteq (A
+    - B) \cup C\).
+
+    \textbf{Part One}
+
+    First we will show that \((A - B) \cup C \subseteq (A \cup B) - C\).
+
+
+    \textbf{Part Two}
+
+    Now we will show that \((A \cup B) - C \subseteq (A - B) \cup C\).
+
+    \\
+
+    Since we have shown each sides, our proof is complete and we have shown
+    that \((A - B) \cup C = (A \cup B) - C\).
+
+    \textbf{Alternative Solution}
+
+    \[
+        \begin{split}
+            (A - B) \cup C &= (\overline{A} \cap B) \cup C
+            \\
+            &= (\overline{A} \cap B) \cup C
+            \\
+            &= \overline{(A \cup \overline{B})} \cup C
+            \\
+            &= \overline{(A \cup B)} \cup C
+            \\
+            &= (A \cup B) - C
+        \end{split}
+    \]
+
     \end{proof}
 \end{homeworkProblem}
 
@@ -186,7 +220,6 @@
 
     Given two strings, \(s = "abcdefg"\) and \(t = "biczdxyg"\), the longest common subsequence
     between the two is \("bcdg"\).
-
 \end{homeworkProblem}
 
 \pagebreak
