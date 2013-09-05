@@ -1,0 +1,203 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+\usepackage{tikz}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{
+    \stepcounter{homeworkProblemCounter}
+    \renewcommand{\homeworkProblemName}{#1}
+    \section{\homeworkProblemName}
+    \enterProblemHeader{\homeworkProblemName}
+}{
+    \exitProblemHeader{\homeworkProblemName}
+}
+
+\newcommand{\problemAnswer}[1]{
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}}
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{
+    \renewcommand{\homeworkSectionName}{#1}
+    \subsection{\homeworkSectionName}
+    \enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]}
+}{
+    \enterProblemHeader{\homeworkProblemName}
+}
+
+\newcommand{\hmwkTitle}{Homework\ \#1}
+\newcommand{\hmwkDueDate}{September 11, 2013 at 4:30pm}
+\newcommand{\hmwkClass}{CS311}
+\newcommand{\hmwkClassTime}{Section 3}
+\newcommand{\hmwkClassInstructor}{Professor Lathrop}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Demonstrate that the quick-sort implementation given is incorrect by
+    providing an input on which the algorithm does not produce correctly sorted
+    input. Briefly explain why the input fails.
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+
+
+    \textbf{Part A}
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part B}
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part C}
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part D}
+
+    \begin{proof}
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Using the implemenation of insertion sort given, solve the given problems.
+    \\
+
+    \textbf{Part A}
+
+    Identify a useful invariant \(I_0\) for the outer loop, that is, a loop
+    invariant which will allow you to complete parts \(b\) through \(d\).
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part B}
+
+    Prove that if \(I_0\) holds after the last iteration of the outer loop
+    completes, then the algorithm sorts \(list\) in ascending order. This
+    corresponds to the termination step of the loop invariant proof.
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part C}
+
+    Prove that \(I_0\) holds before the loop is executed for the first time.
+    This corresponds to the initialization step of the loop invariant proof.
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part D}
+
+    Prove that \(I_0\) is an invariant for the outer loop.
+
+    \textbf{Hint:} It will be necessary to prove something about the behavior
+    of the inner loop using a loop invariant as well. This corresponds to the
+    maintenance step of the loop invariant.
+
+    \begin{proof}
+    \end{proof}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Prove or disprove:
+
+    \[
+        (A - B) \cup C = (A \cup B) - C
+    \]
+
+    \begin{proof}
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Given an instance of the longest common subsequence problem.
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    One hundred quarters lie scattered about on a table before you. Some known
+    n of them are heads up, while the rest are tails up. You cannot in any way
+    observe the configuration of individual quarters (perhaps you are
+    blindfolded). You can, however, pick them up and place them back on the
+    table in the opposite configuration, i.e., flip them.
+    \\
+
+    Your objective is to
+    divide the one hundred quarters into two groups such that each group has
+    the same number of heads. The two groups need not have the same number of
+    quarters. How do you do this?
+\end{homeworkProblem}
+
+\end{document}
