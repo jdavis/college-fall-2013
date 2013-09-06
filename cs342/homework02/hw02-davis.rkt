@@ -228,12 +228,11 @@ the default definitions will have to be present!
              (+ temp x))
            row)
       '(1)))
-  (define prev '(1))
-  (define result (list prev))
-  (for ([i (in-range (- n 1))])
-       (set! prev (pascal-row prev))
-       (set! result
-         (cons
-           prev
-           result)))
-  (reverse result))
+  (define (pascal-iter i limit row)
+    (cond
+      ((= i limit) '())
+      (else
+        (cons
+          row
+          (pascal-iter (+ i 1) limit (pascal-row row))))))
+  (pascal-iter 0 n '(1)))
