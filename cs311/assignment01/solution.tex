@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+\usepackage{changepage}
 
 \usepackage{tikz}
 
@@ -31,39 +32,26 @@
 \setlength\parindent{0pt}
 
 \newcommand{\enterProblemHeader}[1]{
-    \nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
-    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+    \nobreak\extramarks{}{Problem \#\arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \#\arabic{#1} (continued)}{Problem \#\arabic{#1} continued on next page\ldots}\nobreak{}
 }
 
 \newcommand{\exitProblemHeader}[1]{
-    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
-    \nobreak\extramarks{#1}{}\nobreak
+    \nobreak\extramarks{Problem \#\arabic{#1} (continued)}{Problem \#\arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{homeworkProblemCounter}
+    \nobreak\extramarks{Problem \#\arabic{#1}}{}\nobreak{}
 }
 
 \setcounter{secnumdepth}{0}
 \newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \#\arabic{homeworkProblemCounter}}{}\nobreak{}
 
-\newcommand{\homeworkProblemName}{}
-\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{
-    \stepcounter{homeworkProblemCounter}
-    \renewcommand{\homeworkProblemName}{#1}
-    \section{\homeworkProblemName}
-    \enterProblemHeader{\homeworkProblemName}
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \enterProblemHeader{homeworkProblemCounter}
 }{
-    \exitProblemHeader{\homeworkProblemName}
-}
-
-\newcommand{\problemAnswer}[1]{
-\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}}
-}
-
-\newcommand{\homeworkSectionName}{}
-\newenvironment{homeworkSection}[1]{
-    \renewcommand{\homeworkSectionName}{#1}
-    \subsection{\homeworkSectionName}
-    \enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]}
-}{
-    \enterProblemHeader{\homeworkProblemName}
+    \exitProblemHeader{homeworkProblemCounter}
 }
 
 \newcommand{\hmwkTitle}{Homework\ \#1}
