@@ -32,20 +32,20 @@
 \setlength\parindent{0pt}
 
 \newcommand{\enterProblemHeader}[1]{
-    \nobreak\extramarks{}{Problem \#\arabic{#1} continued on next page\ldots}\nobreak{}
-    \nobreak\extramarks{Problem \#\arabic{#1} (continued)}{Problem \#\arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
 }
 
 \newcommand{\exitProblemHeader}[1]{
-    \nobreak\extramarks{Problem \#\arabic{#1} (continued)}{Problem \#\arabic{#1} continued on next page\ldots}\nobreak{}
-    \stepcounter{homeworkProblemCounter}
-    \nobreak\extramarks{Problem \#\arabic{#1}}{}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
 }
 
 \setcounter{secnumdepth}{0}
 \newcounter{homeworkProblemCounter}
 \setcounter{homeworkProblemCounter}{1}
-\nobreak\extramarks{Problem \#\arabic{homeworkProblemCounter}}{}\nobreak{}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
 
 \newenvironment{homeworkProblem}{
     \section{Problem \arabic{homeworkProblemCounter}}
