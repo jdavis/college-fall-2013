@@ -324,26 +324,24 @@
 \begin{homeworkProblem}
     Prove or disprove \( (A - B) \cup C = (A \cup B) - C \).
 
-    \begin{proof}
-        To prove that \((A - B) \cup C = (A \cup B) - C\), we must show that \((A -
-        B) \cup C \subseteq (A \cup B) - C\) and that \((A \cup B) - C \subseteq (A
-        - B) \cup C\).
-        \\
+    \textbf{Counterexample}
 
-        \textbf{Part One}
+    Let \(A = \emptyset \), \(B = \emptyset \) and
+    \(C = \left\{ {1}\right\} \). Which gives:
 
-        First we will show that \((A - B) \cup C \subseteq (A \cup B) - C\).
-        \\
+    \[
+        \begin{split}
+            (A - B) \cup C &= (\emptyset - \emptyset) \cup {1}
+            \\
+            {1} &= (A \cup B) - C
+            \\
+            {1} &= (\emptyset \cup \emptyset) - {1}
+            {1} &= \emptyset - {1}
+            {1} &\neq \emptyset
+        \end{split}
+    \]
 
-
-        \textbf{Part Two}
-
-        Now we will show that \((A \cup B) - C \subseteq (A - B) \cup C\).
-        \\
-
-        Since we have shown each sides, our proof is complete and we have shown
-        that \((A - B) \cup C = (A \cup B) - C\).
-    \end{proof}
+    Since the left doesn't equal the right, the proposition has been disproven.
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
