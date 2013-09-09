@@ -35,7 +35,7 @@ In Racket, say we have the list l:
 >(cdr l); this value corresponds to the remainder of the list, from now on
         ; referred to as the "tail" of the list.
 
-To better grasp the concept, evaluate the following expression and relate the 
+To better grasp the concept, evaluate the following expression and relate the
 return value of the function to the recursive definition of a list:
 >(cdr '(one-element))
 
@@ -60,7 +60,7 @@ STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS, SECTIONS 1.1.6, 1.1.7, 1.3
 Implement a function list-of-even-numbers? that takes a list as argument
 and tells whether or not the list contains only even numbers.
 
->(list-of-even-numbers? '(4 20 16 2)) 
+>(list-of-even-numbers? '(4 20 16 2))
 #t
 >(list-of-even-numbers? '(1))
 #f
@@ -124,7 +124,7 @@ number that is involved in the computation. For instance:
 0.5
 
 You can find more information on how numbers are represented in Racket here:
-http://docs.racket-lang.org/guide/numbers.html 
+http://docs.racket-lang.org/guide/numbers.html
 
 ================================================================================
 For problems 3, 4 you should consider looking over the standard library functions
@@ -134,16 +134,16 @@ http://docs.racket-lang.org/reference/pairs.html
 3. [15p] Carpet
 
 Write a procedure carpet that takes one non-negative natural number as
-argument and produces a list as shown in the examples. 
+argument and produces a list as shown in the examples.
 
 You may assume:
  -that the argument will always be a non-negative natural number.
 
 Output properties:
- - output does not have to be pretty-printed and it must contain NO spaces at 
+ - output does not have to be pretty-printed and it must contain NO spaces at
    the head and tail of the list
  - '+ and '% have to be symbols, not strings.
- 
+
 > (carpet 0)
 ((%))
 
@@ -158,7 +158,7 @@ Output properties:
   ( % + % + % )
   ( % + + + % )
   ( % % % % % ))
-  
+
 >(carpet 3)
 ( ( + + + + + + + )
   ( + % % % % % + )
@@ -171,7 +171,7 @@ Output properties:
 ================================================================================
 4. [15p] Sorting problem
 
-Write a function sort-ascend that takes a list of integers, i.e. (sort-ascend loi), with the 
+Write a function sort-ascend that takes a list of integers, i.e. (sort-ascend loi), with the
 the following behavior:
 
 >(sort '(1))
@@ -215,12 +215,12 @@ complexity of the problem.
 You may assume:
   - that the input is always a string
   - an empty string or one with no parentheses is considered balanced
-  
+
 ================================================================================
 The reason why Scheme/Racket is called a functional language is because functions
 are first class citizens, meaning: they can be treated as any other value
-in the program. Note that whenever the interpreter encounters an unquoted open 
-parenthesis it expects the first value to be a function. The consequences of these 
+in the program. Note that whenever the interpreter encounters an unquoted open
+parenthesis it expects the first value to be a function. The consequences of these
 two statements can be summarized by the following example:
 
 > (define add-alias +)
@@ -251,14 +251,14 @@ What the lambda expression (sometimes referred to as lambda abstraction) does is
 that it creates an anonymous function with the specified number of arguments.
 The second version is akin to simple variable binding:
 >(define forty-two 42)
-Here you bind the value 42 to the variable forty-two, similarly you bind the 
+Here you bind the value 42 to the variable forty-two, similarly you bind the
 function (as-a-value) created by the lambda to the variable foo.
 
 
 ================================================================================
 6. [15p]
 
-In light of this new information let us reconsider problem 1. If you want to 
+In light of this new information let us reconsider problem 1. If you want to
 write a function that tests whether a list contains only strings, odd numbers
 or other lists that contain only even numbers you will notice that the code
 that iterates through the list stays the same, while only the code that does
@@ -275,7 +275,7 @@ write a more generic version that is used as follows:
 >(list-of-all? number? '(1 2 3 "not-a-number"))
 #f
 
->(list-of-all? 
+>(list-of-all?
        ;this lambda tells us if the argument is an odd number
        (lambda (n) (and (integer? n) (odd? n)))
        '(1 3 5)
@@ -307,7 +307,7 @@ encouraged to use it in any other problem.
 7. [15p] create-mapping
 
 A map data structure is described as either a set of key-value pairs or a set
-of keys and a set of values whose relation is described by a function with a 
+of keys and a set of values whose relation is described by a function with a
 one-to-one mapping from keys to values.
 
 Write a function, create-mapping, which takes a list of symbols (keys) and a list
