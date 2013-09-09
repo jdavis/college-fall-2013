@@ -23,7 +23,7 @@ the default definitions will have to be present!
 |#
 ;======================================01=======================================
 (define (list-of-even-numbers? lst)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;======================================02=======================================
@@ -42,25 +42,25 @@ the default definitions will have to be present!
 
 ;======================================03=======================================
 (define (carpet n)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;======================================04=======================================
 (define (sort-ascend loi)
- 'UNIMPLEMENTED  
+ 'UNIMPLEMENTED
 )
 
 ;======================================05=======================================
 (define (balanced? in)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;======================================06=======================================
 (define (list-of-all? predicate lst)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;======================================07=======================================
 (define (create-mapping keys vals)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
