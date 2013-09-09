@@ -8,6 +8,8 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{changepage}
+\usepackage{lineno}
+\usepackage{algpseudocode}
 
 \usepackage{tikz}
 
@@ -79,9 +81,79 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Demonstrate that the quick-sort implementation given is incorrect by
+    Demonstrate that the quicksort implementation given is incorrect by
     providing an input on which the algorithm does not produce correctly sorted
     input. Briefly explain why the input fails.
+    \\
+
+    \textbf{Solution}
+
+    The following input \(list = [3, 3]\), \(start = 0\), and \(end = 1\), will
+    cause the given implementation of quicksort to loop infinitely.
+    \\
+
+    \textbf{Explanation}
+
+    The reason this input fails is because when the first call to \(partition\)
+    happens, \(left = start + 1 = 1\) and \(right = 1\). The \(while\) loop on
+    line 3 waits until \(left \leq right\).
+    \\
+
+    However, \(left\) and \(right\) can never advance past each other because
+    neither line 4 or 7 take into the account the possibility when the pivot
+    value equals either \(list[left]\) or \(list[right]\).  To fix this, all we
+    need to do is change line 4 to be less than \textbf{or equal}, \(list[left]
+    \leq list[start]\). Now \(left\) can be incremented and cause the \(while\)
+    loop to finish.
+    \\
+
+    There is one last issue. When \(partition\) returns, it will set \(mid
+    = 1\). The problem though is that we recursively call \(quicksort\) on
+    \(start = 0\) and \(end = 1\). Which is the exact same as the first call
+    that we made to \(quicksort\).  To fix this, the first call to
+    \(quicksort\) should pass \(mid - 1\) instead of \(mid\).
+    \\
+
+    This is what the final code should look like:
+
+    \begin{linenumbers}[1]
+        \renewcommand\linenumberfont{\normalfont\bfseries\small}
+        \begin{algorithmic}
+            \Function{Quick-Sort}{$list, start, end$}
+                \If{$start \geq end$}
+                    \State{} \Return{}
+                \EndIf{}
+                \State{} $mid \gets \Call{Partition}{list, start, end}$
+                \State{} \Call{Quick-Sort}{$list, start, mid - 1$}
+                \State{} \Call{Quick-Sort}{$list, mid + 1, end$}
+            \EndFunction{}
+        \end{algorithmic}
+    \end{linenumbers}
+
+    and:
+
+    \begin{linenumbers}[1]
+        \renewcommand\linenumberfont{\normalfont\bfseries\small}
+        \begin{algorithmic}
+            \Function{Partition}{$list, start, end$}
+                \State{} $left \gets start + 1$
+                \State{} $right \gets end$
+                \While{$left \leq right$}
+                    \While{$left \leq end \wedge list[left] \leq list[start]$}
+                        \State{} $left \gets left + 1$
+                    \EndWhile{}
+                    \While{$right \geq start \wedge list[right] > list[start]$}
+                        \State{} $right \gets right - 1$
+                    \EndWhile{}
+                    \If{$left \leq right$}
+                        \State{} \Call{swap}{$list, left, right$}
+                    \EndIf{}
+                \EndWhile{}
+                \State{} \Call{swap}{$list, start, right$}
+                \State{} \Return{} $right$
+            \EndFunction{}
+        \end{algorithmic}
+    \end{linenumbers}
 
 \end{homeworkProblem}
 
