@@ -374,6 +374,59 @@
     divide the one hundred quarters into two groups such that each group has
     the same number of heads. The two groups need not have the same number of
     quarters. How do you do this?
+    \\
+
+    \textbf{Solution}
+
+    Given the number of coins is 100, to solve this, we will use induction on
+    the number of original heads, \(n\) that we knew existed at the beginning
+    of the problem. The proposition is as follows:
+    \\
+
+    \textbf{Proposition} Prove that by splitting the coins into two groups of
+    50 and then flipping \(n\) number of coins in one group and adding them
+    to the other group, will result in an equal number of heads in each group.
+
+    \begin{proof}
+        \textbf{Base} To make a more comprehensive base case, we will do when
+        \(n = 0\) and \(n = 1\).
+
+        When \(n = 0\), after splitting when we are automatically done. Since
+        there are no heads in the entire group, there will be no heads in the
+        two separate groups of 50.
+        \\
+
+        When \(n = 1\), after splitting we can have two possible outcomes:
+        either the heads is in the group we will flip, or it is in the group we
+        will add to. If the heads is in the group we alter, we have two more
+        possible outcomes either the 1 coin we choose to flip will either be a
+        heads, or it will be a tails.
+        \\
+
+        \textbf{Step} We will now show that given \(n\) number of heads,
+        we can come up with an algorithm to end up with equal number of
+        heads in each of the two groups when the number of heads is increased
+        by one, or \(n + 1\).
+        \\
+
+        When given \(n\) coins, we assume the induction hypothesis and know
+        that we can split up the coins into two groups, each with equal number
+        of heads.
+        \\
+
+        If an adversary were to pick a coin at random from either group and
+        flip it.  We know that we would only have to take one coin from either
+        pile, flip it, and then add it to the opposite pile.
+        \\
+
+        This is because without loss of generality, the coin that we take will either be a
+        heads or a tails. If it is a heads, then that group will have one less heads
+        \\
+
+        Err, I need to fix the induction step...
+
+    \end{proof}
+
 \end{homeworkProblem}
 
 \end{document}
