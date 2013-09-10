@@ -314,8 +314,15 @@
         According to the loop invariant \(I_1\), we can see that every value
         \(list[j \hdots i]\) is greater or equal to \(v\). We know that all
         values from \(list[0 \hdots j - 1]\) are the original elements but in
-        sorted order. By inserting \(v\) into the position \(list[j]\), we are
-        increasing the
+        sorted order. By inserting \(v\) into the position \(list[j]\) on line
+        8, we are placing \(v\) into a spot such that all values \(list[0] \leq
+        list[1] \hdots list[j - 2] \leq list[j - q] \leq v\) and \(v < list[j +
+        1] \leq list[j + 2] \hdots list[i - 1] \leq list[i]\).
+        \\
+
+        Therefore we have proven the \textbf{Maintenance} step of the loop invariant
+        \(I_0\) with the help of the other loop invariant, \(I_1\). Thus this
+        concludes our proof.
     \end{proof}
 \end{homeworkProblem}
 
