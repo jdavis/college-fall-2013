@@ -24,6 +24,7 @@ the default definitions will have to be present!
 ;======================================01=======================================
 (define (list-of-even-numbers? lst)
   (cond
+    ((not (list? lst)) #f)
     ((null? lst) #t)
     ((and
        (number? (car lst))
