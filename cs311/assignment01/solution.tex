@@ -382,12 +382,21 @@
     such that \(j = n - i\).
     \\
 
-    Given we know the number of \(n\), we only need to perform \(a\) number of
-    actions where \(a = min(n, 100 - n)\). All we need to do is take \(a\)
-    number of coins from either one of the pile and then flip all of them and
-    placing them into the other pile.
+    Given we know the number of \(n\), there are two possibilities for \(n\).
+    Either \(n \leq 50\) or \(n > 50\). If the number of heads is greater than
+    50, then the first thing we do is flip all the coins so that \(n = 100 -
+    n\).
+    \\
 
-
+    Next all we do is take \(n\) number of coins from the pile and flip each
+    one once and place it into a separate pile. When selecting the coin from
+    the pile of 100, there are two possibilities. If the coin we select is
+    tails, we will flip it resulting in a heads added to the other pile and
+    bringing the two piles closer to the same number of heads. If the coin we
+    select is a heads, then we will be reducing the number of heads in the
+    first pile and still bringing the number of heads in the first pile closer
+    to the number in the second pile.  By performing this \(n\) times, we will
+    end up with the same number of heads in both piles.
 \end{homeworkProblem}
 
 \end{document}
