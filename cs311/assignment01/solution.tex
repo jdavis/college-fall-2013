@@ -10,8 +10,7 @@
 \usepackage{changepage}
 \usepackage{lineno}
 \usepackage{algpseudocode}
-
-\usepackage{tikz}
+\usepackage{graphicx}
 
 \topmargin=-0.45in
 \evensidemargin=0in
@@ -162,30 +161,96 @@
 \begin{homeworkProblem}
     Solve the following parts of the problem using double pole or single pole
     switches.
-
+    \\
 
     \textbf{Part A}
+
     Draw a diagram that controls a single light with two switches.
+    \\
+
+    \begin{figure}[h]
+        \centering
+
+        \includegraphics[scale=.5]{circuitA.png}
+
+        \caption{Circuit with two switches}
+        \label{fig:circuitA}
+    \end{figure}
 
     \textbf{Part B}
+
     Draw a diagram that controls a single light with three switches.
+
+    \begin{figure}[h]
+        \centering
+
+        \includegraphics[scale=.5]{circuitB.png}
+
+        \caption{Circuit with three switches}
+        \label{fig:circuitB}
+    \end{figure}
 
     \textbf{Part C}
     Describe for \(n > 3\) an electrical circuit with a single light controlled
     by \(n\) switches.
+    \\
+
+    \textbf{Solution}
+    For \(n > 3\), all you need to do is add more switches between the two ending
+    single pole, double throw switches. By connecting the ends of the dpdt to
+    opposite ends of the preceeding dpdt, you'll ensure there will always be a
+    connecting regardless of whether the switch is on or off.
+
+    \begin{figure}[h]
+        \centering
+
+        \includegraphics[scale=.5]{circuitD.png}
+
+        \caption{Circuit with four switches}
+        \label{fig:circuitD}
+    \end{figure}
+
+    \pagebreak
 
     \textbf{Part D}
-    Prove \textbf{Part C} using induction for all \(n > 3\).
+    Prove it using induction for all \(n > 3\).
 
     \begin{proof}
-        We will prove that a single light switch can be toggled using \(n\) number of switches
-        where \(n > 3\).
+        We will prove that a single light switch can be toggled using \(n\)
+        number of switches where \(n > 3\).
         \\
 
-        \textbf{Base} Our base case will consist of two bases, when \(n = 4\) and \(n = 5\).
+        \textbf{Base} The base case that we need to prove is for when \(n = 4\).
+        By looking at Figure ~\ref{fig:circuitD}, it can be seen that whatever
+        position the 4 switches are in, the circuit is always only one switch
+        away from either being broken or connected for all switches.
         \\
 
-        In the first case, when \(n = 4\), the circuit is simple
+        \textbf{Step} The step case we must prove that given \(n\) is a valid circuit
+        that fits our criteria, by adding one more switch, \(n + 1\) switches, we
+        can still toggle the light from all \(n\) switches.
+        \\
+
+        Consider a circuit with \(n\) switches. To create a circuit with \(n +
+        1\) switches, we can do so by adding one more switch into the circuit.
+        \\
+
+        By the induction hypothesis, we know that a circuit with \(n\) switches
+        allows each switch to toggle the light. In order to satisfy the adding
+        of a new switch, we must ensure that when adding our new switch, the
+        connection can always be completed through one of the paths.
+        \\
+
+        If our circuit looks like the switch in Figure ~\ref{fig:circuitD}, except
+        with \(n\) switches, we can take a new dpdt switch and connect it's top
+        incoming switch to the previous dpdt switch's top output. Then we take
+        the very bottom output of the previous dpdt and hook it up to the
+        bottom input.  \\
+
+        It's easy to see that toggling the newly added switch will just result
+        in breaking one circuit while completing another circuit, thus toggling
+        the lightbulb. Thus this means our circuit now has \(n + 1\) switches
+        and our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
