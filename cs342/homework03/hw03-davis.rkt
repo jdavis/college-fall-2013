@@ -23,8 +23,12 @@ the default definitions will have to be present!
 |#
 ;======================================01=======================================
 (define (list-of-even-numbers? lst)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((null? lst) #t)
+    ((and
+       (number? (car lst))
+       (even? (car lst))) (list-of-even-numbers? (cdr lst)))
+    (else #f)))
 
 ;======================================02=======================================
 ;;for n > 0
