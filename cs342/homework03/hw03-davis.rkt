@@ -35,8 +35,17 @@ the default definitions will have to be present!
 ;;for n > 0
 ;Sn = 1/1 + 1/4 + 1/9 + 1/16 + ...
 (define (series-a n)
-  'UNIMPLEMETED
-)
+  (define (series-a-iter result iter limit)
+    (let ([x (/ 1 (* iter iter))])
+        (cond
+          ((<= iter 0) 0)
+          ((> iter limit) result)
+          (else
+            (series-a-iter
+            (+ result x)
+            (+ iter 1)
+            n)))))
+  (series-a-iter 0 1 n))
 
 ;====
 ;;for n >= 0
