@@ -103,8 +103,25 @@ the default definitions will have to be present!
 
 ;======================================05=======================================
 (define (balanced? in)
-  'UNIMPLEMENTED
-)
+  (define (balanced-iter lst count state)
+    (cond
+      ((null? lst) (= count 0))
+      ((char=? #\( (car lst))
+       (balanced-iter (cdr lst) (+ count 1) 1))
+      ((char=? #\) (car lst))
+       (cond
+         ((= state 0) #f)
+         (else
+           (balanced-iter
+             (cdr lst)
+             (- count 1)
+             (if (= count 1) 0 1)))))
+      (else
+        (balanced-iter
+          (cdr lst)
+          count
+          state))))
+  (balanced-iter (string->list in) 0 0))
 
 ;======================================06=======================================
 (define (list-of-all? predicate lst)
