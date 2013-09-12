@@ -76,15 +76,31 @@ the default definitions will have to be present!
 
 ;======================================03=======================================
 (define (carpet n)
-  (define (multiple sym n)
+  (define (multiple sym iter)
     (cond
-      ((= n 0) '())
-      (cons sym (multiple sym (- n 1)))))
-  (define (wrap n))
-  (let ([sym (if (even? n) '% '+)]))
-  (cond
-    ((= n 0) '((%)))
-    (else (wrap ))))
+      ((= iter -1) '())
+      (else (cons sym (multiple sym (- iter 1))))))
+  (define (surround sym result)
+    (cond
+      ((null? result) '())
+      (else
+        (cons
+          (append (list sym)
+                  (car result)
+                  (list sym))
+          (surround sym (cdr result))))))
+  (define (carpet-iter iter result)
+    (cond
+      ((= iter n) result)
+      (else
+        (let ([sym (if (even? iter) '+ '%)]
+              [l (* 2 (+ iter 1))])
+          (carpet-iter (+ iter 1)
+                       (append
+                         (list (multiple sym l))
+                         (surround sym result)
+                         (list (multiple sym l))))))))
+  (carpet-iter 0 '((%))))
 
 ;======================================04=======================================
 (define (sort-ascend loi)
