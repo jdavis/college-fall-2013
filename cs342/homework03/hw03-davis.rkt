@@ -125,8 +125,11 @@ the default definitions will have to be present!
 
 ;======================================06=======================================
 (define (list-of-all? predicate lst)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((null? lst) #t)
+    ((predicate (car lst))
+     (list-of-all? predicate (cdr lst)))
+    (else #f)))
 
 ;======================================07=======================================
 (define (create-mapping keys vals)
