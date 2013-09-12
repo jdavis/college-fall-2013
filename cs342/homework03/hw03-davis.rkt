@@ -51,8 +51,28 @@ the default definitions will have to be present!
 ;;for n >= 0
 ;Sn = 1 - 1/2 + 1/6 - 1/24 + ...
 (define (series-b n)
-  'UNIMPLEMETED
-)
+  (define (pow a b)
+    (define (pow-iter result iter)
+      (cond
+        ((= iter 0) result)
+        (else
+          (pow-iter (* result a) (- iter 1)))))
+    (pow-iter 1 b))
+  (define (factorial n)
+    (define (fact-iter result iter)
+      (cond
+        ((= iter 0) result)
+        (else
+          (fact-iter (* result iter) (- iter 1)))))
+    (fact-iter 1 n))
+  (define (series-b-iter result iter)
+    (cond
+      ((> iter n) result)
+      (else
+        (let
+          ([x (/ (pow -1 iter) (factorial (+ iter 1)))])
+          (series-b-iter (+ x result) (+ iter 1))))))
+  (series-b-iter 0 0))
 
 ;======================================03=======================================
 (define (carpet n)
