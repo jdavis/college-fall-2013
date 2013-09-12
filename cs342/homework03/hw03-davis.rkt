@@ -163,18 +163,14 @@ the default definitions will have to be present!
         (found (+ iter 1) index (cdr lst)))))
   (define (find key index lst)
     (cond
-      ((null? lst) (raise (string-append "Could not find mapping for symbol " (symbol->string key))))
+      ((null? lst) (raise (string-append "Could not find mapping for symbol '" (symbol->string key))))
       ((eq? key (car lst)) (found 0 index vals))
       (else
         (find key (+ index 1) (cdr lst)))))
-  (lambda
-    (key)
-    (find key 0 keys)))
-
-(define roman-numerals-keys '(I II III IV V))
-;values
-(define arabic-numerals-vals '(1 2 3 4 V))
-(define roman-to-arabic (create-mapping roman-numerals-keys arabic-numerals-vals))
-(roman-to-arabic 'I)
-(roman-to-arabic 'V)
-(roman-to-arabic 'some-symbol)
+  (cond
+    ((not (= (length keys) (length vals))) (raise "The lists are not of equal length."))
+    ((not (list-of-all? symbol? keys)) (raise "The keys are not all symbols."))
+    (else
+      (lambda
+        (key)
+        (find key 0 keys)))))
