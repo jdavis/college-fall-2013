@@ -81,8 +81,25 @@ the default definitions will have to be present!
 
 ;======================================04=======================================
 (define (sort-ascend loi)
- 'UNIMPLEMENTED
-)
+  (define (merge first second)
+    (cond
+      ((null? first) second)
+      ((null? second) first)
+      ((< (car first) (car second))
+       (cons
+         (car first)
+         (merge (cdr first) second)))
+      (else
+       (cons
+         (car second)
+         (merge first (cdr second))))))
+  (let ([mid (quotient (length loi) 2)])
+    (cond
+      ((= mid 0) loi)
+      (else
+        (merge
+          (sort-ascend (take loi mid))
+          (sort-ascend (drop loi mid)))))))
 
 ;======================================05=======================================
 (define (balanced? in)
