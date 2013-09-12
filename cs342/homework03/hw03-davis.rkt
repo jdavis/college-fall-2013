@@ -76,8 +76,15 @@ the default definitions will have to be present!
 
 ;======================================03=======================================
 (define (carpet n)
-  'UNIMPLEMENTED
-)
+  (define (multiple sym n)
+    (cond
+      ((= n 0) '())
+      (cons sym (multiple sym (- n 1)))))
+  (define (wrap n))
+  (let ([sym (if (even? n) '% '+)]))
+  (cond
+    ((= n 0) '((%)))
+    (else (wrap ))))
 
 ;======================================04=======================================
 (define (sort-ascend loi)
