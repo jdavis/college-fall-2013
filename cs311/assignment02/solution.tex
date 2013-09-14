@@ -79,7 +79,9 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Using a loop invariant, prove that the following property holds for \(MAX\):
+    Using a loop invariant, prove that the following property holds for
+    \(MAX\):
+
     \[
         \forall{0 \leq i < n},\ list[i] \leq MAX(list)
     \]
@@ -87,22 +89,62 @@
     \textbf{Solution}
 
     \begin{proof}
-        To prove the following property holds, we will use a loop invariant.
+        To prove the following property holds, we will use the following loop
+        invariant:
+        \\
+
+        \begin{adjustwidth}{2.5em}{0pt}
+            When looping, of all of the elements in the range \(list[0 \hdots
+            i]\), \(maxValue\) will contain the the value that is the largest
+            element in the range of elements.
+            \\
+        \end{adjustwidth}
+
+        By proving the loop invariant, it will prove the correctness of
+        the function \(MAX(list)\). Thus the property will hold.
         \\
 
         \textbf{Initialization}
 
-        Init stuff here.
+        At the beginning of the loop, \(i = 0\). Since \(maxValue = list[0]\),
+        there is only one value in the range of elements. It is trivially true
+        that the max value of a range with 1 element is always that element.
+        Thus the the loop invariant holds.
         \\
 
         \textbf{Maintenance}
 
-        Maintenance stuff here.
+        During each iteration of the while loop on line 3, the value of
+        \(list[i]\) is compared to \(maxValue\). If \(list[i] > maxValue\),
+        then \(maxValue = list[i]\).
+        \\
+
+        Since this happens each loop of the iteration, everytime \(i\) is
+        incremented on line 7, the range of elements consists of \(list[0
+        \hdots i]\). Thus since \(i\) is being incremented by one, the range is
+        growing by one everytime. Since \(maxValue\) is the largest element in
+        the range \(list[0 \hdots i - 1]\), we just need to compare the value
+        at \(list[i]\) to see if we need to update \(maxValue\).
+        \\
+
+        This is exactly what the loop invariant says, thus it proves the
+        maintenance step of the loop invariant.
         \\
 
         \textbf{Termination}
 
-        Termination stuff here
+        When the loop terminates, it terminates when \(i < n\). Since \(i\) is incremented
+        every iteration in the while loop on line 7, when \(i = n\) the loop will stop.
+        \\
+
+        Since \(n\) is the length of the array, it is easy to tell that when
+        \(i = n\), all items in \(list\) have been iterated over and thus
+        \(maxValue\) will be set to the maximum value in the whole array from
+        lines 4--5.
+        \\
+
+        Since this corresponds to the termination step of the loop invariant,
+        it is easy to see that the loop invariant holds.
     \end{proof}
 \end{homeworkProblem}
 
@@ -191,6 +233,6 @@
 
 \begin{homeworkProblem}
     Puzzle.
-\begin{homeworkProblem}
+\end{homeworkProblem}
 
 \end{document}
