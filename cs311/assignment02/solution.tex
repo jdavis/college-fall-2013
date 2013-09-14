@@ -154,6 +154,48 @@
     Prove that a tree with \(n\) vertices has precisely \(n - 1\) edges.
 
     \begin{proof}
+        To prove that a tree with \(n\) vertices has precisely \(n - 1\) edges, we will use induction.
+        \\
+
+        \textbf{Base}
+
+        First consider the simplest possible tree, a tree with
+        \(n = 0\) vertices.  Since the tree consists of just one vertex, there
+        are no edges to other vertices and a tree cannot have a cycle. The
+        number of edges is \(0\) or \(n - 1 = 0\). Thus it holds for the base
+        case.
+        \\
+
+        \textbf{Step}
+
+        We want to prove that for a tree with \(n + 1\) vertices, the tree will
+        also have \((n + 1) - 1\) edges.
+        \\
+
+        Consider a tree, \(T_0\) with \(n\) vertices. We can create a new tree,
+        \(T\) by taking \(T_0\) and adding one vertex to it. This would give \(n + 1\)
+        vertices. Because we'd need to connect the vertice to \(T_0\), the
+        number of edges would then be:
+
+        \[
+            \mbox{edges} = T + 1
+        \]
+
+        We know this because a tree must be connected and have no cycles. By
+        assuming the induction hypothesis:
+
+        \[
+            \begin{split}
+                \mbox{edges} &= T + 1
+                \\
+                &= (n - 1) + 1
+                \\
+                &= (n + 1) - 1
+            \end{split}
+        \]
+
+        Thus we have shown that a tree with \(n + 1\) vertices has exactly \((n
+        + 1) - 1\) edges.
     \end{proof}
 \end{homeworkProblem}
 
