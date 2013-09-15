@@ -205,6 +205,40 @@
     Prove that \(6n^4 + 2n^3 + n + 12 \in \Theta(n^4)\).
 
     \begin{proof}
+        To prove that \(6n^4 + 2n^3 + n + 12 \in \Theta(n^4)\), we must show
+        the following:
+
+        \[
+            \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
+            f(n) \leq c_2 \cdot g(n)}
+        \]
+
+        For the first equality, it is easy to see that \(n^4 \leq c_1 \cdot
+        (6n^4 + 2n^3 + n + 12)\) even for \(c_1 = 1\) and \(n_0 = 1\).
+        \\
+
+        Now we must show the second part of the equality:
+
+        \[
+            \begin{split}
+                6n^4 + 2n^3 + n + 12 &=
+                \\
+                &\leq 6n^4 + 2n^4 + n^4 + 12n^4
+                \\
+                &= 24n^4
+                \\
+                &\leq c_2 \cdot n^4
+            \end{split}
+        \]
+
+        when \(c_2 = 24\) and \(n_0 = 1\).
+        \\
+
+        Therefore, since we have found our two constants, \(c_1 = 1\) and \(c_2
+        = 24\), and constrained \(n_0 = 1\), we have proven the proposition.
+        Thus the proof is complete.
+
+
     \end{proof}
 \end{homeworkProblem}
 
