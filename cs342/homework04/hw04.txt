@@ -1,0 +1,419 @@
+                                     COM S 342
+                              Fall 2013 Homework 4
+
+Suggested reading:
+     STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS, SECTIONS 1.1.6, 1.1.7, 1.3
+     EOPL 2.1 - 2.2.3
+     Weekly Lecture Notes Sep 10 & 12
+
+IMPORTANT:
+Always check the tests to see the full usage of the functions. Not all use cases
+are listed in this file.
+--
+This homework is designed to help enhance your understanding on recursion and 
+higher order procedures, as well as how to use syntax abstraction facilities
+to create new language feature.
+--
+
+Some problems ask you to implement functions that can be found in the
+standard library, http://docs.racket-lang.org/reference/index.html , with the
+exception that yours do not have to be able to support multiple lists as
+arguments.
+
+You are *not* allowed to use these standard library functions in your solutions 
+for problem 1 and 2. However, you are encouraged to play with them to better understand
+their behavior.
+
+The names of the standard library functions do not have the trailing "-342".
+===============================================================================
+During last week's lectures, you were asked to implement a function called 
+"mapp" which took an operation and a list as parameters and outputted a list
+resulted from applying the operation to each element in that list. To refresh
+your memory you should try and reimplement it as it is essential to the latter
+part of this homework.
+
+Example of mapp:
+> (mapp (lambda (x) (+ x 42))
+      '(1 2 3 4)
+  )
+'(43 44 45 46)
+;this expression adds 42 to each element of the list.
+; the anonymous function (lambda (x) (+ x 42)), which adds 42 to
+; any given number, "serves" the higher order function mapp.
+===============================================================================
+1. [10p] fold
+1.a [5p]
+
+Implement a function foldl-342, meaning "fold left", with the following signature:
+
+            (foldl-342 op zero-element lst)
+Input:
+  op: is a two argument function
+  zero-element: is expected to be the zero element of the operator function
+                (e.g. 0 for +, 1 for *) but technically it can be any value.
+                
+  lst: a list of elements
+  
+Result:
+  a value computed by successively applying the "op" function to each element
+  of the list and the result of previous "op" function calls (where no such result exists
+  for zero-element used: meaning the zero-element is the value of the base case)
+  
+> (foldl-342 + 0 '(1 2 3 4))
+10
+
+;;string-append is a library function that takes an arbitrary number of strings
+;;and concatenates them.
+> (string-append "one-string " "---" "two-string")
+"one-string ---two-string"
+
+
+
+;; "fold left" function, i.e. foldl-342, means to fold towards "left" over 
+;; the given list, that is why you see the final result string is generated
+;; in reverse order, in contrast to the order of strings making up the given 
+;; list below.
+> (foldl-342 string-append "" (list "!!!" "42"  "is " "answer " "the " ))
+"the answer is 42!!!"
+
+
+;;the expression will yield the value 0 since the zero-element given is 0
+> (foldl-342 * 0 '(1 2 3 4))
+0
+
+;;this expression computes the sum of squares of each element.
+> (foldl-342 (lambda (x y) (+ (expt x 2) y)) 0 '(1 2 3 4 5))
+55
+
+;; in case you got confused with the following calculation by (foldl-342 - 0 '(1 2 3 4)):
+;;   Scheme/Racket calculates in this way: (4 - (3 - (2 - (1 - 0)))), which is 2.
+;;   As you can see, the folding should proceed towards the left: 4 -> 3 -> 2 -> 1 -> 0(zero element) 
+> (foldl-342 - 0 '(1 2 3 4))
+2
+
+> (foldl-342 - 0 '(4 3 2 1))
+-2
+
+
+--
+1.b [5p]
+
+Implement a function foldr-342 with the same signature as the one from 1.a,
+with the difference that the operator is applied in the opposite direction 
+as foldl, that is, towards the right (from the left).
+
+> (foldr-342 - 0 '(1 2 3 4))
+-2
+> (foldr-342 - 0 '(4 3 2 1))
+2
+
+> (foldr string-append "" (list "the " "answer " "is " "42" "!!!"))
+"the answer is 42!!!"
+
+===============================================================================
+2. [10p] andmap
+
+Implement the function "andmap-342". You *must* use foldl-342 or foldr-342, as the result of problem 1). 
+
+The signature of "andmap-342" -
+
+        andmap test-op lst
+
+Input: 
+  test-op: a one argument function that returns a boolean
+  lst: a list of elements
+
+Output:
+  #t if for all the elements in lst the function test-op returns #t
+  #f if at least for one element the function test-op returns #f
+
+;;odd is a library function that tests whether or not a number is odd
+> (odd? 5)
+#t  
+  
+> (andmap-342 odd? '(1 3 5))
+#t
+
+> (andmap-342 odd? '(1 3 42))
+#f
+
+> (andmap-342 odd? '(1 6 42))
+#f
+
+Besides andmap, the standard library includes the function ormap which behaves
+like andmap except that it returns #t if at least one of the element in the list
+holds the property described by the function.
+
+Note: 
+For some reason, in this implementation of the language racket
+the boolean operators "and" and "or" are NOT functions like + and *,
+but syntax definitions (through macro expansion).
+The point is that you cannot treat them as values:
+
+>(foldr and #f '(#t #f))
+. and: bad syntax in: and
+
+To circumvent this problem you can wrap the "and" and "or" operations in a
+lambda expression.
+
+
+===============================================================================
+==============================RELEVANT EXAMPLES================================
+===============================================================================
+
+For the following part of this homework, use the standard library 
+functions instead of yours because they are more likely to be bug free and they 
+support additional functionality:
+
+-----example----
+"map" standard library function supports multiple lists as arguments:
+
+> (map + '(1 2 3) '(4 5 6))
+'(5 7 9)
+If we supply "n" lists as arguments the argument function (in this case it is the binary 
+"+" function) has to be able to take "n" arguments as well.
+The behavior of the above statement can be described as follows (read from bottom to top):
+
+5   7   9 (the resulting list)
+^   ^   ^
+----------
+
+1   2   3 (input list one)
++   +   +
+4   5   6 (input list two)
+
+Similar to "map" there is the function called "for-each" which has the same signature and
+similar semantics except that it does not return a value, it is used only for its side
+effects.
+> (for-each (lambda (x) (print x) (newline)) '(1 2 3))
+1
+2
+3
+
+Without the print, this expression would have no visible effect.
+> (for-each (lambda (x) x) '(1 2 3))
+;;the return values of the argument function are simply discarded and no new list
+;;is built.
+
+
+-----example-------
+> (define (subtract-then-add x y accumulator)
+   (+ (- x y) accumulator))
+   
+> (foldl subtract-then-add 0 '(32 16 8) '(15 7 3))
+31
+;the expression above winds up computing:
+;(32 - 15) + (16 - 7) + (8 - 3)
+
+Similarly to map, if we provide "n" lists, the function has to take "n + 1" parameters,
+where the last parameter is always the accumulator (base case).
+
+---
+The names for  andmap, ormap are poorly chosen since they do not behave like
+the "map" function, but rather like the foldl function.
+
+> (define (sum-42? x y) (= (+ x  y) 42))
+
+;this will verify if the sum of the sum of every pair of i-th elements is 42.
+> (andmap sum-42? '(1 2) '(41 40))
+#t
+
+> (ormap sum-42? '(1 2) '(41 2))
+#t
+
+> (ormap sum-42? '(1 2) '(342 2))
+#f
+
+If we pass "n" lists as arguments then the argument function has to take "n" arguments.
+
+---
+Consider the library function range:
+> (range 5)
+'(0 1 2 3 4)
+
+Ponder the utility of this function in conjunction with map and foldl,
+it might be helpful to solve other homework problems.
+
+
+===============================================================================
+3. [10p] map reduce
+
+Implement a function "map-reduce" with the signature:
+      
+                (map-reduce m-op r-op zero-el lst)
+
+Input:
+   m-op   : a one argument operator
+   r-op   : a two argument operator
+   zero-el: the zero element of the two argument operator
+   lst    : a list of elements
+
+Output:
+  a value resulted from combining each element of the list using r-op after
+  you have applied m-op on them.
+
+> (define add-forty-two
+    (lambda (x) (+ x 42)))
+> (map-reduce add-forty-two + 0 '(0 1 2))
+129
+
+
+===============================================================================
+4. [15p] matrix-to-vector
+
+Consider the list representation of NxM matrices. In this representation a
+3x4 matrix looks like the following:
+
+> (define example-matrix 
+   '((1 2 3 4)
+     (5 6 7 8)
+     (9 0 1 2))
+  )
+
+Write a function "matrix-to-vector" that takes an operation and a NxM matrix as arguments
+and outputs an M sized vector resulted from successively applying the operation
+on the elements of a column.
+
+*Note* - the term "vector" used in the last paragraph does NOT refer to vector data type in Scheme/Racket, 
+         rather, it points to a familiar math concept which is embodied as a list data type in Scheme/Racket.
+
+> (matrix-to-vector + example-matrix)
+'(15 8 11 14)
+
+> (define string-matrix
+  '(("a" "c" "e")
+    ("b" "d" "f"))
+   )
+
+> (matrix-to-vector string-append string-matrix)
+'("ab"  "cd"  "ef")
+
+===============================================================================
+5. [15p] change-at-index
+
+Implement a function "change-at-index" with the signature:
+
+          (change-at-index i new-el lst) 
+
+Output:
+  returns a list with the same elements as lst except that the element at
+  index "i" is replaced by new-el
+
+> (change-at-index 4 42 '(please do not replace it))
+'(please do not replace 42)
+
+Notes:
+  - you are *not* actually changing the existing list, you are returning
+    a new list containing the provided element at the specified index.
+  - the list is considered to be zero-indexed
+  - you may assume that the index is never out of the bounds of the list
+
+===============================================================================
+
+6. [20p]
+
+Let us make our own "for loop" expression, and implement it in Scheme/Racket. 
+
+To accomplish this we will be using the "define-syntax-rule"
+form.
+
+An example of what we would like to see is:
+> (for {a-var in  '(0 1 2 3 4)}
+          return (+ a-var 42)
+  )
+'(42 43 44 45 46)
+>
+--
+Syntax:
+(for {<looping-variable> in <a-list>}
+      return <expression>
+)
+
+Everything that is not in between angular brackets, <>, has to appear as is
+and in that order.
+--
+Semantics:
+The for loop will bind an element of <a-list> to the <looping-variable>, then
+it will compute <expression> and it will use the results of every iteration
+to create a new list of the same length as <a-list>.
+
+Hint:
+Despite the complex "looking", the solution can be written as a one liner.
+
+
+
+===============================================================================
+7. [20p]
+
+The purpose of this exercise is two-fold: to give you more practice with syntax
+definitions and to test your understanding of higher procedures a bit more. To that
+end we will be imposing restrictions on what you are allowed to use to create these
+syntax definitions.
+
+====
+7.a [10p]
+
+Using "define-syntax-rule" and only the lambda expression,
+define a new syntax abstraction "seq" for sequence that runs two
+expressions one after the other.
+
+> (seq (print 1) (print 2))
+12
+> (define x 0)
+> (seq (print x) (set! x (+ x 1)))
+0
+> x
+1
+> (seq (seq (display x) (set! x (+ x 1))) (display x))
+12
+
+=====
+7.b [10p]
+
+Using "define-syntax-rule" and only the lambda expression,
+if expression, and let/letrec expressions define a new syntax abstraction
+"while" for while loops that takes two expressions "condition" and
+"body" and runs the expression body while the condition remains true.
+A transcript that documents some example usage of this expression is
+given below.
+
+> (define x 0)
+> (while (< x 100) (set! x (+ x 1)))
+0
+> x
+100
+
+> (while (< x 105) (seq (print " * ") (set! x (+ x 1))))
+ *  *  *  *  * 0
+
+Note:
+"body" and "condition" can be *any* arbitrarily complex
+expression, with an arbitrarily high level of nesting.
+
+===============================================================================
+BNF grammar.
+
+Recall that we can describe the list data-type using a regular grammar:
+
+<list> ::=  null
+          | <data> <list>
+          
+<data> ::=  number
+          | string
+          | procedure
+          | symbol
+          | <list>
+          
+In plain english: a list can be either null or it can be a pair of data
+and another list. Data can be either a number, a string, a procedure, a symbol,
+or even a list. These parts of a larger data type are called "variants". So
+null is a variant of list.
+
+The | symbol above means or, while the terms enclosed in angular brackets, <>,
+are called non-terminals and the ones that are not are called terminals.
+
+Non-terminals can be substituted for any valid value of that non-terminal.
+For instance, take the second definition of the <list>:
+   <data> <list>
+Here <data> could be substituted for the value number, and <list> for null.
+Thus, effectively describing a list that contains only one number.
