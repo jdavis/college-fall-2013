@@ -14,7 +14,7 @@ follow these general rules:
 
    - replace the 'UNIMPLEMENTED symbol with your solution
    - you are NOT allowed to change the number of arguments of the pre-defined functions,
-     because changing the number of arguments automatically changes the semantics of the 
+     because changing the number of arguments automatically changes the semantics of the
      function. Changing the name of the arguments is permitted since that change only
      affects the readability of the function, not the semantics.
    - you may write any number of helper functions
@@ -33,12 +33,12 @@ Submission guidelines:
 
 ;======================================01=======================================
 (define (foldl-342 op zero-el lst)
-   'UNIMPLEMENTED  
+   'UNIMPLEMENTED
 )
 
 ;---
 (define (foldr-342 op zero-el lst)
-   'UNIMPLEMENTED  
+   'UNIMPLEMENTED
 )
 
 ;======================================02=======================================
@@ -53,7 +53,7 @@ Submission guidelines:
 
 ;======================================04=======================================
 (define (matrix-to-vector op mat)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;======================================05=======================================
