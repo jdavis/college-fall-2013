@@ -3,7 +3,7 @@
 (#%require "test-infrastructure.rkt")
 (#%require rackunit)
 
-(#%require "hw04-answer-sheet.rkt")
+(#%require "hw04-davis.rkt")
 
 ;as you can probably figure out, this function will run
 ;all the tests.
@@ -298,3 +298,6 @@
      )
   )
 )
+
+(test p1-a)
+(test p1-b)
