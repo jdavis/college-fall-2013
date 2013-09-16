@@ -57,7 +57,7 @@ Submission guidelines:
      (else
        (op
          (car lst)
-         (foldl-342
+         (foldr-342
            op
            zero-el
            (cdr lst))))))
