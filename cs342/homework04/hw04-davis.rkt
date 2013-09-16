@@ -64,8 +64,14 @@ Submission guidelines:
 
 ;======================================02=======================================
 (define (andmap-342 test-op lst)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((null? lst) #t)
+    (else
+      (and (test-op
+             (car lst))
+           (andmap-342
+             test-op
+             (cdr lst))))))
 
 ;======================================03=======================================
 (define (map-reduce m-op r-op zero-el lst)

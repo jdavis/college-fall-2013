@@ -301,3 +301,4 @@
 
 (test p1-a)
 (test p1-b)
+(test p2)
