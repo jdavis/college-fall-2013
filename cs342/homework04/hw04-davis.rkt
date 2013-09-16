@@ -38,8 +38,15 @@ Submission guidelines:
 
 ;---
 (define (foldr-342 op zero-el lst)
-   'UNIMPLEMENTED
-)
+   (cond
+     ((null? lst) zero-el)
+     (else
+       (op
+         (car lst)
+         (foldl-342
+           op
+           zero-el
+           (cdr lst))))))
 
 ;======================================02=======================================
 (define (andmap-342 test-op lst)
