@@ -33,8 +33,22 @@ Submission guidelines:
 
 ;======================================01=======================================
 (define (foldl-342 op zero-el lst)
-   'UNIMPLEMENTED
-)
+  (define (rdr lst)
+    (cond
+      ((null? (cdr lst)) '())
+      (else
+        (cons
+          (car lst)
+          (rdr (cdr lst))))))
+   (cond
+     ((null? lst) zero-el)
+     (else
+       (op
+         (last lst)
+         (foldl-342
+           op
+           zero-el
+           (rdr lst))))))
 
 ;---
 (define (foldr-342 op zero-el lst)
