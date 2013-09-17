@@ -140,10 +140,12 @@ Submission guidelines:
   (map (lambda (var) result) value-range))
 ;======================================07=======================================
 (define-syntax-rule (seq expr1 expr2)
-  'UNIMPLEMENTED
-)
+  ((lambda () expr1 expr2)))
 
 ;====
 (define-syntax-rule (while condition body)
-  'UNIMPLEMENTED
-)
+  ((lambda (f) (f f))
+   (lambda (while-iter)
+      (cond
+        (condition body (while-iter while-iter))
+        (else 0)))))

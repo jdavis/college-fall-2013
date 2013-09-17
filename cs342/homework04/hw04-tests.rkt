@@ -306,3 +306,5 @@
 (test p4)
 (test p5)
 (test p6)
+(test p7-a)
+(test p7-b)
