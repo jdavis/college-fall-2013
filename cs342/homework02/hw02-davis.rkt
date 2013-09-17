@@ -131,8 +131,7 @@ the default definitions will have to be present!
 (define (p11-2)
   '(spaceship
      (name (serenity))
-     (class (firefly)))
-)
+     (class (firefly))))
 
 ;(2 * ((20 - (91 / 7)) * (45 - 42)))
 
