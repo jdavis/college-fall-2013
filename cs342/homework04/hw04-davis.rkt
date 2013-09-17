@@ -75,8 +75,12 @@ Submission guidelines:
 
 ;======================================03=======================================
 (define (map-reduce m-op r-op zero-el lst)
-  'UNIMPLEMENTED
-)
+  (foldl-342
+    r-op
+    zero-el
+    (map
+      m-op
+      lst)))
 
 ;======================================04=======================================
 (define (matrix-to-vector op mat)

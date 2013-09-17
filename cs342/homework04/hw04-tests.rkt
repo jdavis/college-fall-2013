@@ -302,5 +302,6 @@
 (test p1-a)
 (test p1-b)
 (test p2)
+(test p3)
 (test p4)
 (test p5)
