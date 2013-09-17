@@ -85,8 +85,19 @@ Submission guidelines:
 
 ;======================================05=======================================
 (define (change-at-index i new-el lst)
-  'UNIMPLEMENTED
-)
+  (define (change-iter iter lst)
+    (cond
+      ((null? lst) lst)
+      ((= iter i) (cons
+                    new-el
+                    (cdr lst)))
+      (else
+        (cons
+          (car lst)
+          (change-iter
+            (+ iter 1)
+            (cdr lst))))))
+  (change-iter 0 lst))
 
 ;======================================06=======================================
 (define-syntax-rule (for {var in value-range} return result)
