@@ -137,8 +137,16 @@ Submission guidelines:
 
 ;======================================06=======================================
 (define-syntax-rule (for {var in value-range} return result)
-  'UNIMPLEMENTED
-)
+  ((lambda ()
+    (define (evaluate var) result)
+    (define (for-iter lst)
+      (cond
+        ((null? lst) lst)
+        (else
+          (cons
+            (evaluate (car lst))
+            (for-iter (cdr lst))))))
+    (for-iter value-range))))
 ;======================================07=======================================
 (define-syntax-rule (seq expr1 expr2)
   'UNIMPLEMENTED

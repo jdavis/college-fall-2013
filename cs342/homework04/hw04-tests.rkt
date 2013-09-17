@@ -305,3 +305,4 @@
 (test p3)
 (test p4)
 (test p5)
+(test p6)
