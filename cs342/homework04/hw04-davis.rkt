@@ -75,10 +75,19 @@ Submission guidelines:
 
 ;======================================03=======================================
 (define (map-reduce m-op r-op zero-el lst)
+  (define (mapp op lst)
+    (cond
+      ((null? lst) lst)
+      (else
+        (cons
+          (op (car lst))
+          (mapp
+            op
+            (cdr lst))))))
   (foldl-342
     r-op
     zero-el
-    (map
+    (mapp
       m-op
       lst)))
 
