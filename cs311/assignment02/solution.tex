@@ -381,6 +381,8 @@
     \end{proof}
 \end{homeworkProblem}
 
+\pagebreak
+
 \begin{homeworkProblem}
     Suppose \(f \in O(g)\).
     \\
@@ -390,6 +392,32 @@
     Prove that \(f + g \in O(g)\).
 
     \begin{proof}
+        We will show that \(f + g \in O(g)\) by using the definition of Big-Oh.
+
+        Suppose that \(f \in O(g)\). That means \(\exists c_0 \exists n_0 \forall
+        n \geq n_0,\ f(n) \leq c_0 \cdot g(n)\).
+        \\
+
+        Now we must just show that \(\exists c_1 \exists n_0 \forall n \geq
+        n_0\ f(n) + g(n) \leq c_1 \cdot g(n)\).
+        \\
+
+        By taking \(f(n) \leq c \cdot g(n)\), we can add \(g(n)\) to both sides
+        giving us:
+
+        \[
+            f(n) + g(n) \leq c \cdot g(n) + g(n)
+        \]
+
+        Since \(c\) is just a constant, this gives us the following:
+
+        \[
+            f(n) + g(n) \leq (c + 1) \cdot g(n)
+        \]
+
+        Which means our \(n_0\) stays the same but our constant just becomes
+        \(c_1 = c_0 + 1\). Since this proves what wished to, our proof is
+        complete.
     \end{proof}
 
     \textbf{Part Two}
