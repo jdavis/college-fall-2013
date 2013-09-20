@@ -360,14 +360,25 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Problem 2--20 from the text.
+    Find \(f(n)\) and \(g(n\) that satisfy the following relationships. Write
+    "None" if neither exist.
+
+    \begin{enumerate}
+        \item \(f(n) = o(g(n))\) and \(f(n) \neq \Theta(g(n))\)
+        \item \(f(n) = \Theta(g(n))\) and \(f(n) = o(g(n))\)
+        \item \(f(n) = \Theta(g(n))\) and \(f(n) \neq O(g(n))\)
+        \item \(f(n) = \Omega(g(n))\) and \(f(n) \neq O(g(n))\)
+    \end{enumerate}
 
     \begin{proof}
     \end{proof}
 \end{homeworkProblem}
 
+\pagebreak
+
 \begin{homeworkProblem}
-    Problem 2--13 from the text.
+    Prove that if \(f_1(n) = O(g_1(n))\) and \(f_2(n) = O(g_2(n))\), then
+    \(f_1(n) + f_2(n) = O(g_1(n) + g_2(n))\).
 
     \begin{proof}
     \end{proof}
@@ -393,9 +404,8 @@
 
     \begin{proof}
         We will show that \(f + g \in O(g)\) by using the definition of Big-Oh.
-
-        Suppose that \(f \in O(g)\). That means \(\exists c_0 \exists n_0 \forall
-        n \geq n_0,\ f(n) \leq c_0 \cdot g(n)\).
+        Suppose that \(f \in O(g)\). That means \(\exists c_0 \exists n_0
+        \forall n \geq n_0,\ f(n) \leq c_0 \cdot g(n)\).
         \\
 
         Now we must just show that \(\exists c_1 \exists n_0 \forall n \geq
