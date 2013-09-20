@@ -360,7 +360,7 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Find \(f(n)\) and \(g(n\) that satisfy the following relationships. Write
+    Find \(f(n)\) and \(g(n)\) that satisfy the following relationships. Write
     "None" if neither exist.
 
     \begin{enumerate}
@@ -370,17 +370,45 @@
         \item \(f(n) = \Omega(g(n))\) and \(f(n) \neq O(g(n))\)
     \end{enumerate}
 
-    \begin{proof}
-    \end{proof}
+    \textbf{Solutions}
+    \\
+
+    \textbf{Part One} \(f(n) = n\) and \(g(n) = n^2\). \(f(n)\) is dominated by
+    \(g(n)\) yet \(g(n)\) isn't a tight bound on \(f(n)\).
+    \\
+
+    \textbf{Part Two} None. Any function \(f(n)\) that is tightly bounded by
+    \(g(n)\) cannot be dominated by the same function.
+    \\
+
+    \textbf{Part Three} None. If \(f(n)\) is bounded tightly with \(g(n)\) (Big
+    Theta definition), then there is no way it isn't bounded asymptotically by
+    \(g(n)\) which is what Big Oh means. Big Theta is essentially a stronger
+    statement than Big Oh and thus a subset.
+    \\
+
+    \textbf{Part Four} \(f(n) = n^2\) and \(g(n) = n\). Big Theta is a lower
+    bound thus \(f(n)\) is asymptotically greater than \(g(n)\). However it
+    doesn't say anything about \(f(n)\)'s upper bound.
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
-    Prove that if \(f_1(n) = O(g_1(n))\) and \(f_2(n) = O(g_2(n))\), then
-    \(f_1(n) + f_2(n) = O(g_1(n) + g_2(n))\).
+    Prove that if \(f_1(n) \in O(g_1(n))\) and \(f_2(n) \in O(g_2(n))\), then
+    \(f_1(n) + f_2(n) \in O(g_1(n) + g_2(n))\).
 
     \begin{proof}
+        To prove \(f_1(n) + f_2(n) \in O(g_1(n) + g_2(n))\), we must show that
+        there exists a \(c\) and \(n_0\) such that \(f_1(n) + f_2(n) \leq c
+        \cdot (g_1(n) + g_2(n))\).
+        \\
+
+        Since \(f_1(n) \in O(g_1(n))\), there exists a \(c_1\) and \(n_1\).
+        Also, since \(f_2(n) \in O(g_2(n))\), there exists a \(c_2\) and
+        \(n_2\).
+        \\
+
     \end{proof}
 \end{homeworkProblem}
 
