@@ -1,0 +1,161 @@
+                                     COM S 342
+                              Fall 2013 Homework 5
+
+Suggested reading: 
+   EOPL 2.1 - 2.3
+
+Files zipped together:
+     hw05.txt
+     hw05-answer-sheet.rkt
+     hw05-closure-currying-illustrated.rkt
+     hw05-tests.rkt
+     test-infrastructure.rkt
+
+In this homework, for problems 1 and 2,  you will be using procedural-based strategy
+to  represent the data-types. Problem 3 is designed to further enhance your understanding 
+on Data Abstractions. 
+ 
+For problems 1 and 2 (procedural-based representation strategy):
+  *A general rule* is - instead of storing values in lists or other 
+    data types, you will be storing them in "closures". Review the lecture notes and
+    the attached file hw05-closure-currying-illustrated.rkt as a reminder of
+    what closures are. Since currying function is a closely related concept, we
+    introduce them together.
+    
+
+  What procedural-based representation isn't:
+    - a list containing functions that simply return each individual element of
+      the list
+    - if you use lists for anything but temporary computation, you are probably 
+      doing it wrong.
+===============================================================================
+1. [40p] Functional Sets
+
+Use procedural representation to implement sets of numbers.
+
+Each set is a one argument function that takes a number as argument and
+tells whether or not the number is in the set.
+
+Hints:
+  - the functions up until "exists?" can be written as one liners
+    and do not require recursion or other functional operations to solve.
+  - just because a function has the word "map" in it, it doesn't mean you have
+    to use map to implement it. Map is a functional operation with well defined
+    behavior that is not tied to any implementation.
+  - think about what it means for an element to be in a set, rather than how
+    to implement it.
+
+===============================================================================
+2. [20p] Step 
+
+The following data type describes the kinds of movements that can be taken on a
+2-D surface:
+
+<step> ::=  <step>  <step>       "seq-step"
+          | "up" number          "up-step"
+          | "down" number        "down-step"
+          | "left" number        "left-step"
+          | "right" number       "right-step"
+
+"up", "down", "left" and "right" are only markers that help differentiate between
+two steps.
+
+"seq-step", "up-step", "down-step", "left-step" and "right-step" are symbolic names
+we use to identify each alternative production in the grammar, which may also be 
+thought of as "variant" of the <step> data type.
+
+
+2.a
+For each variant of the <step> datatype you should implement the following types
+of functions:
+   - a constructor bearing the name of the variant. Constructors take
+     any relevant data as parameters and return a new value of that type
+     variant.
+   - a predicate with the name of the variant followed by a
+     "?" mark
+   - extractors for each piece of data of the variants. e.g. we write
+     one extractor for up, down, left, right steps and two for seq-step.
+
+***
+NOTE: your implementation has to be based on procedural representation
+(check the most recent lecture notes inside blackboard if clarification
+is still needed for "procedural representation")
+***
+     
+The signatures of the above functions are already written down in the answer
+sheet. You should take the time to see which procedure falls into which category
+and infer their behavior from the test cases. We will be encountering this pattern
+quite often in the future.
+
+A few general rules to keep in mind:
+  - constructors throw exceptions when they receive invalid input
+  - predicates never throw exceptions, they either return #t or #f
+  - extractors throw exceptions when then receive invalid input
+
+
+
+2.b
+Implement the function:
+       (move starting-point step)
+
+Input:
+  - starting-point: a point in the x,y coordinate system, represented as a 2 element
+                    list
+  - step:           a step, as grammatically defined at the beginning of problem 2
+  
+Output:
+  - the end-point after moving the specified number of steps
+===============================================================================
+
+3. [40p] Binary search tree
+
+A binary search tree can be easily described with the following grammar:
+
+<tree> ::=  empty 
+           | number <tree> <tree>
+
+Although BNF grammar is very well suited to describe the structure of the data,
+it is not suited to describe the relation between various pieces.
+
+For instance, we know that a binary search tree has the following properties:
+  - the left subtree of a node contains only nodes with keys less than the
+    node's key.
+  - the right subtree of a node contains only nodes with keys greater than the
+    node's key.
+  - there must be no duplicate nodes.
+  - the implication of the above is that in-order traversal yields a sorted
+    sequence of keys
+  
+Implement the following functions:
+   (empty-tree)
+    ;creates an empty-tree
+    
+  (empty-tree? tree) [2p]
+    ;returns #t or #f if the tree is empty or not
+    
+  (bstree root) [2p]
+    ;creates a tree with only one node
+    
+  
+  (tree->root tree) [2p]
+     ;returns the root of the given tree
+  
+  (tree->left tree) [2p]
+     ;returns the left subtree
+     
+  (tree->right tree) [2p]
+     ;returns the right subtree
+ 
+  (insert-tree n tree) [15p]
+     ;inserts a node with value n into the tree while still maintaining its binary search tree's property
+     ;listed properties
+     
+  (tree->list tree) [15p]
+     ;return a list containing all the values of the tree in sorted order
+     
+Look at the test cases for examples. The functions are not independently tested,
+i.e. tree->left depends on a correct implementation of insert. The reason for
+this is that it provides independence from the internal representation of the
+tree, the only constraint remaining is that the interface has to be self-consistent.
+
+
