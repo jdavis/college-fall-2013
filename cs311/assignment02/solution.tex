@@ -525,7 +525,7 @@
 
         \textbf{Part One}
 
-        First we must show that \(O(f + g) \subseteq O(g)\) First 
+        First we must show that \(O(f + g) \subseteq O(g)\) First
 
     \end{proof}
 \end{homeworkProblem}
@@ -564,7 +564,58 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Puzzle.
+    Cover a grid of squares with \(2^n\) rows and \(2^n\) columns, which means
+    \({(2^n)}^2\) squares in the grid. The only thing you can use to cover it
+    is L-shaped pieces.
+    \\
+
+    Prove it is possible to cover for any \(n\) using induction.
+
+    \begin{proof}
+        \textbf{Base}
+
+        To prove the base case, we will prove that a grid with squares
+        can be covered when \(n = 0\) and \(n = 1\) for comprehensiveness.
+        \\
+
+        \textbf{Part One}
+
+        When \(n = 0\), the case is trivial. The number of rows equals \(2^n =
+        2^0 = 1\), the columns also equal \(2^n = 2^0 = 1\). This is just a
+        grid with one tile. This requires 0 L-shaped pieces. Only one square is
+        uncovered and there are no overlaps. The adversary must then choose
+        that square. Thus the base when \(n = 0\) is satisfied.
+        \\
+
+        \textbf{Part Two}
+
+        When \(n = 1\), the number of rows and columns both are \(2^n = 2^1 =
+        2\). This is just a square with 4 total squares.
+        \\
+
+        Our adversary can then has four options of which to choose. It can
+        either choose the top left, top right, bottom left, or bottom right.
+        \\
+
+        Without loss of generality, in all cases, the square that is chosen can
+        be left uncovered by placing just one L-shaped piece such that it is
+        rotated leaving three squares covered and the chosen square uncovered.
+        Thus it can be seen that when \(n = 1\), the base case is still
+        satisfied.
+        \\
+
+        \textbf{Step}
+
+        In the step, we can assume that for \(n\) the problem of covering the
+        grid of \({(2^n)}^2\) is solvable. By assuming that, we will show that
+        the problem is also solvable when \(n = n + 1\), thus completing the
+        induction and proving the problem.
+        \\
+
+        First assume we have a grid with a chosen \(n\). That means that there
+        are \(2^n)\) rows and equal number of columns. By increasing the number
+    \end{proof}
+
 \end{homeworkProblem}
 
 \end{document}
