@@ -525,7 +525,16 @@
 
         \textbf{Part One}
 
-        First we must show that \(O(f + g) \subseteq O(g)\) First
+        First we must show that \(O(f(n) + g(n)) \subseteq O(g(n))\) We can do
+        this by proving that for every \(h(n) \in O(f(n) + g(n))\), it will
+        exist in \(O(g(n))\).
+        \\
+
+        \textbf{Part Two}
+
+        Second, we must show that \(O(g(n)) \subseteq O(f(n) + g(n))\) We can
+        do this by proving that for every \(h(n) \in O(g(n))\), it will exist
+        in \(O(f(n) + g(n))\).
 
     \end{proof}
 \end{homeworkProblem}
