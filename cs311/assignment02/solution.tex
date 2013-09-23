@@ -612,8 +612,29 @@
         induction and proving the problem.
         \\
 
-        First assume we have a grid with a chosen \(n\). That means that there
-        are \(2^n)\) rows and equal number of columns. By increasing the number
+        When \(n = n + 1\), that means there will be \({(2^{n + 1})}^2\)
+        squares in the grid. This means when the adversary picks his square,
+        there will be \({(2^{n + 1})}^2 - 1\) squares. Since there are 3 squares
+        in the L-shaped piece:
+
+        \[
+            \begin{split}
+                {(2^{n + 1})}^2 - 1 &= (2^{n + 1}) \cdot (2^{n + 1}) - 1
+                \\
+                &= 4^{n + 1} - 1
+                \\
+                &= 4 \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n} - 1
+                \\
+                &= (4 - 1) \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n}
+                \\
+                &= 3 \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n}
+                \\
+                &= 3k
+            \end{split}
+        \]
+
+        where \(k \in \mathbb{Z}\). Thus it is divisible by three.
+
     \end{proof}
 
 \end{homeworkProblem}
