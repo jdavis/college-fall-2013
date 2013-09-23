@@ -199,8 +199,6 @@
     \end{proof}
 \end{homeworkProblem}
 
-\pagebreak
-
 \begin{homeworkProblem}
     Prove that \(6n^4 + 2n^3 + n + 12 \in \Theta(n^4)\).
 
@@ -241,6 +239,8 @@
 
     \end{proof}
 \end{homeworkProblem}
+
+\pagebreak
 
 \begin{homeworkProblem}
     Prove a polynomial of degree \(k\), \(a_kn^k + a_{k - 1}n^{k - 1} + \hdots
@@ -478,7 +478,7 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Suppose \(f(n) \in O(g)\).
+    Suppose \(f(n) \in O(g(n))\).
     \\
 
     \textbf{Part One}
@@ -509,8 +509,8 @@
         \]
 
         Which means our \(n_0\) stays the same but our constant just becomes
-        \(c_1 = c_0 + 1\). Since this proves what wished to, our proof is
-        complete.
+        \(c_1 = c_0 + 1\). Since this proves what we wished to prove, our proof
+        is complete.
     \end{proof}
 
     \textbf{Part Two}
@@ -518,24 +518,52 @@
     Prove that \(O(f(n) + g(n)) = O(g(n))\).
 
     \begin{proof}
-        To prove that \(O(f + g) = O(g)\), we need to show that \(O(f + g)
-        \subseteq O(g)\) and \(O(g) \subseteq O(f + g)\) because Big-Oh
-        notation creates a set of functions.
+        To prove that \(O(f(n) + g(n)) = O(g(n))\), we need to show that
+        \(O(f(n) + g(n)) \subseteq O(g(n))\) and \(O(g(n)) \subseteq O(f(n) +
+        g(n))\) because Big-Oh notation creates a set of functions.
         \\
 
-        \textbf{Part One}
-
-        First we must show that \(O(f(n) + g(n)) \subseteq O(g(n))\) We can do
+        First, we must show that \(O(f(n) + g(n)) \subseteq O(g(n))\) We can do
         this by proving that for every \(h(n) \in O(f(n) + g(n))\), it will
         exist in \(O(g(n))\).
         \\
 
-        \textbf{Part Two}
+        Suppose that \(f(n) \in O(g(n))\) and \(h(n) \in O(f(n) + g(n))\). This
+        means that for \(f(n)\), there exists a \(c_0\) and \(n_0\) such that
+        for all \(n \geq n_0\), \(f(n) \leq c_0 \cdot g(n)\). This also means
+        that for \(h(n)\), there exists a \(c_1\) and \(n_1\) such that for
+        all \(n \geq n_1\), \(h(n) \leq c_1 \cdot (f(n) + g(n))\).
+        \\
+
+        Using this, we get the following:
+
+        \[
+            \begin{split}
+                h(n) &\leq c_1 \cdot ((f(n) + g(n)))
+                \\
+                &\leq c_1 \cdot (c_0 \cdot g(n) + g(n))
+                \\
+                &= c_1 c_0 \cdot g(n) + c_1 \cdot g(n)
+                \\
+                &= (c_1 c_0 + c_1) \cdot g(n)
+                \\
+                &\leq c \cdot g(n)
+            \end{split}
+        \]
+
+        If we just let \(c = c_1 c_0 + c_1\), then we can see that \(h(n) \in
+        O(g(n))\) and the first part of the proof is complete.
 
         Second, we must show that \(O(g(n)) \subseteq O(f(n) + g(n))\) We can
         do this by proving that for every \(h(n) \in O(g(n))\), it will exist
         in \(O(f(n) + g(n))\).
 
+        Suppose that \(f(n) \in O(g(n))\) and \(h(n) \in O(g(n))\). This means
+        that for \(f(n)\), there exists a \(c_0\) and \(n_0\) such that for all
+        \(n \geq n_0\), \(f(n) \leq c_0 \cdot g(n)\). This also means that for
+        \(h(n)\), there exists a \(c_1\) and \(n_1\) such that for all \(n \geq
+        n_1\), \(h(n) \leq c_1 \cdot g(n)\).
+        \\
     \end{proof}
 \end{homeworkProblem}
 
