@@ -623,18 +623,24 @@
                 \\
                 &= 4^{n + 1} - 1
                 \\
-                &= 4 \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n} - 1
+                &= 4 \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n + 1} - 1
                 \\
-                &= (4 - 1) \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n}
+                &= (4 - 1) \cdot 4^1 \cdot 4^2 \hdots 4^{n} \cdot 4^{n + 1}
                 \\
-                &= 3 \cdot 4^1 \cdot 4^2 \hdots 4^{n - 1} \cdot 4^{n}
+                &= 3 \cdot 4^1 \cdot 4^2 \hdots 4^{n} \cdot 4^{n + 1}
                 \\
                 &= 3k
             \end{split}
         \]
 
-        where \(k \in \mathbb{Z}\). Thus it is divisible by three.
+        where \(k \in \mathbb{Z}\). Thus it is divisible by three meaning that we
+        can completely cover the grid of squares with our L-shape tiles.
+        \\
 
+        The grid also contains \(4^{n}\) 4-by-4 grids. By greedily covering it
+        starting with the square the adversary picks, it will completely cover
+        the grid. Thus the proposition holds for \(n = n + 1\) and the proof by
+        induction is complete.
     \end{proof}
 
 \end{homeworkProblem}
