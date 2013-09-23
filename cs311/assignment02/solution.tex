@@ -525,14 +525,15 @@
 
         First, we must show that \(O(f(n) + g(n)) \subseteq O(g(n))\) We can do
         this by proving that for every \(h(n) \in O(f(n) + g(n))\), it will
-        exist in \(O(g(n))\).
+        exist in \(O(g(n))\) or more formally: there exists a \(c\) and \(n_0\)
+        such that for all \(n \geq n_0\), \(h(n) \leq c \cdot g(n)\).
         \\
 
         Suppose that \(f(n) \in O(g(n))\) and \(h(n) \in O(f(n) + g(n))\). This
-        means that for \(f(n)\), there exists a \(c_0\) and \(n_0\) such that
-        for all \(n \geq n_0\), \(f(n) \leq c_0 \cdot g(n)\). This also means
-        that for \(h(n)\), there exists a \(c_1\) and \(n_1\) such that for
-        all \(n \geq n_1\), \(h(n) \leq c_1 \cdot (f(n) + g(n))\).
+        means that for \(f(n)\), there exists a \(c_0\) and \(n_1\) such that
+        for all \(n \geq n_1\), \(f(n) \leq c_0 \cdot g(n)\). This also means
+        that for \(h(n)\), there exists a \(c_1\) and \(n_2\) such that for
+        all \(n \geq n_2\), \(h(n) \leq c_1 \cdot (f(n) + g(n))\).
         \\
 
         Using this, we get the following:
@@ -551,19 +552,46 @@
             \end{split}
         \]
 
-        If we just let \(c = c_1 c_0 + c_1\), then we can see that \(h(n) \in
-        O(g(n))\) and the first part of the proof is complete.
+        If we just let \(c = c_1 c_0 + c_1\) and \(n_0 = n_2 n_1 + n_2\), then
+        we can see that \(h(n) \in O(g(n))\) and the first part of the proof is
+        complete.
+
+        \pagebreak
 
         Second, we must show that \(O(g(n)) \subseteq O(f(n) + g(n))\) We can
         do this by proving that for every \(h(n) \in O(g(n))\), it will exist
-        in \(O(f(n) + g(n))\).
+        in \(O(f(n) + g(n))\), or more formally: there exists a \(c\) and \(n_0\)
+        such that for all \(n \geq n_0\), \(h(n) \leq c \cdot (f(n) + g(n))\)
+        \\
 
         Suppose that \(f(n) \in O(g(n))\) and \(h(n) \in O(g(n))\). This means
-        that for \(f(n)\), there exists a \(c_0\) and \(n_0\) such that for all
-        \(n \geq n_0\), \(f(n) \leq c_0 \cdot g(n)\). This also means that for
+        that for \(f(n)\), there exists a \(c_0\) and \(n_1\) such that for all
+        \(n \geq n_1\), \(f(n) \leq c_0 \cdot g(n)\). This also means that for
         \(h(n)\), there exists a \(c_1\) and \(n_1\) such that for all \(n \geq
-        n_1\), \(h(n) \leq c_1 \cdot g(n)\).
+        n_2\), \(h(n) \leq c_1 \cdot g(n)\).
         \\
+
+        Using this, we get the following:
+
+        \[
+            \begin{split}
+                h(n) &\leq c_1 \cdot g(n)
+                \\
+                &\leq (c_0 + c_1) \cdot g(n)
+                \\
+                &= c_0 \cdot g(n) + c_1 \cdot g(n)
+                \\
+                &\leq c_0 \cdot f(n) + c_1 \cdot g(n)
+                \\
+                &\leq (c_0 + c_1) \cdot (f(n) + g(n))
+                \\
+                &\leq c \cdot (f(n) + g(n))
+            \end{split}
+        \]
+
+        If we let \(c = c_0 + c_1\) and \(n_0 = n_1 + n_2\), then we can
+        see that \(h(n) \in O(f(n) + g(n))\). Thus since we have proven each
+        side of the equality of sets, our proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
