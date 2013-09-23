@@ -526,9 +526,31 @@
     functions: \(f : \mathbb{N} \to \mathbb{R}\).
     \\
 
-    \begin{proof}
-    \end{proof}
+    \textbf{Counterexample}
+
+    Let \(f(n) = n\) and \(g(n) = n^2\).
+    \\
+
+    According to the definition of an equivalence relation, the relation
+    creates essentially partitions where each element belongs to one and only
+    one partition.
+    \\
+
+    More formally, the properties that this implies are the following:
+
+    \begin{enumerate}
+        \item Reflexivity: \(a R a\).
+        \item Symmetry: if \(a R b\), then \(b R a\).
+        \item Transitivity: if \(a R b\) and \(b R c\), then \(a R c\).
+    \end{enumerate}
+
+    Using the second property of an equivalence relation, it is easy to see
+    that Big-Oh isn't an equivalence relation because since \(n \in O(n^2)\), it
+    should follow that \(n^2 \in O(n)\), but we know that isn't the case. Thus
+    it is a counterexample and the proposition is false.
 \end{homeworkProblem}
+
+\pagebreak
 
 \begin{homeworkProblem}
     Puzzle.
