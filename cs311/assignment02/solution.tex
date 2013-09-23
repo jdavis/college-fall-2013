@@ -478,16 +478,16 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Suppose \(f \in O(g)\).
+    Suppose \(f(n) \in O(g)\).
     \\
 
     \textbf{Part One}
 
-    Prove that \(f + g \in O(g)\).
+    Prove that \(f(n) + g(n) \in O(g(n))\).
 
     \begin{proof}
-        We will show that \(f + g \in O(g)\) by using the definition of Big-Oh.
-        Suppose that \(f \in O(g)\). That means \(\exists c_0 \exists n_0
+        We will show that \(f(n) + g(n) \in O(g(n))\) by using the definition of Big-Oh.
+        Suppose that \(f(n) \in O(g(n))\). That means \(\exists c_0 \exists n_0
         \forall n \geq n_0,\ f(n) \leq c_0 \cdot g(n)\).
         \\
 
@@ -515,7 +515,7 @@
 
     \textbf{Part Two}
 
-    Prove that \(O(f + g) = O(g)\).
+    Prove that \(O(f(n) + g(n)) = O(g(n))\).
 
     \begin{proof}
         To prove that \(O(f + g) = O(g)\), we need to show that \(O(f + g)
