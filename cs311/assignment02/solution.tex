@@ -392,8 +392,6 @@
     doesn't say anything about \(f(n)\)'s upper bound.
 \end{homeworkProblem}
 
-\pagebreak
-
 \begin{homeworkProblem}
     Prove that if \(f_1(n) \in O(g_1(n))\) and \(f_2(n) \in O(g_2(n))\), then
     \(f_1(n) + f_2(n) \in O(g_1(n) + g_2(n))\).
@@ -429,11 +427,51 @@
     \end{proof}
 \end{homeworkProblem}
 
+\pagebreak
+
 \begin{homeworkProblem}
     Suppose \(f_1 \in \Theta(g_1)\) and \(f_2 \in \Theta(g_2)\). Prove that
     \(f_1/f_2 \in \Theta(g_1/g_2)\).
 
     \begin{proof}
+        To prove the above proposition, we must show that there exists a
+        \(c_0\), \(c_1\) and \(n_0\) such that:
+
+        \[
+            c_0 \cdot \dfrac{g_1(n)}{g_2(n)} \leq \dfrac{f_1(n)}{f_2(n)} \leq c_1 \cdot \dfrac{g_1(n)}{g_2(n)}
+        \]
+
+        Since \(f_1(n) \in \Theta(g_1(n))\), there exists a \(c_2\),
+        \(c_3\) and \(n_{1}\).  Also, since \(f_2(n) \in \Theta(g_2(n))\),
+        there exists a \(c_4\), \(c_5\) and \(n_2\).
+        \\
+
+        For the first part of the inequality:
+
+        \[
+            \begin{split}
+                \dfrac{c_2 \cdot g_1(n)}{c_4 \cdot g_2(n)} &= \left(\dfrac{c_2}{c_4}\right) \cdot \dfrac{g_1(n)}{g_2(n)}
+                \\
+                &= c_0 \cdot \dfrac{g_1(n)}{g_2(n)}
+                \\
+                &\leq \dfrac{f_1(n)}{f_2(n)}
+            \end{split}
+        \]
+
+        For the second part of the inequality:
+
+        \[
+            \begin{split}
+                \dfrac{f_1(n)}{f_2(n)} &\leq \dfrac{c_3 \cdot g_1(n)}{c_5 \cdot g_2(n)}
+                \\
+                &= \left(\dfrac{c_3}{c_5}\right) \cdot \dfrac{g_1(n)}{g_2(n)}
+                \\
+                &\leq c_1 \cdot \dfrac{g_1(n)}{g_2(n)}
+            \end{split}
+        \]
+
+        Since \(c_0\), \(c_1\) are both constants, we have shown that the
+        proposition holds. Thus the proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
