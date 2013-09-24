@@ -1,0 +1,66 @@
+\documentclass[a4paper,12pt,landscape]{article}
+
+\usepackage[landscape]{geometry}
+\usepackage{graphicx}
+
+\usepackage{tikz-er2}
+\begin{document}
+
+\thispagestyle{empty}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{shadows}
+
+\tikzstyle{every entity} = [top color=white, bottom color=blue!30,
+    draw=blue!50!black!100, drop shadow]
+    \tikzstyle{every weak entity} = [drop shadow={shadow xshift=.7ex,
+        shadow yshift=-.7ex}]
+        \tikzstyle{every attribute} = [top color=white, bottom color=yellow!20,
+        draw=yellow, node distance=1cm, drop shadow]
+        \tikzstyle{every relationship} = [top color=white, bottom color=red!20,
+        draw=red!50!black!100, drop shadow]
+        \tikzstyle{every isa} = [top color=white, bottom color=green!20,
+        draw=green!50!black!100, drop shadow]
+
+        \centering
+        \scalebox{.87}{
+            \begin{tikzpicture}[node distance=1.5cm, every edge/.style={link}]
+
+            \node[weak entity] (address) {Address} edge (address);
+            \node[attribute] (acity) [above left=of address] {City} edge (address);
+            \node[attribute] (astate) [above right=of address] {State} edge (address);
+            \node[attribute] (azip) [above=of address] {Zip} edge (address);
+
+            \node[relationship] (permanent) [below left=of address] {Permanent} edge (address);
+            \node[relationship] (current) [below right=of address] {Current} edge (address);
+
+            \node[entity] (stud) [below=5cm of address] {Student} edge (permanent);
+            \draw[link] (current.10) (stud) (stud) edge (current);
+            \node[attribute] (ssnumber) [above left=of stud] {\key{SSN}} edge (stud);
+            \node[attribute] (sname) [left=of ssnumber] {Name} edge (stud);
+            \node[attribute] (snumber) [above right=of stud] {\key{Number}} edge (stud);
+            \node[attribute] (birthdate) [right=of snumber] {Birthdate} edge (stud);
+            \node[attribute] (gender) [below=of sname] {Gender} edge (stud);
+            \node[attribute] (class) [below=of birthdate] {Class} edge (stud);
+            \node[attribute] (degree) [below left=of stud] {Degree Program} edge (stud);
+            \node[attribute] (sphone) [below right=of stud] {Phone} edge (stud);
+
+            \node[relationship] (majors) [below=1cm of degree] {Major} edge [<-, total] (stud);
+            \node[relationship] (minors) [below=1cm of sphone] {Minor} edge [<-] (stud);
+
+            \node[entity] (department) [below=6cm of stud] {Department} edge (majors);
+            \draw[link] (minors.10) (department) (department) edge (minors);
+            \node[attribute] (dname) [left=of department] {\key{Name}} edge (department);
+            \node[attribute] (dcode) [right=of department] {\key{Code}} edge (department);
+            \node[attribute] (dphone) [below right=of dcode] {Phone} edge (department);
+            \node[attribute] (dcollege) [below left=of dname] {College} edge (department);
+
+            \node[entity] (course) [below=3cm of department] {Course} edge (department);
+            \node[entity] (section) [below right=3cm of department] {Section} edge (department);
+
+
+
+            \end{tikzpicture}
+        }
+
+\end{document}
