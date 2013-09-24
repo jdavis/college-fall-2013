@@ -1,9 +1,13 @@
 import java.util.Collections;
 import java.util.Set;
 
-public class BruteForceScheduler extends Scheduler {
+public class BruteForceScheduler implements IScheduler {
     private Set<IInterval>[] subsets(Set<IInterval> s) {
         return null;
+    }
+
+    private boolean conflicts(Set<IInterval> s) {
+        return true;
     }
 
     public Set<IInterval> optimalSchedule(Set<IInterval> s) {
