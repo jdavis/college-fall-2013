@@ -1,7 +1,7 @@
                                      COM S 342
                               Fall 2013 Homework 5
 
-Suggested reading: 
+Suggested reading:
    EOPL 2.1 - 2.3
 
 Files zipped together:
@@ -12,21 +12,21 @@ Files zipped together:
      test-infrastructure.rkt
 
 In this homework, for problems 1 and 2,  you will be using procedural-based strategy
-to  represent the data-types. Problem 3 is designed to further enhance your understanding 
-on Data Abstractions. 
- 
+to  represent the data-types. Problem 3 is designed to further enhance your understanding
+on Data Abstractions.
+
 For problems 1 and 2 (procedural-based representation strategy):
-  *A general rule* is - instead of storing values in lists or other 
+  *A general rule* is - instead of storing values in lists or other
     data types, you will be storing them in "closures". Review the lecture notes and
     the attached file hw05-closure-currying-illustrated.rkt as a reminder of
     what closures are. Since currying function is a closely related concept, we
     introduce them together.
-    
+
 
   What procedural-based representation isn't:
     - a list containing functions that simply return each individual element of
       the list
-    - if you use lists for anything but temporary computation, you are probably 
+    - if you use lists for anything but temporary computation, you are probably
       doing it wrong.
 ===============================================================================
 1. [40p] Functional Sets
@@ -46,7 +46,7 @@ Hints:
     to implement it.
 
 ===============================================================================
-2. [20p] Step 
+2. [20p] Step
 
 The following data type describes the kinds of movements that can be taken on a
 2-D surface:
@@ -61,7 +61,7 @@ The following data type describes the kinds of movements that can be taken on a
 two steps.
 
 "seq-step", "up-step", "down-step", "left-step" and "right-step" are symbolic names
-we use to identify each alternative production in the grammar, which may also be 
+we use to identify each alternative production in the grammar, which may also be
 thought of as "variant" of the <step> data type.
 
 
@@ -81,7 +81,7 @@ NOTE: your implementation has to be based on procedural representation
 (check the most recent lecture notes inside blackboard if clarification
 is still needed for "procedural representation")
 ***
-     
+
 The signatures of the above functions are already written down in the answer
 sheet. You should take the time to see which procedure falls into which category
 and infer their behavior from the test cases. We will be encountering this pattern
@@ -102,7 +102,7 @@ Input:
   - starting-point: a point in the x,y coordinate system, represented as a 2 element
                     list
   - step:           a step, as grammatically defined at the beginning of problem 2
-  
+
 Output:
   - the end-point after moving the specified number of steps
 ===============================================================================
@@ -111,7 +111,7 @@ Output:
 
 A binary search tree can be easily described with the following grammar:
 
-<tree> ::=  empty 
+<tree> ::=  empty
            | number <tree> <tree>
 
 Although BNF grammar is very well suited to describe the structure of the data,
@@ -125,34 +125,34 @@ For instance, we know that a binary search tree has the following properties:
   - there must be no duplicate nodes.
   - the implication of the above is that in-order traversal yields a sorted
     sequence of keys
-  
+
 Implement the following functions:
    (empty-tree)
     ;creates an empty-tree
-    
+
   (empty-tree? tree) [2p]
     ;returns #t or #f if the tree is empty or not
-    
+
   (bstree root) [2p]
     ;creates a tree with only one node
-    
-  
+
+
   (tree->root tree) [2p]
      ;returns the root of the given tree
-  
+
   (tree->left tree) [2p]
      ;returns the left subtree
-     
+
   (tree->right tree) [2p]
      ;returns the right subtree
- 
+
   (insert-tree n tree) [15p]
      ;inserts a node with value n into the tree while still maintaining its binary search tree's property
      ;listed properties
-     
+
   (tree->list tree) [15p]
      ;return a list containing all the values of the tree in sorted order
-     
+
 Look at the test cases for examples. The functions are not independently tested,
 i.e. tree->left depends on a correct implementation of insert. The reason for
 this is that it provides independence from the internal representation of the

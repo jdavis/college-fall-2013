@@ -14,7 +14,7 @@ follow these general rules:
 
    - replace the 'UNIMPLEMENTED symbol with your solution
    - you are NOT allowed to change the number of arguments of the pre-defined functions,
-     because changing the number of arguments automatically changes the semantics of the 
+     because changing the number of arguments automatically changes the semantics of the
      function. Changing the name of the arguments is permitted since that change only
      affects the readability of the function, not the semantics.
    - you may write any number of helper functions
@@ -87,7 +87,7 @@ Submission guidelines:
   (if (or (equal? n 1) (equal? n 0))
       #f
       (let ([range-of-prime-divisors (cddr (range (+ (integer-sqrt n) 1)))])
-        (andmap (non-divisible? n) range-of-prime-divisors)  
+        (andmap (non-divisible? n) range-of-prime-divisors)
         )
       )
   )
@@ -107,44 +107,44 @@ Submission guidelines:
 
 
 (define (up-step n)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (down-step n)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (left-step n)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (right-step n)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (seq-step st-1 st-2)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;;====
 (define (up-step? st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (down-step? st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (left-step? st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (right-step? st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (seq-step? st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;This is a predicate that tells you whether or not something is a step,
@@ -157,21 +157,21 @@ Submission guidelines:
 ;;to avoid needless duplication we will only implement one extractor to handle all the
 ;;simple steps, rather than 4. So this should take: up, down, left and right steps.
 (define (single-step->n st)
-  'UNIMPLMENTED  
+  'UNIMPLMENTED
 )
 
 ;;two extractors, one for each piece of data representing a sequential step
 (define (seq-step->st-1 st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 
 (define (seq-step->st-2 st)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 ;;===================================
 (define (move start-p step)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 ;======================================03=======================================
@@ -181,7 +181,7 @@ Submission guidelines:
 )
 
 (define (empty-tree? tree)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (bstree root)
@@ -189,21 +189,21 @@ Submission guidelines:
 )
 
 (define (tree->root tree)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (tree->left tree)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (tree->right tree)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (insert-tree n t)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )
 
 (define (tree->list tree)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
 )

@@ -35,9 +35,9 @@ refered to as "partially applied functions".
 
 Q:
   When is this useful?
-A: 
+A:
   Whenever you notice that you are passing the same values to the same subset of
-  arguments you might consider currying that function or refactoring it to a 
+  arguments you might consider currying that function or refactoring it to a
   partially applied function.
 
 --
@@ -50,7 +50,7 @@ from the fantasy series "A Song of Ice and Fire" by G.R.R. Martin (no spoilers i
   (print-with-indent 4 "--" "Jeoffrey" "Baratheon" "Heir to the Iron Throne")
   (print-with-indent 4 "--" "Tommen" "Baratheon" "prince")
   (print-with-indent 4 "--" "Myrcella" "Baratheon" "princess")
-    
+
   ;;house Stark
   (print-with-indent 2 "->" "Eddard" "Stark" "Lord of Winterfell, Warden of the North")
   (print-with-indent 4 "--" "Catelyn" "Stark, formerly Tully" "Lady of Winterfell")
@@ -61,10 +61,10 @@ from the fantasy series "A Song of Ice and Fire" by G.R.R. Martin (no spoilers i
   (print-with-indent 4 "--" "Bran" "Stark" "son")
   (print-with-indent 4 "--" "Rickon" "Stark" "son")
 )
-   
+
 (define (n-spaces n)
   (if (zero? n)
-     "" 
+     ""
     (string-append " " (n-spaces (- n 1))))
 )
 
@@ -108,7 +108,7 @@ two to do the printing.
     (print-family "Jeoffrey" "Baratheon" "Heir to the Iron Throne")
     (print-family "Tommen" "Baratheon" "prince")
     (print-family "Myrcella" "Baratheon" "princess")
-    
+
     ;;house Stark
     (print-house-head "Eddard" "Stark" "Lord of Winterfell, Warden of the North")
     (print-family "Catelyn" "Stark, formerly Tully" "Lady of Winterfell")
@@ -118,7 +118,7 @@ two to do the printing.
     (print-family "Arya" "Stark" "daughther")
     (print-family "Bran" "Stark" "son")
     (print-family "Rickon" "Stark" "son")
-  ) 
+  )
 )
 
 #|
@@ -175,7 +175,7 @@ class Foo{
   public void compute(){
      //this variable *has* to be final
      final int bar = 42;
-     
+
      Thread t = new Thread(new Runnable{
          public void run(){
             System.out.println(bar);
