@@ -3,6 +3,9 @@
 *.py[co]
 a.out
 
+# Java junk
+*.class
+
 # Bah, LaTeX junk
 *.aux
 *.log
