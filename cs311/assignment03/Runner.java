@@ -59,10 +59,12 @@ public class Runner implements IScheduler {
 
         IScheduler[] schedulers = {
             new BruteForceScheduler(),
+            new SmartBruteForceScheduler(),
         };
 
         String[] names = {
             "BruteForce",
+            "SmartBruteForceScheduler",
         };
 
         results = new long[schedulers.length][inputLength.length];
