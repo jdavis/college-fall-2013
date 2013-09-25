@@ -36,7 +36,7 @@ public class Runner implements IScheduler {
         Random r = new Random();
 
         for (int i = 0; i < n; i += 1) {
-            result.add(new Interval(i, r.nextInt() % n));
+            result.add(new Interval(i, i + 3));
         }
 
         return result;
@@ -60,11 +60,13 @@ public class Runner implements IScheduler {
         IScheduler[] schedulers = {
             new BruteForceScheduler(),
             new SmartBruteForceScheduler(),
+            new EarliestDeadlineScheduler(),
         };
 
         String[] names = {
             "BruteForce",
             "SmartBruteForceScheduler",
+            "EarliestDeadlineScheduler",
         };
 
         results = new long[schedulers.length][inputLength.length];
@@ -74,22 +76,16 @@ public class Runner implements IScheduler {
         }
 
         for (int i = 0; i < schedulers.length; i += 1) {
+            System.out.println(names[i] + ": ");
+
             for (int j = 0; j < fixtures.size(); j += 1) {
 
                 start = System.nanoTime();
                 schedulers[i].optimalSchedule(fixtures.get(j));
                 end = System.nanoTime();
 
-                results[i][j] = end - start;
-            }
-        }
-
-        for (int i = 0; i < schedulers.length; i += 1) {
-            System.out.println(names[i] + ": ");
-
-            for (int j = 0; j < fixtures.size(); j += 1) {
                 System.out.println("\tn = " + inputLength[j]);
-                System.out.println("\ttime = " + results[i][j]);
+                System.out.println("\ttime = " + (end - start));
             }
         }
     }
