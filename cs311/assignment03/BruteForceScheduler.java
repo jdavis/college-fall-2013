@@ -79,12 +79,9 @@ public class BruteForceScheduler implements IScheduler {
 
         Iterator<Set<IInterval>> subsets = generateSubsets(s);
 
-        System.out.println("In BruteForce");
-
         while (subsets.hasNext()) {
             Set<IInterval> subset = subsets.next();
 
-            System.out.println("Subset = " + subset);
 
             if (conflicts(subset) == false && subset.size() > optimal.size()) {
                 optimal = subset;
