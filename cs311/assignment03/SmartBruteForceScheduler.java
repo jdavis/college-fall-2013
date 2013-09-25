@@ -7,8 +7,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class SmartBruteForceScheduler extends BruteForceScheduler {
-    protected TreeSet<Set<IInterval>> mSubsets;
-
     public SmartBruteForceScheduler() {
         mSubsets = new TreeSet<Set<IInterval>>(new Comparator<Set<IInterval>>() {
             @Override
@@ -19,26 +17,7 @@ public class SmartBruteForceScheduler extends BruteForceScheduler {
     }
 
     protected Iterator<Set<IInterval>> allSubsets() {
-        return mSubsets.descendingIterator();
-    }
-
-    public Set<IInterval> optimalSchedule(Set<IInterval> s) {
-        Set<IInterval> optimal = Collections.emptySet();
-
-        Iterator<Set<IInterval>> subsets = generateSubsets(s);
-
-        System.out.println("In Smart BruteForce");
-
-        while (subsets.hasNext()) {
-            Set<IInterval> subset = subsets.next();
-
-            System.out.println("Subset = " + subset);
-
-            if (conflicts(subset) == false && subset.size() > optimal.size()) {
-                optimal = subset;
-            }
-        }
-
-        return optimal;
+        TreeSet<Set<IInterval>> set = (TreeSet<Set<IInterval>>) mSubsets;
+        return set.descendingIterator();
     }
 }
