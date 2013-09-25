@@ -6,26 +6,35 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class BruteForceScheduler implements IScheduler {
-    private Iterator<Set<IInterval>> allSubsets(Set<IInterval> s) {
-        HashSet<Set<IInterval>> result = new HashSet<Set<IInterval>>();
+    protected Set<Set<IInterval>> mSubsets;
+
+    public BruteForceScheduler() {
+        mSubsets = new HashSet<Set<IInterval>>();
+    }
+
+    protected Iterator<Set<IInterval>> generateSubsets(Set<IInterval> s) {
         Set<IInterval> emptySet = new HashSet<IInterval>();
 
         Iterator<IInterval> intervals = s.iterator();
 
         /* Add the empty set */
-        result.add(emptySet);
+        mSubsets.add(emptySet);
 
         while (intervals.hasNext()) {
             IInterval i = intervals.next();
-            result.addAll(duplicateAndAdd(i, result));
+            mSubsets.addAll(duplicateAndAdd(i, mSubsets));
         }
 
-        result.remove(emptySet);
+        mSubsets.remove(emptySet);
 
-        return result.iterator();
+        return allSubsets();
     }
 
-    private Set<Set<IInterval>> duplicateAndAdd(IInterval i, Set<Set<IInterval>> s) {
+    protected Iterator<Set<IInterval>> allSubsets() {
+        return mSubsets.iterator();
+    }
+
+    protected Set<Set<IInterval>> duplicateAndAdd(IInterval i, Set<Set<IInterval>> s) {
         HashSet<Set<IInterval>> result = new HashSet<Set<IInterval>>();
 
         Iterator<Set<IInterval>> sets = s.iterator();
@@ -46,7 +55,7 @@ public class BruteForceScheduler implements IScheduler {
         return result;
     }
 
-    private boolean conflicts(Set<IInterval> s) {
+    protected boolean conflicts(Set<IInterval> s) {
         IInterval[] intervals = s.toArray(new IInterval[0]);
 
         Arrays.sort(intervals, new Comparator<IInterval>() {
@@ -68,10 +77,14 @@ public class BruteForceScheduler implements IScheduler {
     public Set<IInterval> optimalSchedule(Set<IInterval> s) {
         Set<IInterval> optimal = Collections.emptySet();
 
-        Iterator<Set<IInterval>> subsets = allSubsets(s);
+        Iterator<Set<IInterval>> subsets = generateSubsets(s);
+
+        System.out.println("In BruteForce");
 
         while (subsets.hasNext()) {
             Set<IInterval> subset = subsets.next();
+
+            System.out.println("Subset = " + subset);
 
             if (conflicts(subset) == false && subset.size() > optimal.size()) {
                 optimal = subset;
