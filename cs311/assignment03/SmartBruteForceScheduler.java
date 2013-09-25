@@ -16,6 +16,22 @@ public class SmartBruteForceScheduler extends BruteForceScheduler {
         });
     }
 
+    public Set<IInterval> optimalSchedule(Set<IInterval> s) {
+        Set<IInterval> optimal = Collections.emptySet();
+
+        Iterator<Set<IInterval>> subsets = generateSubsets(s);
+
+        while (subsets.hasNext()) {
+            Set<IInterval> subset = subsets.next();
+
+            if (conflicts(subset) == false) {
+                return subset;
+            }
+        }
+
+        return Collections.emptySet();
+    }
+
     protected Iterator<Set<IInterval>> allSubsets() {
         TreeSet<Set<IInterval>> set = (TreeSet<Set<IInterval>>) mSubsets;
         return set.descendingIterator();
