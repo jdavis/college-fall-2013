@@ -5,13 +5,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.PriorityQueue;
 
 public class SmartBruteForceScheduler extends BruteForceScheduler {
     public SmartBruteForceScheduler() {
-        mSubsets = new TreeSet<Set<IInterval>>(new Comparator<Set<IInterval>>() {
+        mSubsets = new PriorityQueue<Set<IInterval>>(11, new Comparator<Set<IInterval>>() {
             @Override
             public int compare(Set<IInterval> s1, Set<IInterval> s2) {
-                return s1.size() - s2.size();
+                return s2.size() - s1.size();
             }
         });
     }
@@ -30,10 +31,5 @@ public class SmartBruteForceScheduler extends BruteForceScheduler {
         }
 
         return Collections.emptySet();
-    }
-
-    protected Iterator<Set<IInterval>> allSubsets() {
-        TreeSet<Set<IInterval>> set = (TreeSet<Set<IInterval>>) mSubsets;
-        return set.descendingIterator();
     }
 }

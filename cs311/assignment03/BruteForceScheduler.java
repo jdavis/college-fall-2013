@@ -1,18 +1,19 @@
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 public class BruteForceScheduler implements IScheduler {
-    protected Set<Set<IInterval>> mSubsets;
+    protected Collection<Set<IInterval>> mSubsets;
 
     public BruteForceScheduler() {
         mSubsets = new HashSet<Set<IInterval>>();
     }
 
-    protected Iterator<Set<IInterval>> generateSubsets(Set<IInterval> s) {
+    protected Iterator<Set<IInterval>> generateSubsets(Collection<IInterval> s) {
         Set<IInterval> emptySet = new HashSet<IInterval>();
 
         Iterator<IInterval> intervals = s.iterator();
@@ -34,7 +35,7 @@ public class BruteForceScheduler implements IScheduler {
         return mSubsets.iterator();
     }
 
-    protected Set<Set<IInterval>> duplicateAndAdd(IInterval i, Set<Set<IInterval>> s) {
+    protected Collection<Set<IInterval>> duplicateAndAdd(IInterval i, Collection<Set<IInterval>> s) {
         HashSet<Set<IInterval>> result = new HashSet<Set<IInterval>>();
 
         Iterator<Set<IInterval>> sets = s.iterator();
