@@ -1,0 +1,36 @@
+Extra Info
+
+Course
+    - Since Courses can be cross listed, there is no key constraint. It does
+      have a total constraint because a course shouldn't exist without a
+      Department.
+
+Student
+    - First name and last name are broken up for searching
+    - Each Student *requires* a Major, thus total and key constraint
+    - Students can have a Minor, but only one, so therefore there is a key
+      constraint
+    - Each Student can have two addresses, one permanent and one current
+
+Address
+    - An Address is a weak entity because it cannot exist without a Student
+      living at it either permanently or currently
+    - There is no key constraint because a Student could have the same permanent
+      and current Address.
+    - Each Student must at least have a permanent Address, thus the total
+      constraint.
+
+Department
+    - No constraints.
+
+Section
+    - A Section is a weak entity to the Teaching relationship because a section
+      should only exist if it has all required information assigned to it
+
+Grade
+    - A relationship because it is assigned to a Student and his/her
+      corresponding Section.
+    - A Student cannot have multiple grades per section, thus a key constraint
+      is used.
+    - A total constraint is not used because at the beginning of the semester
+      students don't have a grade. It would only be issued at Midterm/Finals.
