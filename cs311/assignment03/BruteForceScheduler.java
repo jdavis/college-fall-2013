@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -45,7 +47,22 @@ public class BruteForceScheduler implements IScheduler {
     }
 
     private boolean conflicts(Set<IInterval> s) {
-        return true;
+        IInterval[] intervals = s.toArray(new IInterval[0]);
+
+        Arrays.sort(intervals, new Comparator<IInterval>() {
+            @Override
+            public int compare(IInterval i1, IInterval i2) {
+                return i1.getEndTime() - i2.getEndTime();
+            }
+        });
+
+        for (int i = 1; i < intervals.length; i += 1) {
+            if (intervals[i - 1].getEndTime() > intervals[i].getStartTime()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Set<IInterval> optimalSchedule(Set<IInterval> s) {
