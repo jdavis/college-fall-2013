@@ -20,7 +20,9 @@ public class SmartBruteForceScheduler extends BruteForceScheduler {
     public Set<IInterval> optimalSchedule(Set<IInterval> s) {
         Set<IInterval> optimal = Collections.emptySet();
 
+        mSubsets.clear();
         Iterator<Set<IInterval>> subsets = generateSubsets(s);
+
 
         while (subsets.hasNext()) {
             Set<IInterval> subset = subsets.next();
