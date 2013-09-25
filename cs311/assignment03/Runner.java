@@ -1,8 +1,10 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 
 public class Runner implements IScheduler {
@@ -29,19 +31,64 @@ public class Runner implements IScheduler {
         }
     }
 
+    public static Set<IInterval> randomIntervals(int n) {
+        HashSet<IInterval> result = new HashSet<IInterval>();
+        Random r = new Random();
+
+        for (int i = 0; i < n; i += 1) {
+            result.add(new Interval(i, r.nextInt() % n));
+        }
+
+        return result;
+    }
+
     public static void main (String[] args) {
-        System.out.println("Testing");
+        long start, end, t;
+        long[][] results;
 
-        HashSet<IInterval> s = new HashSet<IInterval>();
+        int[] inputLength = {
+            1,
+            2,
+            4,
+            8,
+            16,
+        };
 
-        BruteForceScheduler scheduler = new BruteForceScheduler();
+        ArrayList<Set<IInterval>> fixtures = new ArrayList<Set<IInterval>>();
 
-        s.add(new Interval(0, 4));
-        s.add(new Interval(3, 6));
-        s.add(new Interval(6, 7));
 
-        Set<IInterval> result = scheduler.optimalSchedule(s);
+        IScheduler[] schedulers = {
+            new BruteForceScheduler(),
+        };
 
-        System.out.println("Optimal = " + result);
+        String[] names = {
+            "BruteForce",
+        };
+
+        results = new long[schedulers.length][inputLength.length];
+
+        for (int i = 0; i < inputLength.length; i += 1) {
+            fixtures.add(randomIntervals(inputLength[i]));
+        }
+
+        for (int i = 0; i < schedulers.length; i += 1) {
+            for (int j = 0; j < fixtures.size(); j += 1) {
+
+                start = System.nanoTime();
+                schedulers[i].optimalSchedule(fixtures.get(j));
+                end = System.nanoTime();
+
+                results[i][j] = end - start;
+            }
+        }
+
+        for (int i = 0; i < schedulers.length; i += 1) {
+            System.out.println(names[i] + ": ");
+
+            for (int j = 0; j < fixtures.size(); j += 1) {
+                System.out.println("\tn = " + inputLength[j]);
+                System.out.println("\ttime = " + results[i][j]);
+            }
+        }
     }
 }
