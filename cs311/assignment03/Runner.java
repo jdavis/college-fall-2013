@@ -158,8 +158,8 @@ public class Runner implements IScheduler {
 
             if (i > 0) {
                 for (int j = 0; j < schedulers.length; j += 1) {
-                    double n = results[i][j] / results[i - 1][j];
-                    System.out.format("%1$20.6g |", n);
+                    double d = results[i][j] / results[i - 1][j];
+                    System.out.format("%1$20.6g |", d);
                 }
             } else {
                 for (int j = 0; j < schedulers.length; j += 1) {
