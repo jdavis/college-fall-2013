@@ -6,8 +6,21 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
+import java.lang.Math;
 
 public class Runner implements IScheduler {
+    /** Number of times to run the schedulers. */
+    public static final int ROUNDS = 1000;
+
+    /** Number of times to run the schedulers. */
+    public static final int INPUT_MULTIPLIER = 2;
+
+    /** Number of times to run the schedulers. */
+    public static final int MULTIPLIER_LIMIT = 4;
+
+    /** Number of nanoseconds in a second. */
+    public static final double NANOS = 1000000000.0;
+
     public Set<IInterval> optimalSchedule(Set<IInterval> s) {
         return null;
     }
@@ -19,6 +32,7 @@ public class Runner implements IScheduler {
             startTime = start;
             endTime = end;
         }
+
         public int getStartTime() {
             return startTime;
         }
@@ -36,26 +50,17 @@ public class Runner implements IScheduler {
         Random r = new Random();
 
         for (int i = 0; i < n; i += 1) {
-            result.add(new Interval(i, i + 3));
+            result.add(new Interval(i, r.nextInt(n)));
         }
 
         return result;
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         long start, end, t;
         long[][] results;
 
-        int[] inputLength = {
-            1,
-            2,
-            4,
-            8,
-            //16,
-        };
-
         ArrayList<Set<IInterval>> fixtures = new ArrayList<Set<IInterval>>();
-
 
         IScheduler[] schedulers = {
             new BruteForceScheduler(),
@@ -64,29 +69,72 @@ public class Runner implements IScheduler {
         };
 
         String[] names = {
-            "BruteForce",
-            "SmartBruteForceScheduler",
-            "EarliestDeadlineScheduler",
+            "Brute",
+            "Smart",
+            "Earliest",
         };
 
-        results = new long[schedulers.length][inputLength.length];
+        results = new long[MULTIPLIER_LIMIT][schedulers.length];
 
-        for (int i = 0; i < inputLength.length; i += 1) {
-            fixtures.add(randomIntervals(inputLength[i]));
+
+        for (int r = 0; r < ROUNDS; r += 1) {
+
+            // Empty all the fixtures for the new round
+            fixtures.clear();
+
+            // Create new fixtures
+            for (int i = 0; i < MULTIPLIER_LIMIT; i += 1) {
+                int n = (int) Math.pow(INPUT_MULTIPLIER, i);
+
+                fixtures.add(randomIntervals(n));
+            }
+
+            // Run each scheduler for all the new fixtures
+            for (int i = 0; i < fixtures.size(); i += 1) {
+                for (int j = 0; j < schedulers.length; j += 1) {
+
+                    start = System.nanoTime();
+                    schedulers[j].optimalSchedule(fixtures.get(i));
+                    end = System.nanoTime();
+                    t = end - start;
+
+                    // Continued average for each round
+                    results[i][j] = (results[i][j] + t) / 2;
+                }
+            }
         }
 
-        for (int i = 0; i < schedulers.length; i += 1) {
-            System.out.println(names[i] + ": ");
+        System.out.format("%1$20s |", "n");
 
-            for (int j = 0; j < fixtures.size(); j += 1) {
+        for (int i = 0; i < names.length; i += 1) {
+            System.out.format("%1$20s |", names[i]);
+        }
 
-                start = System.nanoTime();
-                schedulers[i].optimalSchedule(fixtures.get(j));
-                end = System.nanoTime();
+        for (int i = 0; i < names.length; i += 1) {
+            System.out.format("%1$20s |", (names[i] + " Growth"));
+        }
 
-                System.out.println("\tn = " + inputLength[j]);
-                System.out.println("\ttime = " + (end - start));
+        System.out.print("\n");
+
+        for (int i = 0; i < fixtures.size(); i += 1) {
+            int n = (int) Math.pow(INPUT_MULTIPLIER, i);
+            System.out.format("%1$20d |", n);
+
+            for (int j = 0; j < schedulers.length; j += 1) {
+                System.out.format("%1$20d |", results[i][j]);
             }
+
+            if (i > 0) {
+                for (int j = 0; j < schedulers.length; j += 1) {
+                    System.out.format("%1$20.6g |", (double) results[i][j] / results[i - 1][j]);
+                }
+            } else {
+                for (int j = 0; j < schedulers.length; j += 1) {
+                    System.out.format("%1$20s |", "DNE");
+                }
+            }
+
+            System.out.print("\n");
         }
     }
 }
