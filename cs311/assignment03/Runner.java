@@ -1,51 +1,70 @@
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
-import java.lang.Math;
 
+/**
+ * Runs all the schedulers.
+ */
 public class Runner implements IScheduler {
     /** Number of times to run the schedulers. */
     public static final int ROUNDS = 10000;
 
-    /** Number of times to run the schedulers. */
+    /** Factor to multiply the input by. */
     public static final int INPUT_MULTIPLIER = 2;
 
-    /** Number of times to run the schedulers. */
+    /** Limit to how many times to multiply the input. */
     public static final int MULTIPLIER_LIMIT = 4;
 
-    /** Number of nanoseconds in a second. */
-    public static final double NANOS = 1000000000.0;
-
-    public Set<IInterval> optimalSchedule(Set<IInterval> s) {
+    final public Set<IInterval> optimalSchedule(Set<IInterval> s) {
         return null;
     }
 
+    /**
+     * Basic interval class.
+     */
     static class Interval implements IInterval {
+        /** Start and end times. */
         private int startTime, endTime;
 
-        public Interval(int start, int end) {
+        /**
+         * Create a interval with given parameters.
+         * @param start Start time of the interval
+         * @param end End time of the interval
+         */
+        public Interval(final int start, final int end) {
             startTime = start;
             endTime = end;
         }
 
+        /**
+         * Getter for the start time.
+         * @return Start time
+         */
         public int getStartTime() {
             return startTime;
         }
+
+        /**
+         * Getter for the end time.
+         * @return End time
+         */
         public int getEndTime() {
             return endTime;
         }
 
+        @Override
         public String toString() {
             return "Interval: [" + startTime + " - " + endTime + "]";
         }
     }
 
-    public static Set<IInterval> randomIntervals(int n) {
+    /**
+     * Create a random set of intervals.
+     * @param n Input size
+     * @return Set with n random intervals
+     */
+    public static Set<IInterval> randomIntervals(final int n) {
         HashSet<IInterval> result = new HashSet<IInterval>();
         Random r = new Random();
 
@@ -56,7 +75,7 @@ public class Runner implements IScheduler {
         return result;
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         long start, end, t;
         long[][] results;
 
@@ -76,6 +95,9 @@ public class Runner implements IScheduler {
 
         results = new long[MULTIPLIER_LIMIT][schedulers.length];
 
+        //
+        // Run each scheduler ROUNDS times for each set of intervals.
+        //
 
         for (int r = 0; r < ROUNDS; r += 1) {
 
@@ -93,6 +115,7 @@ public class Runner implements IScheduler {
             for (int i = 0; i < fixtures.size(); i += 1) {
                 for (int j = 0; j < schedulers.length; j += 1) {
 
+                    // Determine how long it ran
                     Set<IInterval> fixture = fixtures.get(i);
                     start = System.nanoTime();
                     schedulers[j].optimalSchedule(fixture);
@@ -104,6 +127,10 @@ public class Runner implements IScheduler {
                 }
             }
         }
+
+        //
+        // Column headers
+        //
 
         System.out.format("%1$20s |", "n");
 
@@ -117,6 +144,10 @@ public class Runner implements IScheduler {
 
         System.out.print("\n");
 
+        //
+        // Print the results into a nice table
+        //
+
         for (int i = 0; i < fixtures.size(); i += 1) {
             int n = (int) Math.pow(INPUT_MULTIPLIER, i);
             System.out.format("%1$20d |", n);
@@ -127,7 +158,8 @@ public class Runner implements IScheduler {
 
             if (i > 0) {
                 for (int j = 0; j < schedulers.length; j += 1) {
-                    System.out.format("%1$20.6g |", (double) results[i][j] / results[i - 1][j]);
+                    double n = results[i][j] / results[i - 1][j];
+                    System.out.format("%1$20.6g |", n);
                 }
             } else {
                 for (int j = 0; j < schedulers.length; j += 1) {
