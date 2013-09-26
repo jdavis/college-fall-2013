@@ -1,0 +1,64 @@
+# Activity Selection Problem
+
+## Methodology
+
+The method that I used to calculate the performance of the three different
+algorithms was quite simple. I made use of the function `System.nanoTime()` to
+get the nano seconds. By calling it before and after the method and taking the
+difference of each result, I was able to determine the nano seconds that it
+took for the method to run.
+
+    Note: Have a look at the Runner.java class to see the code that I used to
+    generate these results.
+
+To ensure that the times I gathered weren't affected by OS scheduling or
+anything else, I ran each test 10,000 times and averaged the results each time.
+
+For each one of the 10,000 rounds, I would generate a random set of n
+intervals, where n was a power of 2. Each scheduler would then run on this
+random set of intervals.
+
+## Expectations
+
+Based on Big-Oh analysis, each of the brute force schedulers is expected to run
+in O(2^n) time. This is because each subset needs to be checked. Even though
+the smart brute force scheduler tries to do it intelligently, it still
+evaluates to O(2^n) for the average case.
+
+The Big-Oh analysis for the Earliest Deadline algorithm is O(n). This is because
+Earliest greedily selects the best possible interval based on the ending times. A
+proof of this greediness can be constructed like here:
+http://en.wikipedia.org/wiki/Activity_selection_problem#Proof_of_optimality
+
+Based on this analysis, we can expect the time for input sizes n and 2n to grow
+exponentially for the brute force methods.
+
+However, for the greedy method, the time for input of size n and 2n should only
+double, indicating a linear growth rate.
+
+## Results
+
+The results for the analysis are in the table below. The first column indicates
+the size of the input. The next three columns indicate the scheduler used to
+determine the optimal set. The last three columns take the time for input size
+n and divides it by the time it took for input size (n / 2).
+
+By dividing the time by the previous time, we can see what happens everytime
+the input size of n is doubled.
+
+    n |               Brute |               Smart |            Earliest |        Brute Growth |        Smart Growth |     Earliest Growth |
+    1 |                2000 |                 491 |                 500 |                 DNE |                 DNE |                 DNE |
+    2 |                3076 |                1250 |                 547 |             1.53800 |             2.54582 |             1.09400 |
+    4 |                9139 |                4295 |                 690 |             2.97107 |             3.43600 |             1.26143 |
+    8 |              154510 |               86276 |                 999 |             16.9067 |             20.0875 |             1.44783 |
+
+## Conclusion
+
+As the results show, both brute force schedulers grow exponentially when the
+input size is doubled. Yet the greedy scheduler approximately doubles with the
+input size. This is exactly what the Big Oh analysis predicted.
+
+Thus it shows that Big Oh is a very valid way for comparing runtime of
+algorithms.
+
+The power of asymptotics is great =D
