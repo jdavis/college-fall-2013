@@ -1,19 +1,21 @@
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * Uses a greedy method to determine the optimal schedule of intervals.
+ */
 public class EarliestDeadlineScheduler implements IScheduler {
-    public Set<IInterval> optimalSchedule(Set<IInterval> s) {
+    public final Set<IInterval> optimalSchedule(final Set<IInterval> s) {
         HashSet<IInterval> optimal = new HashSet<IInterval>();
 
         IInterval[] intervals = s.toArray(new IInterval[0]);
 
         Arrays.sort(intervals, new Comparator<IInterval>() {
             @Override
-            public int compare(IInterval i1, IInterval i2) {
+            public int compare(final IInterval i1,
+                final IInterval i2) {
                 return i1.getEndTime() - i2.getEndTime();
             }
         });

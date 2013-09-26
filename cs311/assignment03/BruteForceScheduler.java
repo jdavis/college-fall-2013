@@ -6,14 +6,27 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * Iterates over the complete set of intervals, saving the most optimal one for
+ * last.
+ */
 public class BruteForceScheduler implements IScheduler {
+    /** Generated subsets. */
     protected Collection<Set<IInterval>> mSubsets;
 
+    /**
+     * Creates a scheduler.
+     */
     public BruteForceScheduler() {
         mSubsets = new HashSet<Set<IInterval>>();
     }
 
-    protected Iterator<Set<IInterval>> generateSubsets(Collection<IInterval> s) {
+    /**
+     * Generates all the subsets for the given collection.
+     * @param s Collection to create subets from
+     * @return Iterator over all the subsets
+     */
+    protected final Iterator<Set<IInterval>> generateSubsets(final Collection<IInterval> s) {
         Set<IInterval> emptySet = new HashSet<IInterval>();
 
         Iterator<IInterval> intervals = s.iterator();
@@ -28,14 +41,18 @@ public class BruteForceScheduler implements IScheduler {
 
         mSubsets.remove(emptySet);
 
-        return allSubsets();
-    }
-
-    protected Iterator<Set<IInterval>> allSubsets() {
         return mSubsets.iterator();
     }
 
-    protected Collection<Set<IInterval>> duplicateAndAdd(IInterval i, Collection<Set<IInterval>> s) {
+    /**
+     * Duplicates all sets given then adds the given interval.
+     * @param i Interval to add to each subset
+     * @param s Sets to duplicate
+     * @return All the subsets with the interval added
+     */
+    protected final Collection<Set<IInterval>> duplicateAndAdd(
+            final IInterval i,
+            final Collection<Set<IInterval>> s) {
         HashSet<Set<IInterval>> result = new HashSet<Set<IInterval>>();
 
         Iterator<Set<IInterval>> sets = s.iterator();
@@ -56,12 +73,17 @@ public class BruteForceScheduler implements IScheduler {
         return result;
     }
 
-    protected boolean conflicts(Set<IInterval> s) {
+    /**
+     * Determines if a set of intervals is conflicting.
+     * @param s Set of intervals to compare
+     * @return Boolean if conflicting
+     */
+    protected final boolean conflicts(final Set<IInterval> s) {
         IInterval[] intervals = s.toArray(new IInterval[0]);
 
         Arrays.sort(intervals, new Comparator<IInterval>() {
             @Override
-            public int compare(IInterval i1, IInterval i2) {
+            public int compare(final IInterval i1, final IInterval i2) {
                 return i1.getEndTime() - i2.getEndTime();
             }
         });
@@ -75,7 +97,7 @@ public class BruteForceScheduler implements IScheduler {
         return false;
     }
 
-    public Set<IInterval> optimalSchedule(Set<IInterval> s) {
+    public Set<IInterval> optimalSchedule(final Set<IInterval> s) {
         Set<IInterval> optimal = Collections.emptySet();
 
         mSubsets.clear();
@@ -83,7 +105,6 @@ public class BruteForceScheduler implements IScheduler {
 
         while (subsets.hasNext()) {
             Set<IInterval> subset = subsets.next();
-
 
             if (conflicts(subset) == false && subset.size() > optimal.size()) {
                 optimal = subset;
