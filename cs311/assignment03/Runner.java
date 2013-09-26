@@ -10,7 +10,7 @@ import java.lang.Math;
 
 public class Runner implements IScheduler {
     /** Number of times to run the schedulers. */
-    public static final int ROUNDS = 1000;
+    public static final int ROUNDS = 10000;
 
     /** Number of times to run the schedulers. */
     public static final int INPUT_MULTIPLIER = 2;
@@ -93,8 +93,9 @@ public class Runner implements IScheduler {
             for (int i = 0; i < fixtures.size(); i += 1) {
                 for (int j = 0; j < schedulers.length; j += 1) {
 
+                    Set<IInterval> fixture = fixtures.get(i);
                     start = System.nanoTime();
-                    schedulers[j].optimalSchedule(fixtures.get(i));
+                    schedulers[j].optimalSchedule(fixture);
                     end = System.nanoTime();
                     t = end - start;
 
