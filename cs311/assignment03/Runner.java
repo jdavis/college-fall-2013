@@ -88,7 +88,7 @@ public class Runner implements IScheduler {
         Random r = new Random();
 
         for (int i = 0; i < n; i += 1) {
-            result.add(new Interval(i, i + 1));
+            result.add(new Interval(0, n));
         }
 
         return result;
