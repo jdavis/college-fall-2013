@@ -75,6 +75,25 @@ public class Runner implements IScheduler {
         return result;
     }
 
+    /**
+     * Create a "bad" set of intervals.
+     *
+     * It will always require checking all the subsets.
+     *
+     * @param n Input size
+     * @return Set with n random intervals
+     */
+    public static Set<IInterval> badIntervals(final int n) {
+        HashSet<IInterval> result = new HashSet<IInterval>();
+        Random r = new Random();
+
+        for (int i = 0; i < n; i += 1) {
+            result.add(new Interval(i, i + 1));
+        }
+
+        return result;
+    }
+
     public static void main(final String[] args) {
         long start, end, t;
         long[][] results;
@@ -108,13 +127,16 @@ public class Runner implements IScheduler {
             for (int i = 0; i < MULTIPLIER_LIMIT; i += 1) {
                 int n = (int) Math.pow(INPUT_MULTIPLIER, i);
 
-                fixtures.add(randomIntervals(n));
+                if (i == MULTIPLIER_LIMIT) {
+                    fixtures.add(badIntervals(n));
+                } else {
+                    fixtures.add(randomIntervals(n));
+                }
             }
 
             // Run each scheduler for all the new fixtures
             for (int i = 0; i < fixtures.size(); i += 1) {
                 for (int j = 0; j < schedulers.length; j += 1) {
-
                     // Determine how long it ran
                     Set<IInterval> fixture = fixtures.get(i);
                     start = System.nanoTime();
