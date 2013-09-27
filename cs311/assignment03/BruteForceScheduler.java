@@ -97,6 +97,15 @@ public class BruteForceScheduler implements IScheduler {
         return false;
     }
 
+    /**
+     * Determines the optimal schedule based on the intervals given.
+     *
+     * It looks through them all and saving the subset with the most number of
+     * intervals.
+     *
+     * @param s Set of intervals to look through
+     * @return Set that contains the optimal intervals
+     */
     public Set<IInterval> optimalSchedule(final Set<IInterval> s) {
         Set<IInterval> optimal = Collections.emptySet();
 
