@@ -8,7 +8,7 @@ import java.util.Set;
  */
 public class Runner implements IScheduler {
     /** Number of times to run the schedulers. */
-    public static final int ROUNDS = 10000;
+    public static final int ROUNDS = 100;
 
     /** Factor to multiply the input by. */
     public static final int INPUT_MULTIPLIER = 2;
@@ -114,6 +114,13 @@ public class Runner implements IScheduler {
 
         results = new long[MULTIPLIER_LIMIT][schedulers.length];
 
+        // Zero the results.
+        for (int i = 0; i < fixtures.size(); i += 1) {
+            for (int j = 0; j < schedulers.length; j += 1) {
+                results[i][j] = 0;
+            }
+        }
+
         //
         // Run each scheduler ROUNDS times for each set of intervals.
         //
@@ -139,6 +146,7 @@ public class Runner implements IScheduler {
                 for (int j = 0; j < schedulers.length; j += 1) {
                     // Determine how long it ran
                     Set<IInterval> fixture = fixtures.get(i);
+
                     start = System.nanoTime();
                     schedulers[j].optimalSchedule(fixture);
                     end = System.nanoTime();
@@ -180,7 +188,7 @@ public class Runner implements IScheduler {
 
             if (i > 0) {
                 for (int j = 0; j < schedulers.length; j += 1) {
-                    double d = results[i][j] / results[i - 1][j];
+                    double d = (double) results[i][j] / results[i - 1][j];
                     System.out.format("%1$20.6g |", d);
                 }
             } else {
