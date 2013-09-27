@@ -54,17 +54,19 @@ By dividing the time by the previous time, we can see what happens everytime
 the input size of n is doubled.
 
     n |               Brute |               Smart |            Earliest |        Brute Growth |        Smart Growth |     Earliest Growth |
-    1 |                2000 |                 491 |                 500 |                 DNE |                 DNE |                 DNE |
-    2 |                3076 |                1250 |                 547 |             1.53800 |             2.54582 |             1.09400 |
-    4 |                9139 |                4295 |                 690 |             2.97107 |             3.43600 |             1.26143 |
-    8 |              154510 |               86276 |                 999 |             16.9067 |             20.0875 |             1.44783 |
+    1 |                8535 |                7010 |                4022 |                 DNE |                 DNE |                 DNE |
+    2 |               13331 |                8401 |                4659 |             1.56192 |             1.19843 |             1.15838 |
+    4 |               46072 |               12826 |                5975 |             3.45600 |             1.52672 |             1.28246 |
+    8 |              847610 |               65907 |               13525 |             18.3975 |             5.13855 |             2.26360 |
 
 
 ## Conclusion
 
 As the results show, both brute force schedulers grow exponentially when the
-input size is doubled. Yet the greedy scheduler approximately doubles with the
-input size. This is exactly what the Big Oh analysis predicted.
+input size is doubled. The Smart Growth grows slightly slower than exponential,
+but it still isn't close to being better. Yet the greedy scheduler
+approximately doubles with the input size. This is exactly what the Big Oh
+analysis predicted.
 
 Thus it shows that Big Oh is a very valid way for comparing runtime of
 algorithms.
