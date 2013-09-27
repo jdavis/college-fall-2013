@@ -12,9 +12,9 @@ took for the method to run.
     generate these results.
 
 To ensure that the times I gathered weren't affected by OS scheduling or
-anything else, I ran each test 10,000 times and averaged the results each time.
+anything else, I ran each test 100 times and averaged the results each time.
 
-For each one of the 10,000 rounds, I would generate a random set of n
+For each one of the 100 rounds, I would generate a random set of n
 intervals, where n was a power of 2. Each scheduler would then run on this
 random set of intervals.
 
@@ -22,19 +22,26 @@ random set of intervals.
 
 Based on Big-Oh analysis, each of the brute force schedulers is expected to run
 in O(2^n) time. This is because each subset needs to be checked. Even though
-the smart brute force scheduler tries to do it intelligently, it still
-evaluates to O(2^n) for the average case.
+the smart brute force scheduler tries to do it intelligently, in the worst case
+it will need to evaluate almost all the subsets. Therefore it will still be
+close to O(2^n) for the average case because if it only looks at half of the
+subsets, that just equals O(2^n / 2) = O(2^{n - 1}) which is still O(2^n).
 
-The Big-Oh analysis for the Earliest Deadline algorithm is O(n). This is because
-Earliest greedily selects the best possible interval based on the ending times. A
-proof of this greediness can be constructed like here:
+The Big-Oh analysis for the Earliest Deadline algorithm is O(nlgn) if the input is
+sorted by finish time. However, in this case, the input isn't sorted so we do
+that first. Thus the complexity is then O(nlgn + n) which is just O(nlgn)
+asymptotically. This is because Earliest deadline is greedy and selects the
+best possible optimal interval at each step. This can be run in linear time.
+Since the sorting dominates the linear traversal, it wins out in the Big Oh
+analysis. A proof of the linear greediness of the problem can be constructed
+like here:
 http://en.wikipedia.org/wiki/Activity_selection_problem#Proof_of_optimality
 
 Based on this analysis, we can expect the time for input sizes n and 2n to grow
 exponentially for the brute force methods.
 
 However, for the greedy method, the time for input of size n and 2n should only
-double, indicating a linear growth rate.
+grow at a linear-log rate, indicating a slower growth.
 
 ## Results
 
@@ -51,6 +58,7 @@ the input size of n is doubled.
     2 |                3076 |                1250 |                 547 |             1.53800 |             2.54582 |             1.09400 |
     4 |                9139 |                4295 |                 690 |             2.97107 |             3.43600 |             1.26143 |
     8 |              154510 |               86276 |                 999 |             16.9067 |             20.0875 |             1.44783 |
+
 
 ## Conclusion
 
