@@ -35,28 +35,25 @@ Submission guidelines:
 ;singleton-set should return a function that takes a number as an argument and
 ;tells whether or not that number is in the set
 (define (singleton-set x)
-  'UNIMPLEMENTED
-  )
+  (lambda (e)
+    (eq? e x)))
 
 
 ;the set of all elements that are in either 's1' or 's2'
 (define (union s1 s2)
-  'UNIMPLEMENTED
-  )
+  (lambda (e) (or (s1 e) (s2 e)))
 
 ;the set of all elements that are in both  in 's1' and 's2'
 (define (intersection s1 s2)
-  'UNIMPLEMENTED
-  )
+  (lambda (e) (and (s1 e) (s2 e))))
 
 ;the set of all elements that are in 's1', but that are not in 's2'
 (define (diff s1 s2)
-  'UNIMPLEMENTED
-  )
+  (lambda (e) (and (s1 e) (not (s2 e)))))
 
 ;returns the subset of s, for which the predicate 'predicate' is true.
 (define (filter predicate s)
-  'UNIMPLEMENTED
+  (lambda (e) (and ))
   )
 
 ;we assume that the sets can contain only numbers between 0 and bound
@@ -85,12 +82,9 @@ Submission guidelines:
     (lambda (i)
       (not (= (modulo n i) 0))))
   (if (or (equal? n 1) (equal? n 0))
-      #f
-      (let ([range-of-prime-divisors (cddr (range (+ (integer-sqrt n) 1)))])
-        (andmap (non-divisible? n) range-of-prime-divisors)
-        )
-      )
-  )
+    #f
+    (let ([range-of-prime-divisors (cddr (range (+ (integer-sqrt n) 1)))])
+      (andmap (non-divisible? n) range-of-prime-divisors))))
 ;===============================================================================
 ;======================================02=======================================
 ;===============================================================================
