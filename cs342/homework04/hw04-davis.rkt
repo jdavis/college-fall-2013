@@ -93,9 +93,7 @@ Submission guidelines:
 
 ;======================================04=======================================
 (define (matrix-to-vector op mat)
-  (apply map (cons
-               op
-               mat)))
+  (apply map (cons op mat)))
 
 ;======================================05=======================================
 (define (change-at-index i new-el lst)
