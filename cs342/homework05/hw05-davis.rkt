@@ -81,7 +81,11 @@ Submission guidelines:
 
 ;returns a new set where "op" has been applied to all elements
 (define (map-set op s)
-  (lambda (e)))
+  (lambda (e)
+    (ormap
+      (lambda (f)
+        (and (s f) (eq? (op f) e)))
+      (range bound))))
 
 ;just a sample predicate
 (define (prime? n)
