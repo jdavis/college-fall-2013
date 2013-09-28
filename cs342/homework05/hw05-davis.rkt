@@ -110,70 +110,170 @@ Submission guidelines:
                  )
 )
 
+(define up-type 'up-type)
+(define left-type 'left-type)
+(define down-type 'down-type)
+(define right-type 'right-type)
+(define seq-type 'seq-type)
+
+(define step-request 'step-request)
+(define seq-step1-request 'seq-step1-request)
+(define seq-step2-request 'seq-step2-request)
+(define step-check 'step-check)
+
 
 (define (up-step n)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((not (number? n)) (invalid-args-msg
+                         "up-step"
+                         "number?"
+                         n))
+    (else
+      (lambda (data)
+        (cond
+          ((eq? data step-request) n)
+          ((eq? data step-check) up-type))))))
 
 (define (down-step n)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((not (number? n)) (invalid-args-msg
+                         "down-step"
+                         "number?"
+                         n))
+    (else
+      (lambda (data)
+        (cond
+          ((eq? data step-request) n)
+          ((eq? data step-check) down-type))))))
 
 (define (left-step n)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((not (number? n)) (invalid-args-msg
+                         "left-step"
+                         "number?"
+                         n))
+    (else
+      (lambda (data)
+        (cond
+          ((eq? data step-request) n)
+          ((eq? data step-check) left-type))))))
 
 (define (right-step n)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((not (number? n)) (invalid-args-msg
+                         "right-step"
+                         "number?"
+                         n))
+    (else
+      (lambda (data)
+        (cond
+          ((eq? data step-request) n)
+          ((eq? data step-check) right-type))))))
 
 (define (seq-step st-1 st-2)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((not (step? st-1)) (invalid-args-msg
+                         "seq-step"
+                         "step?"
+                         st-1))
+    ((not (step? st-2)) (invalid-args-msg
+                         "seq-step"
+                         "step?"
+                         st-2))
+    (else
+      (lambda (data)
+        (cond
+          ((eq? data step-request)
+           (list (st-1 step-request) (st-2 step-request)))
+          ((eq? data seq-step1-request) st-1)
+          ((eq? data seq-step2-request) st-2)
+          ((eq? data step-check) seq-type))))))
 
 ;;====
 (define (up-step? st)
-  'UNIMPLEMENTED
-)
+  (if
+    (procedure? st)
+    (eq? up-type (st step-check))
+    (invalid-args-msg
+      "up-step?"
+      "procedure?"
+      st)))
 
 (define (down-step? st)
-  'UNIMPLEMENTED
-)
+  (if
+    (procedure? st)
+    (eq? down-type (st step-check))
+    (invalid-args-msg
+      "down-step?"
+      "procedure?"
+      st)))
 
 (define (left-step? st)
-  'UNIMPLEMENTED
-)
+  (if
+    (procedure? st)
+    (eq? left-type (st step-check))
+    (invalid-args-msg
+      "left-step?"
+      "procedure?"
+      st)))
 
 (define (right-step? st)
-  'UNIMPLEMENTED
-)
+  (if
+    (procedure? st)
+    (eq? right-type (st step-check))
+    (invalid-args-msg
+      "right-type"
+      "procedure?"
+      st)))
 
 (define (seq-step? st)
-  'UNIMPLEMENTED
-)
+  (if
+    (procedure? st)
+    (eq? seq-type (st step-check))
+    (invalid-args-msg
+      "seq-step?"
+      "procedure?"
+      st)))
 
 ;This is a predicate that tells you whether or not something is a step,
 ;it should return true when given either up, down, left, right or seq steps.
 (define (step? st)
-  'UNIMPLEMENTED
-)
+  (or
+    (eq? #t (up-step? st))
+    (eq? #t (down-step? st))
+    (eq? #t (left-step? st))
+    (eq? #t (right-step? st))
+    (eq? #t (seq-step? st))))
 
 
 ;;to avoid needless duplication we will only implement one extractor to handle all the
 ;;simple steps, rather than 4. So this should take: up, down, left and right steps.
 (define (single-step->n st)
-  'UNIMPLMENTED
-)
+  (cond
+    ((step? st) (st step-request))
+    (else (invalid-args-msg
+            "single-step->n"
+            "single-step?"
+            st))))
 
 ;;two extractors, one for each piece of data representing a sequential step
 (define (seq-step->st-1 st)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((seq-step? st) (st seq-step1-request))
+    (else
+      (invalid-args-msg
+        "seq-step->st-1"
+        "seq-step?"))))
 
 
 (define (seq-step->st-2 st)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((seq-step? st) (st seq-step2-request))
+    (else
+      (invalid-args-msg
+        "seq-step->st-2"
+        "seq-step?"))))
+
 ;;===================================
 (define (move start-p step)
   'UNIMPLEMENTED
