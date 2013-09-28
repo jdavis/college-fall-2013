@@ -396,3 +396,4 @@
 
 (test p1)
 (test p2-a)
+(test p2-b)
