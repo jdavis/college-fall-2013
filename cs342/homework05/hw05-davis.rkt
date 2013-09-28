@@ -276,8 +276,30 @@ Submission guidelines:
 
 ;;===================================
 (define (move start-p step)
-  'UNIMPLEMENTED
-)
+  (define (add-step step)
+    (let ((n (step step-request)))
+      (cond
+        ((up-step? step) (list
+                           (car start-p)
+                           (+ n (cadr start-p))))
+        ((down-step? step) (list
+                             (car start-p)
+                             (- (cadr start-p) n)))
+        ((left-step? step) (list
+                             (- (car start-p) n)
+                             (cadr start-p)))
+        ((right-step? step) (list
+                             (+ n (car start-p))
+                             (cadr start-p))))))
+  (cond
+    ((seq-step? step)
+     (move (add-step (seq-step->st-1 step)) (seq-step->st-2 step)))
+    ((step? step) (add-step step))
+    (else
+          (invalid-args-msg
+            "move"
+            "step?"
+            step))))
 
 ;======================================03=======================================
 
