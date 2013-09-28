@@ -93,31 +93,9 @@ Submission guidelines:
 
 ;======================================04=======================================
 (define (matrix-to-vector op mat)
-  (define (firsts mat)
-    (cond
-      ((null? mat) mat)
-      (else
-        (cons
-          (caar mat)
-          (firsts (cdr mat))))))
-  (define (rest mat)
-    (cond
-      ((null? mat) '())
-      (else
-        (cons
-          (cdar mat)
-          (rest (cdr mat))))))
-  (define (matrix-inner lst)
-    (cond
-      ((andmap null? lst) '())
-      ((null? lst) lst)
-      (else
-        (cons
-          (apply
-            op
-            (firsts lst))
-          (matrix-inner (rest lst))))))
-  (matrix-inner mat))
+  (apply map (cons
+               op
+               mat)))
 
 ;======================================05=======================================
 (define (change-at-index i new-el lst)
