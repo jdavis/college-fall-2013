@@ -41,7 +41,7 @@ Submission guidelines:
 
 ;the set of all elements that are in either 's1' or 's2'
 (define (union s1 s2)
-  (lambda (e) (or (s1 e) (s2 e)))
+  (lambda (e) (or (s1 e) (s2 e))))
 
 ;the set of all elements that are in both  in 's1' and 's2'
 (define (intersection s1 s2)
@@ -53,8 +53,7 @@ Submission guidelines:
 
 ;returns the subset of s, for which the predicate 'predicate' is true.
 (define (filter predicate s)
-  (lambda (e) (and ))
-  )
+  (lambda (e) (and (predicate e) (s e))))
 
 ;we assume that the sets can contain only numbers between 0 and bound
 (define bound 100)
@@ -62,19 +61,27 @@ Submission guidelines:
 ;returns whether or not the set contains at least an element for which
 ;the predicate is true.
 (define (exists? predicate s)
-  'UNIMPLEMENTED
-  )
+  (ormap
+    (lambda (e)
+      (and (predicate e)
+           (s e)))
+    (range bound)))
 
 ;returns whether or not the predicate is true for all the elements
 ;of the set
 (define (all? predicate s)
-  'UNIMPLEMENTED
-  )
+  (andmap
+    (lambda (e)
+      (or
+        (not (s e))
+        (and
+          (predicate e)
+          (s e))))
+    (range bound)))
 
 ;returns a new set where "op" has been applied to all elements
 (define (map-set op s)
-  'UNIMPLEMENTED
-  )
+  (lambda (e) (s (op e))))
 
 ;just a sample predicate
 (define (prime? n)
