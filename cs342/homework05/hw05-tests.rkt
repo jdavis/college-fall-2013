@@ -394,6 +394,8 @@
   )
 )
 
-(test p1)
-(test p2-a)
-(test p2-b)
+;(test p1)
+;(test p2-a)
+;(test p2-b)
+;(test p3)
+(test-all)
