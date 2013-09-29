@@ -303,34 +303,45 @@ Submission guidelines:
 
 ;======================================03=======================================
 
-(define (empty-tree)
-  'UNIMPLEMENTED
-)
+(define (empty-tree) '())
 
 (define (empty-tree? tree)
-  'UNIMPLEMENTED
-)
+  (eq? tree '()))
 
 (define (bstree root)
-  'UNIMPLEMENTED
-)
+  (list root (empty-tree) (empty-tree)))
 
 (define (tree->root tree)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((null? tree) '())
+    (else
+      (car tree))))
 
 (define (tree->left tree)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((null? tree) (empty-tree))
+    (else
+      (cadr tree))))
 
 (define (tree->right tree)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((null? tree) (empty-tree))
+    (else
+      (caddr tree))))
 
 (define (insert-tree n t)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((not (list? t)) '())
+    ((empty-tree? t) (list n (empty-tree) (empty-tree)))
+    ((> (car t) n) (list (car t) (insert-tree n (tree->left t)) (tree->right t)))
+    ((<= (car t) n) (list (car t) (tree->left t) (insert-tree n (tree->right t))))
+    (else '())))
 
 (define (tree->list tree)
-  'UNIMPLEMENTED
-)
+  (cond
+    ((empty-tree? tree) '())
+    (else (append
+            (tree->list (tree->left tree))
+            (cons
+              (car tree)
+              (tree->list (tree->right tree)))))))
