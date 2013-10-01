@@ -1,0 +1,256 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{changepage}
+\usepackage{lineno}
+\usepackage{algpseudocode}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{Homework\ \#4}
+\newcommand{\hmwkDueDate}{October 11, 2013 at 4:30pm}
+\newcommand{\hmwkClass}{CS311}
+\newcommand{\hmwkClassTime}{Section 3}
+\newcommand{\hmwkClassInstructor}{Professor Lathrop}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Consider the binary search tree code given.
+
+    \begin{enumerate}
+        \item Prove that the best case running time of \alg{BUILD-BST} is \(\Omega(n \lg (n))\).
+        \item Prove that the worst case running time of \alg{BUILD-BST} is \(O(n^2)\).
+    \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part Two}
+
+    \begin{proof}
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Consider an AVL tree where every node in the tree has a balance factor of
+    0. Prove using induction that any such AVL tree is also full.
+    \\
+
+    \textbf{Solution}
+
+    \begin{proof}
+        \textbf{Base}
+        \\
+
+        \textbf{Step}
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Write pseudocode that when given a list of elements sorted in ascending
+    order, return a complete BST that contains precisely the elements in the
+    input list. The algorithm should run in linear time.
+
+    \textbf{Solution}
+
+    The pseudocode of the algorithm is as follows:
+
+    \begin{linenumbers}[1]
+        \renewcommand\linenumberfont{\normalfont\bfseries\small}
+        \begin{algorithmic}
+            \Function{BuildBST}{$list, start, end$}
+                \State{} $left \gets start + 1$
+                \State{} $right \gets end$
+                \While{$left \leq right$}
+                    \While{$left \leq end \wedge list[left] \leq list[start]$}
+                        \State{} $left \gets left + 1$
+                    \EndWhile{}
+                    \While{$right \geq start \wedge list[right] > list[start]$}
+                        \State{} $right \gets right - 1$
+                    \EndWhile{}
+                    \If{$left \leq right$}
+                        \State{} \Call{swap}{$list, left, right$}
+                    \EndIf{}
+                \EndWhile{}
+                \State{} \Call{swap}{$list, start, right$}
+                \State{} \Return{} $right$
+            \EndFunction{}
+        \end{algorithmic}
+    \end{linenumbers}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Open addressing problem.
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Consider the algorithm given to traverse a rooted binary tree where
+    \alg{VISIT} is a constant-time function. Using the master theorem, give a
+    tight bound on the running time of \alg{TRAVERSE} as a function of the number
+    of nodes in \(t\).
+    \\
+
+    \textbf{Solution}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Consider the following recurrence relation:
+    \[
+        T(n) = \left\{
+            \begin{array}{ll}
+                1 & \quad n = 1 \\
+                7 \cdot T(\dfrac{n}{2}) + 1 & \quad n > 1
+            \end{array}
+        \right.
+    \]
+
+    \begin{enumerate}
+        \item Use the master theorem to show that \(T(n) \in \Theta(n^{\lg 7})\).
+        \item Use induction to show that \(T(n) = \dfrac{1}{6} \cdot (7 \cdot
+              n^{\lg 7} - 1)\). You may assume that \(n\) is a power of two.
+    \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+    \\
+
+    \textbf{Part Two}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Using the given operations of a priority queue do the following:
+
+    \begin{enumerate}
+        \item Provide a pseudocode implementation of the \alg{enqueue\((e)\)} and \alg{dequeue\(()\)} operations of a queue
+              that uses a priority queue to store its data.
+        \item Provide pseudocode implementations of the \alg{push\((e)\)} and \alg{pop\(()\)}
+              operations of a stack that uses a priority queue to store its data.
+    \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+    \\
+
+    \textbf{Part Two}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Consider the algorithm given for quicksort. Using the knowledge that
+    quicksort depends on the behavior of \alg{SELECT-PIVOT}, assume that
+    \alg{SELECT-PIVOT} runs in constant time and \alg{PARTITION} runs in time
+    \(\Omega(end - start)\), do the following:
+
+    \begin{enumerate}
+        \item What \alg{SELECT-PIVOT} behavior will lead to worst case \alg{QUICKSORT} behavior? Use the master
+              theorem to derive a tight bound on \alg{QUICKSORT}'s worst case running time.
+        \item What \alg{SELECT-PIVOT} behavior will lead to the best case \alg{QUICKSORT} behavior? Use the
+              master theorem to derive a tight bound on \alg{QUICKSORT}'s best case running time.
+    \end{enumerate}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    A 10-foot rope is stretched across a gap. \(n\) ants are distributed on the
+    rope and each ant faces either direction. At the same instant, the ants
+    begin to walk, moving forward at a rate of 10 feet per minute. If two ants
+    collide, they immediately reverse direction. When an ant reaches the end of
+    the rope, it steps off the rope and can no longer block the other ants.
+
+    \begin{enumerate}
+        \item What is the largest possible amount of time that can elapse
+              before the last ant steps off the rope?
+        \item In what situation does the worst-case time arise?
+    \end{enumerate}
+\end{homeworkProblem}
+
+\end{document}
