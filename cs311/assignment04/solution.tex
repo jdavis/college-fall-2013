@@ -125,30 +125,30 @@
     Write pseudocode that when given a list of elements sorted in ascending
     order, return a complete BST that contains precisely the elements in the
     input list. The algorithm should run in linear time.
+    \\
 
     \textbf{Solution}
 
-    The pseudocode of the algorithm is as follows:
+    The algorithm works by taking the median of the list and then setting it as
+    the root element in the BST then recurses until the range consists of only
+    one element. The pseudocode of the algorithm is below:
+    \\
 
     \begin{linenumbers}[1]
         \renewcommand\linenumberfont{\normalfont\bfseries\small}
         \begin{algorithmic}
             \Function{BuildBST}{$list, start, end$}
-                \State{} $left \gets start + 1$
-                \State{} $right \gets end$
-                \While{$left \leq right$}
-                    \While{$left \leq end \wedge list[left] \leq list[start]$}
-                        \State{} $left \gets left + 1$
-                    \EndWhile{}
-                    \While{$right \geq start \wedge list[right] > list[start]$}
-                        \State{} $right \gets right - 1$
-                    \EndWhile{}
-                    \If{$left \leq right$}
-                        \State{} \Call{swap}{$list, left, right$}
-                    \EndIf{}
-                \EndWhile{}
-                \State{} \Call{swap}{$list, start, right$}
-                \State{} \Return{} $right$
+                \If{$start = end$}
+                    \State{} \Return{} new \Call{Node}{$list[start]$}
+                \EndIf{}
+                \\
+                \State{} $mid \gets start + (end - start) / 2$
+                \State{} $root \gets$ new \Call{Node}{$list[mid]$}
+                \\
+                \State{} $root.left \gets$ \Call{BuildBST}{$list, start, mid - 1$}
+                \State{} $root.right \gets$ \Call{BuildBST}{$list, mid + 1, end$}
+                \\
+                \State{} \Return{$root$}
             \EndFunction{}
         \end{algorithmic}
     \end{linenumbers}
