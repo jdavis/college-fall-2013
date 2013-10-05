@@ -138,7 +138,9 @@
         \renewcommand\linenumberfont{\normalfont\bfseries\small}
         \begin{algorithmic}
             \Function{BuildBST}{$list, start, end$}
-                \If{$start = end$}
+                \If{$start > end$}
+                    \State{} \Return{NULL}
+                \ElsIf{$start = end$}
                     \State{} \Return{} new \Call{Node}{$list[start]$}
                 \EndIf{}
                 \\
