@@ -112,13 +112,24 @@
     \textbf{Solution}
 
     \begin{proof}
-        Prove that an AVL tree with a balance factor of 0 for every node is full.
+        Prove that an AVL tree with a balance factor of 0 for every node is
+        full.  A full binary tree has \(2^{h + 1} - 1\) nodes where \(h\) is the
+        height of the tree.
         \\
 
         \textbf{Base}
+
+        Consider a tree where with a single node, the root, and where it has a
+        balance factor of 0. It follows that this tree has a height of zero, so
+        \(h = 0\). Thus \(2^{h + 1} - 1 = 2^{0 + 1} - 1 = 2 - 1 = 1\) nodes.
+        This is a full binary tree because the root is a leaf therefore it has
+        no children. Thus we have proven the base case.
         \\
 
         \textbf{Step}
+
+        We wish to show that when \(h = h + 1\),
+
     \end{proof}
 \end{homeworkProblem}
 
