@@ -229,12 +229,48 @@
     \end{enumerate}
 
     \textbf{Solution}
+
+    Higher priority means a lower number for this pseudocode.
     \\
+
 
     \textbf{Part One}
-    \\
+
+    \begin{linenumbers}[1]
+        \renewcommand\linenumberfont{\normalfont\bfseries\small}
+        \begin{algorithmic}
+            \State{} $index \gets 0$
+            \State{} $queue \gets$ new \Call{PriorityQueue}{ }
+            \\
+            \Function{enqueue}{$e$}
+                \State{} $queue$.\Call{enqueue}{$e, index$}
+                \State{} $index \gets index + 1$
+            \EndFunction{}
+            \\
+            \Function{dequeue}{ }
+                \State{} \Return{$queue$.\Call{dequeue}{ }}
+            \EndFunction{}
+        \end{algorithmic}
+    \end{linenumbers}
 
     \textbf{Part Two}
+
+    \begin{linenumbers}[1]
+        \renewcommand\linenumberfont{\normalfont\bfseries\small}
+        \begin{algorithmic}
+            \State{} $index \gets INT\_MAX$
+            \State{} $queue \gets$ new \Call{PriorityQueue}{ }
+            \\
+            \Function{enqueue}{$e$}
+                \State{} $queue.$\Call{enqueue}{$e, index$}
+                \State{} $index \gets index - 1$
+            \EndFunction{}
+            \\
+            \Function{dequeue}{ }
+                \State{} \Return{$queue$.\Call{dequeue}{ }}
+            \EndFunction{}
+        \end{algorithmic}
+    \end{linenumbers}
 \end{homeworkProblem}
 
 \pagebreak
