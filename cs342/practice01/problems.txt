@@ -1,0 +1,211 @@
+                             COM S 342 Fall 2013
+                          practice Exam 1 
+
+;==============================================================================
+1. [Recursion and Higher Order Procedures ] (35pts)
+
+Implement a procedure triangle-pattern with the following signature:
+
+(define (triangle-pattern size next-sym init-sym)...)
+
+  size:     denotes the size of the generated triangle
+  next-sym: is a two argument function that, given the row number and the
+            previous symbol, outputs the next symbol
+  init-sym: the first symbol of every line
+  
+  The triangle is flipped such that its base is on the left, in a vertical position.
+
+> (define (one-star-one-plus prev-sym i)
+  (if (equal? prev-sym '+)
+      '*
+      '+))
+
+> (triangle-pattern 1 one-star-one-plus '*)
+'(
+ (*)
+ )
+
+> (triangle-pattern 2 one-star-one-plus '*)
+'(
+ (*)
+ (* +)
+ (*)
+ )
+
+> (triangle-pattern 3 one-star-one-plus '*)
+'(
+ (*)
+ (* +)
+ (* + *)
+ (* +)
+ (*)
+ )
+ 
+ ;the pattern changes based on the initial symbol
+> (triangle-pattern 3 one-star-one-plus '+)
+'(
+ (+)
+ (+ *)
+ (+ * +)
+ (+ *)
+ (+)
+)
+
+
+> (define (odd-plus-even-star prev-sym i)
+  (if (= (modulo i 2) 0)
+      '*
+      '+))
+
+> (triangle-pattern 1 odd-plus-even-star '$)
+'(
+ ($)
+ )
+
+;
+> (triangle-pattern 2 odd-plus-even-star '$)
+'(
+ ($)
+ ($ *)
+ ($)
+ )
+
+> (triangle-pattern 3 odd-plus-even-star '$)
+'(
+ ($)
+ ($ *)
+ ($ + +)
+ ($ *)
+ ($)
+ )
+
+Notes:
+ - no pretty printing is required, just create the correct lists.
+ - you may assume that size is always an integer >= 1
+ - you may assume that next-sym is always a two argument function
+ - line numbering is 1 indexed. Check the last 3 examples to verify
+
+Hint:
+  it might be useful to first write a helper function to compute a row with index i
+;==============================================================================
+
+
+
+
+
+
+
+2. [Currying a Function] (10pts)
+Given the procedure  
+      node::symbol -> number -> number -> tree
+(define node
+    (lambda (sym left right)
+      (list sym left right)))
+
+(a) Write a curried version of the above procedure (i.e. instead of taking all three
+    parameters as was in  lambda(sym, left, right), try composing return functions 
+    that take one parameter at a time )
+
+
+
+
+
+(b) Use the curred version to create the following tree: (top 2 3)
+
+
+
+
+
+
+3. [Flat Recursion] (10pts)
+Write a procedure, get-last-name that takes in a list of lists with first-name/middle-name/last-name
+string lists and returns a single list of only the last names. For instance:
+
+(get-last-name '(("John" "F" "Kennedy") ("Winston" "S" "Churchill"))  =>  ("Kennedy" "Churchill")
+
+
+
+
+
+
+
+
+
+4.[common sense knowledge in Scheme]  (15pts)
+Given   (define x (list (cons 'a 'b) (cons 'c (list 'd 'e)) 'f 'g)))
+what does each of the following return in Scheme?
+
+(cdar x) =>
+(caddr x) =>
+(cadddr x)  =>
+(cdadr x) =>
+(cddadr x) =>
+
+
+
+
+
+5. [Data Type Representation] (20pts)
+
+Consider the data type of 
+<bintree> ::=  <number>			"leaf-node"
+	  |    (<bintree> <bintree>)	"interior-node"
+
+also, consider an interface given as follows
+
+Constructors: 
+      (leaf-node number)		// leaf-node constructor
+      (interior-node bintree bintree)  // interior-node constructor
+
+Predicate:
+      * Searches if input number exists in the bintree => #t/#f *
+      (number-exists? bintree n)    
+
+Implement the bintree data type using **PROCEDURAL-BASED** representation
+
+Example runs:
+      (number-exists? (leaf-node 4) 5) => #f
+      (number-exists? (interior-node (leaf-node 4) (leaf-node 5)) 5) => #t
+
+***Hint: this is easier than the homework questions, since you are not asked to do the extractors ****
+
+
+
+
+
+
+
+
+6. [Data Type Representation]  (10pts)
+
+Consider the data type "pl-exp", which represents expressions in the pl language. This data type is 
+defined by the following grammar:
+
+<pl-exp> ::= <symbol>   "var-name"
+	  |  ( <symbol> <pl-exp> )    " call-name  argument"
+	  |  ( <pl-exp> <pl-exp> )    " guard-condition action"
+
+(a) Create the interface for this data type using the standard method for representing recursive data types
+    discussed in class. Write the signature for the constructors, predicates and extractors based on the 
+    grammar provided above. 
+    A signature generally represents types of input and output. An example signature from the previous question
+    is leaf-node: number -> bintree, saying that leaf-node is a function that takes as argument a number and the
+    result of this function is a bintree.
+
+   Signature for constructors:
+
+
+
+   Signatures for predicates:
+
+
+   
+   Signatures for extractors:
+
+
+
+
+
+
+(b) Try using Scheme's define-datatype form as introduced in class, given in the lecture notes, to write a 
+    representation for the data type pl-exp.

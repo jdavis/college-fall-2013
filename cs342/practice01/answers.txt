@@ -1,0 +1,112 @@
+Answer problem-1
+
+(define (triangle-recur original-sym size next-sym-wrapper next-sym step first-row)
+  (if (= size 1)
+      (list (list (next-sym-wrapper step original-sym first-row next-sym)))
+      (add-left-most-col first-row step original-sym next-sym-wrapper next-sym 
+                         (decorate (triangle-recur original-sym (- size 1) next-sym-wrapper next-sym (+ 1 step) (+ 1 first-row) )) )))
+
+(define (add-left-most-col starting-row step original-sym next-sym-wrapper next-sym lst-lst) 
+  (if (null? lst-lst)
+      '()
+      (cons (cons (next-sym-wrapper step original-sym starting-row next-sym) (car lst-lst))
+            (add-left-most-col (+ 1 starting-row ) step original-sym next-sym-wrapper next-sym (cdr lst-lst)))))
+
+;; step starts from Zero
+(define (next-sym-wrapper advance-step original-sym row next-sym)
+  (if (= advance-step 0)
+      original-sym
+      (next-sym row (next-sym-wrapper (- advance-step 1) original-sym row next-sym))))
+
+(define (decorate lst-lst)
+  (append (cons '() lst-lst) '(())))
+
+(define (triangle-pattern size next-sym init-sym)
+  (triangle-recur init-sym size next-sym-wrapper next-sym 0 1))
+
+
+Answer problem-2
+(a) 
+
+(define node
+    (lambda (sym)
+      (lambda (left)
+        (lambda (right)
+          (list sym left right)))))
+
+(b)
+
+(((node ’top) 2) 3)
+
+
+
+Answer problem-3
+
+(define (get-last-name names)
+    (if  (null? names)
+         ’()
+         (append (cddar names) (get-last-name (cdr names)))))
+
+
+
+
+Answer problem-4
+
+b
+g
+f
+(d e) 
+(e)
+
+
+
+
+Answer problem-5
+
+; Constructors
+(define leaf-node
+  (lambda (number)
+    (lambda (search-num)
+      (if (equal? number search-num)
+          #t
+	  #f))))
+
+(define interior-node
+  (lambda (left right)
+    (lambda (search-num)
+       (or (number-exists? left search-num)
+           (number-exists? right search-num)))))
+
+; Observers/Predicates
+(define number-exists?
+  (lambda (bintree search-num)
+    (bintree search-num)))
+
+Answer problem-6
+
+a)
+  var : symbol -> pl-exp
+  call: symbol -> pl-exp -> pl-exp
+  guard : pl-exp -> pl-exp -> pl-exp
+
+  var?     : pl-exp -> bool
+  call?    : pl-exp -> bool
+  guard?   : pl-exp -> bool
+ 
+  var->name  : pl-exp -> symbol
+  call->name : pl-exp -> symbol
+  call->argument : pl-exp -> pl-exp
+  guard->condition : pl-exp -> pl-exp
+  guard->action    : pl-exp -> pl-exp
+
+b)
+
+(define-datatype pl-exp pl-exp?
+  (var
+    (name symbol?))
+  (call
+    (name symbol?)
+    (argument pl-exp?))
+  (guard
+    (condition pl-exp?)
+    (action pl-exp?)))
