@@ -196,24 +196,82 @@
         T(n) = \left\{
             \begin{array}{ll}
                 1 & \quad n = 1 \\
-                7 \cdot T(\dfrac{n}{2}) + 1 & \quad n > 1
+                7 \cdot T(\frac{n}{2}) + 1 & \quad n > 1
             \end{array}
         \right.
     \]
 
     \begin{enumerate}
-        \item Use the master theorem to show that \(T(n) \in \Theta(n^{\lg 7})\).
+        \item Use the master theorem to show that \(T(n) \in \Theta(n^{\log_2 7})\).
         \item Use induction to show that \(T(n) = \dfrac{1}{6} \cdot (7 \cdot
-              n^{\lg 7} - 1)\). You may assume that \(n\) is a power of two.
+              n^{\log_2 7} - 1)\). You may assume that \(n\) is a power of two.
     \end{enumerate}
 
     \textbf{Solution}
     \\
 
     \textbf{Part One}
+    We have \(a = 7\), \(b = 2\) and \(f(n) = 1\). According to the Master
+    Method, this gives us:
+    \[
+        n^{\log_b a} = n^{\log_2 7} \in \Theta(n^{\log_2 7})
+    \]
+
+    This puts us in case 1 of the master method because \(f(n) = O(g(n))\)
+    where \(f(n) = 1\) and when \(\epsilon = 3\), \(g(n) = n^{\log_2 7 -
+    \epsilon} = n^{\log_2 7 - 3} = n^{\log_2 4} = n^2\).
     \\
 
+    To prove that we are in case 1, we just need to find a \(c\) and \(n_0\)
+    such that for all \(n > n_0\) the inequality \(1 \leq c \cdot n^2\) holds.
+    If we let \(n_0 = 1\) and \(c = 1\) the inequality holds, thus proving
+    \(f(n) = O(g(n))\).
+    \\
+
+    Now that we've verified that we are in case 1 of the master method, we now know
+    that \(T(n) = \Theta(n^{\log_2 7})\).
+    \\
+
+
     \textbf{Part Two}
+
+    \begin{proof}
+        We will use induction to prove that \(T(n) = \dfrac{1}{6} \cdot (7
+        \cdot n^{\log_2 7} - 1)\).
+        \\
+
+        \textbf{Base}
+
+        Consider the base case when \(n = 1\). It is trivial because \(T(1) = 1\) which is
+        equal to \(\dfrac{1}{6}(7n^{log_2 7} - 1) = \dfrac{1}{6}(7 \cdot
+        1^{log_2 7} - 1) = \dfrac{1}{6}(7 - 1) = 1\).
+        \\
+
+        \textbf{Step}
+
+        To prove the induction step, we can assume that \(n > 1\) and that
+        \(n\) is a power of two. The induction hypothesis is thus \(T(n) =
+        \dfrac{1}{6}(7{n}^{log_2 7} - 1)\). This give us:
+        \\
+
+        \[
+            \begin{split}
+                T(n) &= 7 \cdot T(n/2) + 1
+                \\
+                &= 7 (\frac{1}{6}(7{(n/2)}^{log_2 7} - 1)) + 1
+                \\
+                &= 7 (\frac{1}{6}({n}^{log_2 7} - 1)) + 1
+                \\
+                &= 7 (\frac{1}{6}{n}^{log_2 7} - \frac{1}{6}) + 1
+                \\
+                &= \frac{7}{6}{n}^{log_2 7} - \frac{7}{6} + 1
+                \\
+                &= \frac{1}{6}(7{n}^{log_2 7} - 7 + 6)
+                \\
+                &= \frac{1}{6}(7{n}^{log_2 7} - 1)
+            \end{split}
+        \]
+    \end{proof}
 \end{homeworkProblem}
 
 \pagebreak
@@ -222,10 +280,12 @@
     Using the given operations of a priority queue do the following:
 
     \begin{enumerate}
-        \item Provide a pseudocode implementation of the \alg{enqueue\((e)\)} and \alg{dequeue\(()\)} operations of a queue
-              that uses a priority queue to store its data.
-        \item Provide pseudocode implementations of the \alg{push\((e)\)} and \alg{pop\(()\)}
-              operations of a stack that uses a priority queue to store its data.
+        \item Provide a pseudocode implementation of the \alg{enqueue\((e)\)}
+            and \alg{dequeue\(()\)} operations of a queue that uses a priority
+            queue to store its data.
+        \item Provide pseudocode implementations of the \alg{push\((e)\)} and
+            \alg{pop\(()\)} operations of a stack that uses a priority queue to
+            store its data.
     \end{enumerate}
 
     \textbf{Solution}
