@@ -31,6 +31,16 @@ Define Syntax:
             (condition body (while-iter while-iter))
             (else 0)))))
 
+Data Abstraction:
+    - Interface: tells us the data of the type, what operations, and what
+      properties the data has.
+    - Representation independence: when the client manipulates values of the
+      data type only through procedures in the interface.
 
-Grammer, BNF:
-    - Count kinds of data
+Inferfaces for Recursive Data Types:
+    - State different kinds of data for a given data type
+    - Constructors, predicates, extractors based on BNF
+        1. One constructor for each kind of data in the data type.
+        2. One predicate for each kind of data in the data type.
+        3. One extractor for each piece of data passed to a constructor of the
+           data type.
