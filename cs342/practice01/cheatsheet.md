@@ -31,6 +31,23 @@ Define Syntax:
             (condition body (while-iter while-iter))
             (else 0)))))
 
+Define Datatype:
+    (define-datatype binary-tree binary-tree?
+      (leaf-node     (datum number?))
+      (interior-node (key   symbol?)
+                     (left  binary-tree?)
+                     (right binary-tree?)))
+
+    (define leaf-sum
+      (lambda (tree)
+        (cases binary-tree tree
+          (leaf-node (datum)
+            datum)
+          (interior-node (key left right)
+            (+ (leaf-sum left) (leaf-sum right)))
+          (else
+            (error "leaf-sum: Invalid tree" tree)))))
+
 Data Abstraction:
     - Interface: tells us the data of the type, what operations, and what
       properties the data has.
