@@ -81,19 +81,51 @@
 \pagebreak
 
 \begin{homeworkProblem}
-    Consider the binary search tree code given.
-
-    \begin{enumerate}
-        \item Prove that the best case running time of \alg{BUILD-BST} is \(\Omega(n \lg (n))\).
-        \item Prove that the worst case running time of \alg{BUILD-BST} is \(O(n^2)\).
-    \end{enumerate}
+    Consider the binary search tree code given and prove the two propositions.
+    \\
 
     \textbf{Solution}
     \\
 
     \textbf{Part One}
+    Prove that the best case running time of \alg{BUILD-BST} is \(\Omega(n \lg n)\).
 
     \begin{proof}
+        To prove that the best case running time of \alg{BUILD-BST} is
+        \(\Omega(n \lg n)\), we will define a recurrence for \alg{BUILD-BST},
+        \(T(n)\), and then show that \(T(n) \in \Omega(n \lg n)\) by showing
+        that \(0 \leq c \cdot n \lg n \leq T(n)\) for some constant \(c > 0\)
+        and all \(n \geq n_0\).
+        \\
+
+        To prove the worst case, we need to understand how \alg{BST.add()}
+        works.  It recurses into either the left or right subtree dependent on
+        the values of each node.
+        \\
+
+        To illicit best case run-time, it follows that during each recursion,
+        we cut down the size of our problem by a factor of 2. This would give
+        the recurrence as follows: \(T(n) = T(n/2) + \Theta(1)\) where the work
+        done at each step is constant. We can now use the master method.
+        \\
+
+        By applying the master method, we get \(a = 1\), \(b = 2\) and \(f(n) =
+        \Theta(1)\).  Which gives \(n^{\log_b a} = n^{\log_2 1} = n^0 = 1\).
+        Since \(f(n) \in \Theta(1)\), this puts us into the second case where
+        \(T(n) = \Theta(n \lg n)\).
+        \\
+
+        By using the following knowledge:
+
+        \[
+            \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
+            f(n) \leq c_2 \cdot g(n)}
+        \]
+
+        It follows that when a function \(T(n) \in \Theta(g(n))\), it also is
+        \(T(n) \in \Omega(g(n))\) by the definition of \(\Theta(n)\). Thus we have
+        proven the best case running time of \alg{BUILD-BST} is \(\Omega(n \lg
+        n)\).
     \end{proof}
 
     \textbf{Part Two}
@@ -106,13 +138,13 @@
         \cdot n^2\) for some constant \(c > 0\) and all \(n \geq n_0\).
         \\
 
-        To prove the worst case, we need to understand how \alg{BST.add()} works.
-        It recurses into either the left or right subtree dependent on the values of
-        each node.
+        To prove the worst case, we need to understand how \alg{BST.add()}
+        works.  It recurses into either the left or right subtree dependent on
+        the values of each node.
         \\
 
-        To illicit worst case run-time, it follows that during each recursion, we
-        only cut down the size of our problem by 1. This would give the
+        To illicit worst case run-time, it follows that during each recursion,
+        we only cut down the size of our problem by 1. This would give the
         recurrence as follows: \(T(n) = T(n - 1) + \Theta(1)\) where the work
         done at each step is constant. By using the substitution method we get
         the following:
