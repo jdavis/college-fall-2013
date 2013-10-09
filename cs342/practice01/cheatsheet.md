@@ -61,3 +61,31 @@ Inferfaces for Recursive Data Types:
         2. One predicate for each kind of data in the data type.
         3. One extractor for each piece of data passed to a constructor of the
            data type.
+    - Example:
+        <pl-exp> ::= <symbol>   "var-name"
+                  |  ( <symbol> <pl-exp> )    " call-name  argument"
+                  |  ( <pl-exp> <pl-exp> )    " guard-condition action"
+
+                  var : symbol -> pl-exp
+                  call: symbol -> pl-exp -> pl-exp
+                  guard : pl-exp -> pl-exp -> pl-exp
+
+                  var?     : pl-exp -> bool
+                  call?    : pl-exp -> bool
+                  guard?   : pl-exp -> bool
+
+                  var->name  : pl-exp -> symbol
+                  call->name : pl-exp -> symbol
+                  call->argument : pl-exp -> pl-exp
+                  guard->condition : pl-exp -> pl-exp
+                  guard->action    : pl-exp -> pl-exp
+
+                (define-datatype pl-exp pl-exp?
+                  (var
+                    (name symbol?))
+                  (call
+                    (name symbol?)
+                    (argument pl-exp?))
+                  (guard
+                    (condition pl-exp?)
+                    (action pl-exp?)))
