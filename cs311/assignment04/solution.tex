@@ -172,30 +172,66 @@
 
 \begin{homeworkProblem}
     Consider an AVL tree where every node in the tree has a balance factor of
-    0. Prove using induction that any such AVL tree is also full.
+    0. Prove using induction that any such AVL tree is also full: the
+    \(d^{th}\) level of the tree (where the root is in level 0) has either
+    \(2^d\) or 0 nodes.
     \\
 
     \textbf{Solution}
 
     \begin{proof}
         Prove that an AVL tree with a balance factor of 0 for every node is
-        full.  A full binary tree has \(2^{h + 1} - 1\) nodes where \(h\) is the
-        height of the tree.
+        full. A full binary tree has either \(2^d\) or 0 nodes at the
+        \(d^{th}\) level.
         \\
 
         \textbf{Base}
 
         Consider a tree where with a single node, the root, and where it has a
-        balance factor of 0. It follows that this tree has a height of zero, so
-        \(h = 0\). Thus \(2^{h + 1} - 1 = 2^{0 + 1} - 1 = 2 - 1 = 1\) nodes.
-        This is a full binary tree because the root is a leaf therefore it has
-        no children. Thus we have proven the base case.
+        balance factor of 0. As given, we consider this root node to be at
+        depth \(d = 0\).  This gives us \(2^d = 2^0 = 1\) node. Since this is
+        perfectly balanced and also consists of just 1 node. Adding any nodes
+        would offset the balance factor and would result in being more than 1
+        node. Thus the base case holds.
         \\
 
         \textbf{Step}
 
-        We wish to show that when \(h = h + 1\),
+        We wish to show for a AVL tree with a depth of \(d + 1\) and a balance
+        factor of 0, it still creates a ``full'' binary tree in that at every
+        depth there are \(2^{d + 1}\) nodes.
+        \\
 
+        Consider two AVL trees \(T_1\) and \(T_2\) both with a depth \(d\) and
+        balance factors of 0. If we were to construct a new AVL tree \(T\) by
+        taking a new node and adding \(T_1\) and \(T_2\) as subtrees to the new
+        root, we would end up with a new tree. The new tree would then have a
+        depth of \(d + 1\) because the new root adds one to the depth.
+        \\
+
+        Since we are taking two AVL trees with balance factors of 0, we get the
+        following:
+
+        \[
+            \begin{split}
+                \mbox{nodes at level } d &= \mbox{nodes at level d of } T_1 + \mbox{nodes at level d of } T_2
+            \end{split}
+        \]
+
+        By assuming the induction hypothesis and get the following:
+
+        \[
+            \begin{split}
+                \mbox{nodes at level } d &= 2^d + 2^d
+                \\
+                &= 2 \cdot 2^d
+                \\
+                &= 2^{d + 1}
+            \end{split}
+        \]
+
+        Thus at every depth of a AVL tree with a depth of \(d + 1\) and a
+        balance factor of 0 still has \(2^{d}\) or 0 nodes.
     \end{proof}
 \end{homeworkProblem}
 
