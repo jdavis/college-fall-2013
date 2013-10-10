@@ -6,9 +6,9 @@ Josh Davis
 ## Question 1
 
 Which of the following dependencies can you infer do not hold over schema S?
-    - A -> B: Yes, it holds.
-    - BC -> A: Yes, it holds.
-    - B -> C: Yes, it holds.
+    - A -> B:
+    - BC -> A:
+    - B -> C:
 
 Can you identify any dependencies that hold over S?
     - No. In order to say that a dependency holds over a given schema, we would
