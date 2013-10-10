@@ -487,6 +487,69 @@
         \item What \alg{SELECT-PIVOT} behavior will lead to the best case \alg{QUICKSORT} behavior? Use the
               master theorem to derive a tight bound on \alg{QUICKSORT}'s best case running time.
     \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    To derive a tight bound on the worst case running time, we need to come up
+    with a recurrence that captures the worst case running time of the
+    algorithm.
+    \\
+
+    Since \alg{QUICKSORT} is broken up into two subproblems, from \(start\) to
+    \(mid - 1\) and then \(mid\) to \(end\), the worst thing that could happen
+    is if the mid selected is equal to the end and only cuts down the list by a
+    single element each time. This would cause the recurrence to be the
+    following:
+
+    \[
+        \begin{split}
+            T(n) &= T(n - 1) + T(0) + \Theta(end - start)
+            \\
+            &\leq T(n - 1) + T(0) + \Theta(n)
+            \\
+            &= T(n - 1) + \Theta(n)
+        \end{split}
+    \]
+
+    We can't use the master method in this case but we can either use the
+    substitution method which will give us an upper bound of \(\Theta(n^2)\).
+    Intuitively, this makes sense because for every recursive call from \(n\)
+    to 0, we do \(\Theta(n)\) work which gives us a quadratic run time.
+    \\
+
+    \textbf{Part Two}
+
+    To derive a tight bound on the best case running time, we will come up with
+    a recurrence again.
+    \\
+
+    In the best case, the divide and conquer will operate the best when each
+    problem is as close to the same size as possible. This means that it will
+    half the problem size for each recursive call. This gives us the recurrence
+    of the following:
+
+    \[
+        \begin{split}
+            T(n) &= T(n/2) + T(n/2) + \Theta(end - start)
+            \\
+            &\leq T(n/2) + T(n/2) + \Theta(n)
+            \\
+            &= 2 \cdot T(n/2) + \Theta(n)
+        \end{split}
+    \]
+
+    Using the master method, this gives us \(a = 2\), \(b = 2\) and \(f(n) \in
+    \Theta(n)\). Thus \(n^{\log_b a} = n^{\log_2 2} = n^1 = n\). Since \(f(n)
+    \in \Theta(n)\), this puts us in the second case. The second case then
+    gives us the following best case run time: \(T(n) = \Theta(n^{\log_b a} \lg
+    n) = \Theta(n^{\log_2 a} \lg n) = \Theta(n \lg n)\).
+    \\
+
+    Since we've found the worst case and best case running times, our solution
+    is now complete.
 \end{homeworkProblem}
 
 \pagebreak
