@@ -43,7 +43,7 @@ exist. Therefore it is not a dependency-preserving decomposition.
 ### What is the strongest normal form of `ABC` and why?
 
 The strongest normal form of `ABC` is BCNF (which encompasses 1NF, 2NF, and
-3NF). This is because for ABC, we have three FDs: `AB -> C`, `BC -> A`, `AC ->
+3NF). This is because for `ABC`, we have three FDs: `AB -> C`, `BC -> A`, `AC ->
 B`. For all of those dependencies, we can see that each is a superkey. Thus it
 follows the definition of BCNF.
 
