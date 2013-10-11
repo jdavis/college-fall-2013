@@ -360,6 +360,29 @@
     \\
 
     \textbf{Solution}
+
+    First we must come up with a recurrence for the given algorithm. The
+    recurrence for \alg{TRAVERSE} is: \(T(n) = T(n/2) + T(n/2) + \Theta(1) +
+    1\). This is because each recursive call divides the binary tree into two
+    and conquers each branch recursively.
+    \\
+
+    Since \alg{visit} is a constant-time function, it can be represented in the
+    recurrence as \(\Theta(1)\). The extra addition of 1 is to capture the if
+    statement check. Similarly, this check has a constant run time which can be
+    absorbed into the \(\Theta(1)\) but left for clarity sake.
+    \\
+
+    By combining the recurrence we get \(T(n) = 2 \cdot T(n/2) + \Theta(1)\).
+    Using the master method, we get \(a = 2\), \(b = 2\), and \(f(n) =
+    \Theta(1)\). This gives us \(n^{\log_b a} = n^{\log_2 2} = n^1 = 1\).
+    \\
+
+    No matter what \(\epsilon\) equals as long as \(\epsilon > 0\), it will
+    always grow faster than a constant function. Therefore, this puts us into
+    the first case of the master method.  This says that \(T(n) = \Theta(n)\).
+    Thus it is a tight bound on the running time of the \alg{TRAVERSE}
+    algorithm and our analysis is complete.
 \end{homeworkProblem}
 
 \pagebreak
@@ -392,8 +415,8 @@
     \]
 
     This puts us in case 1 of the master method because \(f(n) = O(g(n))\)
-    where \(f(n) = 1\) and when \(\epsilon = 3\), \(g(n) = n^{\log_2 7 -
-    \epsilon} = n^{\log_2 7 - 3} = n^{\log_2 4} = n^2\).
+    where \(f(n) = 1\) and when \(\epsilon \approx .8\), \(g(n) = n^{\log_2 7 -
+    \epsilon} = n^{\log_2 7 - \epsilon} = n^2\).
     \\
 
     To prove that we are in case 1, we just need to find a \(c\) and \(n_0\)
