@@ -1,4 +1,5 @@
-COM S 461: Homework 2 =====================
+COM S 461: Homework 2
+=====================
 
 Josh Davis
 
@@ -71,7 +72,7 @@ relations given does A determine DE.
 - Let's try another set, `R3` and `R4`. This gives us `BF intersection FGH = F`.
   Since `F -> GH`, we can do `F -> FGH`. Now we need to check another relation.
 
-  Taking FGH, we are stuck because there are no other relations where the
+  Taking `FGH`, we are stuck because there are no other relations where the
   intersection isn't the empty set.
 
 - It looks like this `D2` isn't lossless because we have no way of joining all
