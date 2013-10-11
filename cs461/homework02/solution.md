@@ -22,7 +22,7 @@ BC -> A, E -> G}`.
 
 ### Is `D1 = {ABC, ACDE, ADG}` a lossless join decomposition? Why?
 
-- First let's look at `ABC and `ACDE`. The common attributes are `AC`. This
+- First let's look at `ABC. and `ACDE`. The common attributes are `AC`. This
   gives us `ABC intersection ACDE = AC` for the left side of the dependency. And
   `AC -> B` and by using Armstrong's Axioms, `AC -> ABC`, which is the
   intersection.
