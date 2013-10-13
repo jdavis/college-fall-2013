@@ -11,7 +11,7 @@
 (define p4
   (test-suite
    "the tests for your language features"
-   
+
    (test-case
     "test case 1."
     )
@@ -24,14 +24,14 @@
 (require rackunit/text-ui)
 
 (define (test suite)
-  (run-tests suite 'verbose)  
+  (run-tests suite 'verbose)
   )
 
 (define-syntax 342-check-exn
   (syntax-rules ()
     [ (342-check-exn expression exn-msg)
-      (check-equal? 
-       (with-handlers ([string? (lambda (err-msg) err-msg)]) 
+      (check-equal?
+       (with-handlers ([string? (lambda (err-msg) err-msg)])
          expression)
        exn-msg)
       ]

@@ -13,7 +13,7 @@
     (comment ("#" (arbno (not #\newline))) skip)
     (number (digit (arbno digit)) number)
     (number ("-" digit (arbno digit)) number)
-    
+
     (identifier (letter (arbno (or letter digit "_" "-" "?"))) symbol)
     )
   )
@@ -40,7 +40,7 @@
 ;value-of takes as a parameter an AST resulted from a call to the
 ;create-ast function.
 (define (run program-string)
-  'UNIMPLEMENTED  
+  'UNIMPLEMENTED
   )
 
 (define (value-of ast)
@@ -75,14 +75,14 @@
 
 ;create-ast is a one argument function that takes a string,
 ;scans & parses it and generates a resulting abstract
-;syntax tree. 
+;syntax tree.
 (define create-ast
   (sllgen:make-string-parser the-lexical-spec the-grammar))
 
 ;you can use this function to find out more about how
 ;the string is broken up into tokens during parsing,
 ;this step is automatically included in the create-ast
-;function. This is a one-argument function that takes a 
+;function. This is a one-argument function that takes a
 ;string.
 (define just-scan
   (sllgen:make-string-scanner the-lexical-spec the-grammar))
