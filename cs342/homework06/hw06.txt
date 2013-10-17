@@ -1,0 +1,182 @@
+			COM S 342
+		Fall 2013 Homework 06
+
+Directions:
+
+  This homework contains the following 5 files (start with hw06.txt)
+     hw06.txt
+     hw06-answer-sheet.rkt
+     hw06-env-values.rkt
+     hw06-p4-tests-yourlastname.rkt
+     hw06-tests.rkt
+
+
+  Specail thanks to Lorand Szakacs and Hridesh Rajan for the valuable help
+
+  This homework is designed also to provide you a code reading and "guessing"
+  opportunity (for example in problem 1)
+
+
+Suggested reading:
+    EOPL: 2.4 (refresh your memory on define-datatype)
+    EOPL: B.1-B.3 (about sllgen)
+    EOPL: 3.1-3.2 (implementation of language)
+
+
+Submission guideline:
+   You will submit two files, possibly three (read problem 5 for more info)
+   For sure the two files you have to submit are:
+       hw06-answer-sheet.rkt
+       hw06-p4-tests-yourlastname.rkt
+
+**************************************
+
+For this homework you will be implementing your first interpreter. To accomplish this
+you are using the framework sllgen introduced in class (B.1-B.3 in your textbook). Given
+lexical specifications (used for tokenizing the input into tokens) and abstract grammar
+(used for parsing the tokens), sllgen will generate a parser for you. This way, for an
+input string, the appropriate Abstract Syntax Tree (AST) of it can be automatically
+created. During Thursday's class, We gave an overview on Abstract Syntax, its difference
+from concrete syntax, here you will have a more tangible experience with it. We will be
+making use only of the AST in our implementations. (Another kind of abstraction for
+our convenience!)
+
+If you read the BNF grammar you will notice that the already well know
+up, down, left, right steps reappear. The reason is that we will be implementing
+a domain specific language that described the movement of an entity in a 2D grid.
+
+As a rule of thumb, every expression in our language will return a value. Currently
+the only values that can be returned by the language are described by the
+"expressed-val" datatype found in the "hw06-env-values.rkt" file. These
+values will be referred to as the "expressed values" of our language.
+
+Also, please read the answer-sheet carefully, it contains several tips.
+===============================================================================
+Given the language described by the following BNF grammar:
+
+<program> ::=
+             <expr>* a-program
+
+<expr> ::=
+           number           "num-expr"
+        | up(<expr>)        "up-expr"
+        | down(<expr>)      "down-expr"
+        | left(<expr>)      "left-expr"
+        | right(<expr>)     "right-expr"
+
+        | (<expr> <expr>)   "point-expr"
+        | + <expr> <expr>   "add-expr"
+        | origin? (<expr>)  "origin-expr"
+        | if (<expr>)
+           then <expr>
+           else <expr>       "if-expr"
+
+        | move (<expr> <expr> <expr>*)  "move-expr"
+
+note:
+  *, is the Kleene closure, and represents 0 or more of that thing that is
+  marked.
+
+Semantic annotations:
+  - up, down, left, right (<expr>)
+    <expr> will always have to evaluate to a num-expr
+
+  - (<expr> <expr>)
+    both <expr> in this point-expr will have to be num-expr
+
+  - origin? (<expr>)
+    <expr> is a point-expr
+
+  - if (<expr>) ...,
+    <expr> will have to be a point-expr
+
+  - + <expr> <expr>, you can *only* add together:
+    left-expr && left-expr
+    left-expr && right-expr
+    right-expr && right-expr
+    down-expr && down-expr
+    down-expr && up-expr
+    up-expr && down-expr
+    no other additions are allowed
+
+  - move (<expr> <expr> <expr>*)
+    the first <expr> has to be a <point-expr>
+    <expr> <expr>*, have to be up, down, left, right expressions
+
+
+===============================================================================
+1. [5p]
+Look in your answer sheet for "the-lexical-spec". Please describe in your own
+words how the program strings are "chopped up" based on this specification ?
+**write it under (define problem-1-answer ...) in your answer sheet.
+
+
+===============================================================================
+2. [15p]
+Write the grammar specification for the above described language under
+(define the-grammar '( ....) ) in your answer sheet.
+
+
+===============================================================================
+3. [30p]
+Implement the above language.
+**find the right place in your answer sheet to inject your code
+
+===============================================================================
+4. [20p]
+Add at least a new language feature of your own design. Please describe the semantics
+of your features, argue why you think they're useful and provide several test programs
+that use these features.
+
+***********IMPORTANT***********
+Please write these programs in the hw06-p4-tests-yourlastname.rkt file, separate
+from hw06-answer-sheet.rkt
+**********
+===============================================================================
+
+
+As you can notice the above version of the language does not have a concept
+of an identifier. Consider these new additions to the grammar of the language:
+
+<expr> ::=
+           <initial-language>
+         | identifier              "iden-expr"
+         | { <var-expr>* <expr> *} "block-expr"
+
+<var-expr> ::=
+               | val identifier = <expr>         "val"
+               | final val identifier = <expr>   "final-val"
+
+We had to make the distinction between <var-expr> and <expr> in order
+to be able to write the <block-expr> as is described. To better understand how sllgen
+works try writing the grammar without any distinction and see what happens.
+
+Semantic annotations
+   - whenever an identifier is encountered, it is evaluated to its bound value.
+
+   - block-expr, can have any number of variable declarations, i.e. <var-expr>
+     followed by any number of expressions <expr>. The value returned by the block-expr
+     ,just like in racket, is the value of the last statement. ALL previous expressions
+     still have to be evaluated.
+
+   - val identifier = <expr>, it will create a variable with the name "identifier" that
+     is bound to the value returned by the <expr>
+
+   - final val, similar to val, but the variable's definition cannot be overridden.
+     This is similar to what you implemented in the last homework, exercise 2.b.
+
+   - the return value of a val or final-val var-expr are undefined. i.e. you can
+     have them return whatever you wish.
+
+===============================================================================
+5. [30p]
+Implement the language features that support identifiers.
+
+***Note:
+To solve this last part you will have to make use of the environment datatype (already
+provided in the hw06-env-values.rkt file). This will require a few changes to the
+structure of your code so it is strongly recommended that after solving problem 3 you back
+up that implementation and start implementing these new features on a copy. If you cannot
+finish problem 5 then you can submit two separate files, one containing the untarnished,
+(hopefully, correct) solution for problem 3, and another file containing your solution for
+problem 5. If all language features are implemented correctly, please submit only one file.

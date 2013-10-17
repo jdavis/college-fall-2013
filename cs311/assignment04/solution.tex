@@ -116,7 +116,6 @@
         \\
 
         By using the following knowledge:
-
         \[
             \exists c_1 \exists c_2 \forall n \geq n_0,\ {c_1 \cdot g(n) \leq
             f(n) \leq c_2 \cdot g(n)}
@@ -148,7 +147,6 @@
         recurrence as follows: \(T(n) = T(n - 1) + \Theta(1)\) where the work
         done at each step is constant. By using the substitution method we get
         the following:
-
         \[
             \begin{split}
                 T(n) &= T(n - 1) + \Theta(1)
@@ -197,32 +195,33 @@
 
         \textbf{Step}
 
-        We wish to show for a AVL tree with a depth of \(d + 1\) and a balance
-        factor of 0, it still creates a ``full'' binary tree in that at every
-        depth there are \(2^{d + 1}\) nodes.
+        We wish to show for a AVL tree with a depth of \(d\), if we expand it
+        so that the depth equals \(d + 1)\) and the balance factor is still 0,
+        it must create a ``full'' binary tree in that at the last depth, \(d +
+        1\) there will still be \(2^{d + 1}\) nodes.
         \\
 
         Consider two AVL trees \(T_1\) and \(T_2\) both with a depth \(d\) and
         balance factors of 0. If we were to construct a new AVL tree \(T\) by
         taking a new node and adding \(T_1\) and \(T_2\) as subtrees to the new
         root, we would end up with a new tree. The new tree would then have a
-        depth of \(d + 1\) because the new root adds one to the depth.
+        depth of \(d + 1\) because the new root adds one to the depth. Since
+        both \(T_1\) and \(T_2\) both have the same number of nodes, our new
+        tree has a balance factor of 0.
         \\
 
         Since we are taking two AVL trees with balance factors of 0, we get the
-        following:
-
+        following at the last level:
         \[
             \begin{split}
-                \mbox{nodes at level } d &= \mbox{nodes at level d of } T_1 + \mbox{nodes at level d of } T_2
+                \mbox{nodes at level } d + 1 &= \mbox{nodes at level d of } T_1 + \mbox{nodes at level d of } T_2
             \end{split}
         \]
 
-        By assuming the induction hypothesis and get the following:
-
+        By assuming the induction hypothesis we get the following:
         \[
             \begin{split}
-                \mbox{nodes at level } d &= 2^d + 2^d
+                \mbox{nodes at level } d + 1 &= 2^d + 2^d
                 \\
                 &= 2 \cdot 2^d
                 \\
@@ -230,8 +229,8 @@
             \end{split}
         \]
 
-        Thus at every depth of a AVL tree with a depth of \(d + 1\) and a
-        balance factor of 0 still has \(2^{d}\) or 0 nodes.
+        Thus we can see that adding any more nodes would unbalance the tree and
+        it wouldn't be full anymore. Thus the proof is complete.
     \end{proof}
 \end{homeworkProblem}
 
@@ -278,7 +277,6 @@
     Let \(H\) be an empty hash table with \(n = 6\) bins. Assume that \(H\)
     stores integers according to the hash function \(h(x) = x\) and the probing
     function:
-
     \[
         P(x, i) = \left\{
             \begin{array}{ll}
@@ -362,6 +360,29 @@
     \\
 
     \textbf{Solution}
+
+    First we must come up with a recurrence for the given algorithm. The
+    recurrence for \alg{TRAVERSE} is: \(T(n) = T(n/2) + T(n/2) + \Theta(1) +
+    1\). This is because each recursive call divides the binary tree into two
+    and conquers each branch recursively.
+    \\
+
+    Since \alg{visit} is a constant-time function, it can be represented in the
+    recurrence as \(\Theta(1)\). The extra addition of 1 is to capture the if
+    statement check. Similarly, this check has a constant run time which can be
+    absorbed into the \(\Theta(1)\) but left for clarity sake.
+    \\
+
+    By combining the recurrence we get \(T(n) = 2 \cdot T(n/2) + \Theta(1)\).
+    Using the master method, we get \(a = 2\), \(b = 2\), and \(f(n) =
+    \Theta(1)\). This gives us \(n^{\log_b a} = n^{\log_2 2} = n^1 = 1\).
+    \\
+
+    No matter what \(\epsilon\) equals as long as \(\epsilon > 0\), it will
+    always grow faster than a constant function. Therefore, this puts us into
+    the first case of the master method.  This says that \(T(n) = \Theta(n)\).
+    Thus it is a tight bound on the running time of the \alg{TRAVERSE}
+    algorithm and our analysis is complete.
 \end{homeworkProblem}
 
 \pagebreak
@@ -387,6 +408,7 @@
     \\
 
     \textbf{Part One}
+
     We have \(a = 7\), \(b = 2\) and \(f(n) = 1\). According to the Master
     Method, this gives us:
     \[
@@ -394,8 +416,8 @@
     \]
 
     This puts us in case 1 of the master method because \(f(n) = O(g(n))\)
-    where \(f(n) = 1\) and when \(\epsilon = 3\), \(g(n) = n^{\log_2 7 -
-    \epsilon} = n^{\log_2 7 - 3} = n^{\log_2 4} = n^2\).
+    where \(f(n) = 1\) and when \(\epsilon \approx .8\), \(g(n) = n^{\log_2 7 -
+    \epsilon} = n^{\log_2 7 - \epsilon} = n^2\).
     \\
 
     To prove that we are in case 1, we just need to find a \(c\) and \(n_0\)
@@ -428,8 +450,6 @@
         To prove the induction step, we can assume that \(n > 1\) and that
         \(n\) is a power of two. The induction hypothesis is thus \(T(n) =
         \dfrac{1}{6}(7{n}^{log_2 7} - 1)\). This give us:
-        \\
-
         \[
             \begin{split}
                 T(n) &= 7 \cdot T(n/2) + 1
@@ -539,7 +559,6 @@
     is if the mid selected is equal to the end and only cuts down the list by a
     single element each time. This would cause the recurrence to be the
     following:
-
     \[
         \begin{split}
             T(n) &= T(n - 1) + T(0) + \Theta(end - start)
@@ -566,7 +585,6 @@
     problem is as close to the same size as possible. This means that it will
     half the problem size for each recursive call. This gives us the recurrence
     of the following:
-
     \[
         \begin{split}
             T(n) &= T(n/2) + T(n/2) + \Theta(end - start)
@@ -602,6 +620,29 @@
               before the last ant steps off the rope?
         \item In what situation does the worst-case time arise?
     \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    When two ants bounce off each other, it has no affect on the actual travel
+    times. If the ants didn't bounce and just continued to travel, the solution
+    would still be the same. Therefore since the rope is 10 feet long and the
+    ants travel at 10 ft per minute, the longest time it would take for the
+    rope to be clear of ants is 1 minute.
+    \\
+
+    \textbf{Part Two}
+
+    The worst case time would arise whenever an ant is placed at the very edge
+    of the rope. The ant that will be left on the rope last will always be the
+    ant that is farthest from the respective end that it faces.
+    \\
+
+    Therefore even if there are two ants placed on the edge of the rope facing
+    inwards, they will both fall off at after 1 minute because they will meet
+    in the middle and then reverse and travel the remaining half of the rope.
 \end{homeworkProblem}
 
 \end{document}
