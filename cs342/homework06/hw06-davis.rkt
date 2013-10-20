@@ -74,7 +74,7 @@
       add-expr)
 
     (expression
-      ("move" "(" (arbno expression) ")")
+      ("move" "(" expression expression (arbno expression) ")")
       move-expr)
     ))
 
@@ -150,7 +150,10 @@
                     ([ifval (value-of-ast-node-expression ifexp)]
                      [val1 (value-of-ast-node-expression exp1)]
                      [val2 (value-of-ast-node-expression exp2)])
-                    (if ifval val1 val2)))
+                    (if
+                      (bool-val->b ifval)
+                      val1
+                      val2)))
 
          (add-expr (exp1 exp2)
                    (let
@@ -158,7 +161,11 @@
                       [val2 (value-of-ast-node-expression exp2)])
                      (step-val (add-steps val1 val2))))
 
-         (move-expr (exp1) 0)))
+         (move-expr (exp1 exp2 exps)
+                    (foldl
+                      move-helper
+                      (value-of-ast-node-expression exp1)
+                      (cons exp2 exps)))))
 
 (define (add-steps exp1 exp2)
   (let
@@ -215,6 +222,29 @@
          ((> st1v st2v)
           (right-step (- st1v st2v)))
          (else (left-step (- st2v st1v))))))))
+
+(define (move-helper exp1 exp2)
+  (displayln "move helper!")
+  (displayln exp1)
+  (displayln exp2)
+  (letrec
+    ([step (step-val->st (value-of-ast-node-expression exp1))]
+     [n (single-step->n step)]
+     [p (point-val->p exp2)]
+     [x (point->x p)]
+     [y (point->y p)])
+    (displayln "valued")
+    (displayln step)
+    (displayln n)
+    (displayln p)
+    (displayln x)
+    (displayln y)
+    (point-val
+      (cond
+        ((up-step? step) (point x (+ n y)))
+        ((down-step? step) (point x (- y n)))
+        ((left-step? step) (point (- x n) y))
+        ((right-step? step) (point (+ n x) y))))))
 
 ;===============================================================================
 ;============================= sllgen boilerplate ==============================
