@@ -14,6 +14,10 @@
     (number (digit (arbno digit)) number)
     (number ("-" digit (arbno digit)) number)
 
+    ; Add support for decimals
+    (number ((arbno digit) "." digit (arbno digit)) number)
+    (number ("-" (arbno digit) "." digit (arbno digit)) number)
+
     (identifier (letter (arbno (or letter digit "_" "-" "?"))) symbol)
     )
   )
@@ -66,6 +70,10 @@
       origin-expr)
 
     (expression
+      ("line" "(" expression expression ")" "at" expression)
+      line-expr)
+
+    (expression
       ("if" "(" expression ")" "then" expression "else" expression)
       if-expr)
 
@@ -96,8 +104,6 @@
 ;for each different ast node type, e.g. <program>, <expr>, <var-expr> you might
 ;consider implementing a function with the outline:
 (define (value-of-ast-node-program ast)
-  (displayln "program ast")
-  (displayln ast)
   (cases program ast
          (a-program (exp1) (value-of-ast-node-expressions exp1))))
 
@@ -139,8 +145,6 @@
 
          (origin-expr (exp1)
                       (let ([p (point-val->p (value-of-ast-node-expression exp1))])
-                        (displayln "origin!")
-                        (displayln p)
                         (bool-val
                           (and (= 0 (point->x p))
                                (= 0 (point->y p))))))
@@ -165,7 +169,21 @@
                     (foldl
                       move-helper
                       (value-of-ast-node-expression exp1)
-                      (cons exp2 exps)))))
+                      (cons exp2 exps)))
+         (line-expr (exp1 exp2 exp3)
+                    (letrec
+                      ([p1 (point-val->p (value-of-ast-node-expression exp1))]
+                       [x1 (point->x p1)]
+                       [y1 (point->y p1)]
+                       [p2 (point-val->p (value-of-ast-node-expression exp2))]
+                       [x2 (point->x p2)]
+                       [y2 (point->y p2)]
+                       [x (num-val->n (value-of-ast-node-expression exp3))]
+                       [slope (/ (- y2 y1) (- x2 x1))])
+                      (num-val
+                        (+
+                          (* slope x)
+                          (- y1 (* slope x1))))))))
 
 (define (add-steps exp1 exp2)
   (let
@@ -224,21 +242,12 @@
          (else (left-step (- st2v st1v))))))))
 
 (define (move-helper exp1 exp2)
-  (displayln "move helper!")
-  (displayln exp1)
-  (displayln exp2)
   (letrec
     ([step (step-val->st (value-of-ast-node-expression exp1))]
      [n (single-step->n step)]
      [p (point-val->p exp2)]
      [x (point->x p)]
      [y (point->y p)])
-    (displayln "valued")
-    (displayln step)
-    (displayln n)
-    (displayln p)
-    (displayln x)
-    (displayln y)
     (point-val
       (cond
         ((up-step? step) (point x (+ n y)))
