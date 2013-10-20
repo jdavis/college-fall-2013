@@ -26,10 +26,48 @@
 
 (define the-grammar
   '(
-    ;please remove this before you start writting your gramar
-    (unimplemented ("unimlpemented") unimplemented-expr)
-    )
-  )
+    (program ((arbno expression)) a-program)
+
+    (expression
+     (number)
+     num-expr)
+
+    (expression
+     ("up" "(" expression ")")
+     up-expr)
+
+    (expression
+     ("down" "(" expression ")")
+     down-expr)
+
+    (expression
+     ("left" "(" expression ")")
+     left-expr)
+
+    (expression
+     ("right" "(" expression ")")
+     right-expr)
+
+    (expression
+      ("(" expression expression ")")
+      point-expr)
+
+    (expression
+      ("origin?" "(" expression ")")
+      origin-expr)
+
+    (expression
+      ("if" "(" expression ")" "then" expression "else" expression)
+      if-expr)
+
+    (expression
+      ("+" expression expression)
+      add-expr)
+
+    (expression
+      ("move" "(" (arbno expression) ")")
+      move-expr)
+    ))
 
 ;given one or more arguments this function will return a flat list
 (define (flat-list el1 . rest)
