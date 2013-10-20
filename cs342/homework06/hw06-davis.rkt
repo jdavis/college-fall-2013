@@ -71,20 +71,18 @@
 
 ;given one or more arguments this function will return a flat list
 (define (flat-list el1 . rest)
-  (flatten (list el1 rest))
-  )
+  (flatten (list el1 rest)))
+
 ;===============================================================================
 ;================================ Value-of =====================================
 ;===============================================================================
 ;value-of takes as a parameter an AST resulted from a call to the
 ;create-ast function.
 (define (run program-string)
-  'UNIMPLEMENTED
-  )
+  (value-of (create-ast program-string)))
 
 (define (value-of ast)
-  'UNIMPLEMENTED
-  )
+  (value-of-ast-node-program ast))
 
 ;for each different ast node type, e.g. <program>, <expr>, <var-expr> you might
 ;consider implementing a function with the outline:
