@@ -2,7 +2,7 @@
 (#%provide (all-defined))
 (#%require rackunit)
 
-(#%require "hw06-answer-sheet.rkt")
+(#%require "hw06-davis.rkt")
 (#%require "hw06-env-values.rkt")
 
 ;this function will run all the tests.
@@ -756,3 +756,5 @@
       ]
     )
   )
+
+(test p3)
