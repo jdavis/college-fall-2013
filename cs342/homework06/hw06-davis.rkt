@@ -132,8 +132,9 @@
                       (let ([p (point-val->p (value-of-ast-node-expression exp1))])
                         (displayln "origin!")
                         (displayln p)
-                        (and (= 0 (point->x p))
-                             (= 0 (point->y p)))))
+                        (bool-val
+                          (and (= 0 (point->x p))
+                               (= 0 (point->y p))))))
 
          (if-expr (ifexp exp1 exp2)
                   (let
