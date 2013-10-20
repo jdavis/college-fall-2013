@@ -20,7 +20,8 @@
 
 ;write your answer in string form:
 (define problem-1-answer
-  "No answer"
+  "First off, whitespace is insignificant. A comment goes from # to a new line and is skipped.
+  Numbers are"
   )
 
 (define the-grammar
