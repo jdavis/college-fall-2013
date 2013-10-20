@@ -20,9 +20,18 @@
 
 ;write your answer in string form:
 (define problem-1-answer
-  "First off, whitespace is insignificant. A comment goes from # to a new line and is skipped.
-  Numbers are"
-  )
+  "The parser will break up everything into tokens based on these 4 rules:
+
+  1. Whitespace is insignificant.
+
+  2. A comment goes from # to a new line and is skipped.
+
+  3. Numbers are a token that starts with either a digit or a - sign and
+  followed by any number of digits. The datum type is a Racket number.
+
+  4. Then an identifier is anything that starts with a letter and then any number
+  of digits, letters, or special characters '_-?'. The datum type is a Racket
+  symbol.")
 
 (define the-grammar
   '(
