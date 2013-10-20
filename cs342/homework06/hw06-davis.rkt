@@ -86,17 +86,126 @@
 
 ;for each different ast node type, e.g. <program>, <expr>, <var-expr> you might
 ;consider implementing a function with the outline:
-#|
-(define (value-of-ast-node-type ast)
-  (cases ast-node-type ast
-    (ast-node-type-variant
-     (f1 f2)
-     'UNIMPLEMENTED
-     )
-    (else (raise (~a "value-of-ast-node-type error: unimplemented expression: " ast)))
-    )
-  )
-|#
+(define (value-of-ast-node-program ast)
+  (displayln "program ast")
+  (displayln ast)
+  (cases program ast
+         (a-program (exp1) (value-of-ast-node-expressions exp1))))
+
+(define (value-of-ast-node-expressions asts)
+  (cond
+    ((null? (cdr asts)) (value-of-ast-node-expression (car asts)))
+    (else
+      (value-of-ast-node-expression (car asts))
+      (value-of-ast-node-expressions (cdr asts)))))
+
+(define (value-of-ast-node-expression ast)
+  (cases expression ast
+         (num-expr (num)
+                   (num-val num))
+
+         (up-expr (exp1)
+                  (let ([val1 (value-of-ast-node-expression exp1)])
+                    (step-val (up-step (num-val->n val1)))))
+
+         (down-expr (exp1)
+                  (let ([val1 (value-of-ast-node-expression exp1)])
+                    (step-val (down-step (num-val->n val1)))))
+
+         (left-expr (exp1)
+                    (let ([val1 (value-of-ast-node-expression exp1)])
+                      (step-val (left-step (num-val->n val1)))))
+
+         (right-expr (exp1)
+                    (let ([val1 (value-of-ast-node-expression exp1)])
+                      (step-val (right-step (num-val->n val1)))))
+
+         (point-expr (exp1 exp2)
+                     (let ([val1 (value-of-ast-node-expression exp1)]
+                           [val2 (value-of-ast-node-expression exp2)])
+                       (point-val
+                         (point
+                           (num-val->n val1)
+                           (num-val->n val2)))))
+
+         (origin-expr (exp1)
+                      (let ([p (point-val->p (value-of-ast-node-expression exp1))])
+                        (displayln "origin!")
+                        (displayln p)
+                        (and (= 0 (point->x p))
+                             (= 0 (point->y p)))))
+
+         (if-expr (ifexp exp1 exp2)
+                  (let
+                    ([ifval (value-of-ast-node-expression ifexp)]
+                     [val1 (value-of-ast-node-expression exp1)]
+                     [val2 (value-of-ast-node-expression exp2)])
+                    (if ifval val1 val2)))
+
+         (add-expr (exp1 exp2)
+                   (let
+                     ([val1 (value-of-ast-node-expression exp1)]
+                      [val2 (value-of-ast-node-expression exp2)])
+                     (step-val (add-steps val1 val2))))
+
+         (move-expr (exp1) 0)))
+
+(define (add-steps exp1 exp2)
+  (let
+    ([st1 (step-val->st exp1)]
+     [st2 (step-val->st exp2)]
+     [st1v (single-step->n (step-val->st exp1))]
+     [st2v (single-step->n (step-val->st exp2))])
+    (cond
+      ((and
+         (left-step? st1)
+         (left-step? st2))
+       (left-step
+         (+ st1v st2v)))
+      ((and
+         (up-step? st1)
+         (up-step? st2))
+       (up-step
+         (+ st1v st2v)))
+      ((and
+         (right-step? st1)
+         (right-step? st2))
+       (right-step
+         (+ st1v st2v)))
+      ((and
+         (down-step? st1)
+         (down-step? st2))
+       (down-step
+         (+ st1v st2v)))
+      ((and
+         (up-step? st1)
+         (down-step? st2))
+       (cond
+         ((> st1v st2v)
+          (up-step (- st1v st2v)))
+         (else (down-step (- st2v st1v)))))
+      ((and
+         (down-step? st1)
+         (up-step? st2))
+       (cond
+         ((> st1v st2v)
+          (down-step (- st1v st2v)))
+         (else (up-step (- st2v st1v)))))
+      ((and
+         (left-step? st1)
+         (right-step? st2))
+       (cond
+         ((> st1v st2v)
+          (left-step (- st1v st2v)))
+         (else (right-step (- st2v st1v)))))
+      ((and
+         (right-step? st1)
+         (left-step? st2))
+       (cond
+         ((> st1v st2v)
+          (right-step (- st1v st2v)))
+         (else (left-step (- st2v st1v))))))))
+
 ;===============================================================================
 ;============================= sllgen boilerplate ==============================
 ;===============================================================================
