@@ -111,6 +111,3 @@
       ]
     )
   )
-
-; TODO: Remove
-(test p4)
