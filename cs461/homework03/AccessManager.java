@@ -1,22 +1,21 @@
 public class AccessManager implements AccessManagerInterface {
+    private Database db;
+    private ArrayList<Table>[] tables;
+    private PageFormat pFormat;
+    private RecordFormat rFormat;
 
-    public boolean createTable(Object db, String tableName, Object[] fields) {
+    public AccessManager() {
+        tables = new ArrayList<Table>();
+    }
+
+    Table createTable(String tableName, Field[] fields) {
 
     }
 
-    public Object readRecord(Object db, String tableName, int rid) {
-
-    }
-
-    public boolean writeRecord(Object db, String tableName, int rid) {
-
-    }
-
-    public boolean deleteRecord(Object db, String tableName, int rid) {
-
-    }
-
-    public boolean append(Object db, String tableName, Object record) {
-
-    }
+    boolean deleteTable(String tableName);
+    Record readRecord(String tableName, int rid);
+    boolean writeRecord(String tableName, int rid, Record record);
+    boolean deleteRecord(String tableName, int rid);
+    void setRecordFormat(RecordFormat format);
+    void setPageFormat(PageFormat format);
 }

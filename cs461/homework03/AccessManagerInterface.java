@@ -1,7 +1,9 @@
 public interface AccessManagerInterface {
-    boolean createTable(Object db, String tableName, Object[] fields);
-    Object readRecord(Object db, String tableName, int rid);
-    boolean writeRecord(Object db, String tableName, int rid);
-    boolean deleteRecord(Object db, String tableName, int rid);
-    boolean append(Object db, String tableName, Object record);
+    Table createTable(String tableName, Object[] fields);
+    boolean deleteTable(String tableName);
+    Record readRecord(String tableName, int rid);
+    boolean writeRecord(String tableName, int rid, Record record);
+    boolean deleteRecord(String tableName, int rid);
+    void setRecordFormat(RecordFormat format);
+    void setPageFormat(PageFormat format);
 }
