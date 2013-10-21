@@ -84,6 +84,22 @@
     (expression
       ("move" "(" expression expression (arbno expression) ")")
       move-expr)
+
+    (expression
+      (identifier)
+      iden-expr)
+
+    (expression
+      ("{" (arbno var-expr) (arbno expression) "}")
+      block-expr)
+
+    (var-expr
+      ("val" identifier "=" expression)
+      val)
+
+    (var-expr
+      ("final" "val" identifier "=" expression)
+      final-val)
     ))
 
 ;given one or more arguments this function will return a flat list
@@ -96,64 +112,61 @@
 ;value-of takes as a parameter an AST resulted from a call to the
 ;create-ast function.
 (define (run program-string)
-  (value-of (create-ast program-string)))
+  (value-of (create-ast program-string) (empty-env)))
 
-(define (value-of ast)
-  (value-of-ast-node-program ast))
+(define (value-of ast env)
+  (cond
+    ((program? ast) (value-of-ast-node-program ast env))
+    ((var-expr? ast) (value-of-ast-node-var ast env))
+    ((expression? ast) (value-of-ast-node-expression ast env))
+    (else 0)))
 
 ;for each different ast node type, e.g. <program>, <expr>, <var-expr> you might
 ;consider implementing a function with the outline:
-(define (value-of-ast-node-program ast)
+(define (value-of-ast-node-program ast env)
   (cases program ast
-         (a-program (exp1) (value-of-ast-node-expressions exp1))))
+         (a-program (exprs) (last (map (lambda (x) (value-of x env)) exprs)))))
 
-(define (value-of-ast-node-expressions asts)
-  (cond
-    ((null? (cdr asts)) (value-of-ast-node-expression (car asts)))
-    (else
-      (value-of-ast-node-expression (car asts))
-      (value-of-ast-node-expressions (cdr asts)))))
-
-(define (value-of-ast-node-expression ast)
+(define (value-of-ast-node-expression ast env)
   (cases expression ast
          (num-expr (num)
                    (num-val num))
 
          (up-expr (exp1)
-                  (let ([val1 (value-of-ast-node-expression exp1)])
+                  (let ([val1 (value-of exp1 env)])
                     (step-val (up-step (num-val->n val1)))))
 
          (down-expr (exp1)
-                  (let ([val1 (value-of-ast-node-expression exp1)])
+                  (let ([val1 (value-of exp1 env)])
                     (step-val (down-step (num-val->n val1)))))
 
          (left-expr (exp1)
-                    (let ([val1 (value-of-ast-node-expression exp1)])
+                    (let ([val1 (value-of exp1 env)])
                       (step-val (left-step (num-val->n val1)))))
 
          (right-expr (exp1)
-                    (let ([val1 (value-of-ast-node-expression exp1)])
+                    (let ([val1 (value-of exp1 env)])
                       (step-val (right-step (num-val->n val1)))))
 
          (point-expr (exp1 exp2)
-                     (let ([val1 (value-of-ast-node-expression exp1)]
-                           [val2 (value-of-ast-node-expression exp2)])
+                     (let ([val1 (value-of exp1 env)]
+                           [val2 (value-of exp2 env)])
                        (point-val
                          (point
                            (num-val->n val1)
                            (num-val->n val2)))))
 
          (origin-expr (exp1)
-                      (let ([p (point-val->p (value-of-ast-node-expression exp1))])
+                      (let ([p (point-val->p (value-of exp1 env))])
                         (bool-val
                           (and (= 0 (point->x p))
                                (= 0 (point->y p))))))
 
          (if-expr (ifexp exp1 exp2)
                   (let
-                    ([ifval (value-of-ast-node-expression ifexp)]
-                     [val1 (value-of-ast-node-expression exp1)]
-                     [val2 (value-of-ast-node-expression exp2)])
+                    ([ifval (value-of ifexp env)]
+                     [val1 (value-of exp1 env)]
+                     [val2 (value-of exp2 env)])
                     (if
                       (bool-val->b ifval)
                       val1
@@ -161,29 +174,57 @@
 
          (add-expr (exp1 exp2)
                    (let
-                     ([val1 (value-of-ast-node-expression exp1)]
-                      [val2 (value-of-ast-node-expression exp2)])
+                     ([val1 (value-of exp1 env)]
+                      [val2 (value-of exp2 env)])
                      (step-val (add-steps val1 val2))))
 
          (move-expr (exp1 exp2 exps)
                     (foldl
-                      move-helper
-                      (value-of-ast-node-expression exp1)
+                      (lambda (x1 x2) (move-helper env x1 x2))
+                      (value-of exp1 env)
                       (cons exp2 exps)))
          (line-expr (exp1 exp2 exp3)
                     (letrec
-                      ([p1 (point-val->p (value-of-ast-node-expression exp1))]
+                      ([p1 (point-val->p (value-of exp1 env))]
                        [x1 (point->x p1)]
                        [y1 (point->y p1)]
-                       [p2 (point-val->p (value-of-ast-node-expression exp2))]
+                       [p2 (point-val->p (value-of exp2 env))]
                        [x2 (point->x p2)]
                        [y2 (point->y p2)]
-                       [x (num-val->n (value-of-ast-node-expression exp3))]
+                       [x (num-val->n (value-of exp3 env))]
                        [slope (/ (- y2 y1) (- x2 x1))])
                       (num-val
                         (+
                           (* slope x)
-                          (- y1 (* slope x1))))))))
+                          (- y1 (* slope x1))))))
+         (iden-expr (iden)
+                    (apply-env env iden))
+         (block-expr (var-exprs exprs)
+                     (cond
+                       ((null? exprs) 0)
+                       (else
+                         (let
+                           ([scope (update-env var-exprs env)])
+                           (last (map (lambda (x) (value-of x scope)) exprs))))))))
+
+(define (value-of-ast-node-var ast env)
+  (cases var-expr ast
+         (val (iden expr1)
+              (let
+                ([val1 (value-of expr1 env)])
+                (extend-env-wrapper iden val1 env #f)))
+         (final-val (iden expr1)
+              (let
+                ([val1 (value-of expr1 env)])
+                (extend-env-wrapper iden val1 env #t)))))
+
+(define (update-env vars env)
+  (cond
+    ((null? vars) env)
+    (else
+      (update-env
+        (cdr vars)
+        (value-of (car vars) env)))))
 
 (define (add-steps exp1 exp2)
   (let
@@ -241,9 +282,9 @@
           (right-step (- st1v st2v)))
          (else (left-step (- st2v st1v))))))))
 
-(define (move-helper exp1 exp2)
+(define (move-helper env exp1 exp2)
   (letrec
-    ([step (step-val->st (value-of-ast-node-expression exp1))]
+    ([step (step-val->st (value-of exp1 env))]
      [n (single-step->n step)]
      [p (point-val->p exp2)]
      [x (point->x p)]
