@@ -24,7 +24,7 @@ public class AccessManager implements AccessManagerInterface {
             final PageFormat givenPageFormat,
             final RecordFormat givenRecordFormat) {
         // Create a new Collection of Tables
-        tables = new HashMap<String, Table>();
+        tables = givenDB.loadTables();
 
         // Assign constructor values
         db = givenDB;
@@ -39,7 +39,7 @@ public class AccessManager implements AccessManagerInterface {
      */
     public final void createTable(final String tableName,
             final Field[] fields) {
-        Table table = new Table(fields);
+        Table table = new Table(fields, pageFormat, recordFormat);
 
         tables.put(tableName, table);
     }
@@ -78,21 +78,22 @@ public class AccessManager implements AccessManagerInterface {
             final int rid) throws DBMSException {
         Table table = getTable(tableName);
 
-        return table.readRecord(rid, recordFormat);
+        return table.readRecord(rid);
     }
 
     /**
      * Writes a given Record to its Table.
+     * @param tableName Name of the table.
      * @param rid ID of the Record.
      * @param record Record to write.
      * @throws DBMSException on any error.
      */
-    public void writeRecord(final String tableName,
+    public final void writeRecord(final String tableName,
             final int rid,
             final Record record) throws DBMSException {
         Table table = getTable(tableName);
 
-        table.writeRecord(rid, record, recordFormat);
+        table.writeRecord(rid, record);
     }
 
     /**
@@ -105,7 +106,7 @@ public class AccessManager implements AccessManagerInterface {
             final int rid) throws DBMSException {
         Table table = getTable(tableName);
 
-        table.deleteRecord(rid, recordFormat);
+        table.deleteRecord(rid);
     }
 
     /**
@@ -132,10 +133,27 @@ public class AccessManager implements AccessManagerInterface {
         // Page.
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ObjectOutputStream serializer = new ObjectOutputStream(out);
+
+        // Contains mapping from Database to Tables
+        serializer.writeObject(db);
+
+        // Contains mapping from Tables to Pages + Field info
         serializer.writeObject(tables);
+
+        // Close serializer
         serializer.close();
 
+        // Read the first Page into memory.
+        Page page = DiskManager.readPage(0);
 
+        // Write the Database information to it
+        page.writeBytes(out.toByteArray());
+
+        // Write it back to disk
+        DiskManager.writePage(0, page);
+
+        // Clean up
+        out.close();
     }
 
     /**
