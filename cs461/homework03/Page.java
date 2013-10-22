@@ -1,4 +1,4 @@
-public interface Page {
+public class Page {
     void setPageID(int pid);
     int getPageID();
     void setPageFormat(PageFormat format);
