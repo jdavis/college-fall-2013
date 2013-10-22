@@ -11,8 +11,9 @@ public interface RecordFormat {
 
     /**
      * Reads a Record from an array of bytes.
+     * @param fields Fields to look for.
      * @param bytes Array of bytes to read.
      * @return Record that was read.
      */
-    Record readRecord(final byte[] bytes);
+    Record readRecord(final Field[] fields, final byte[] bytes);
 }
