@@ -1,25 +1,65 @@
+/**
+ * Main interface to the DBMS.
+ */
 public class AccessManager implements AccessManagerInterface {
+    /** Database connection info to use. */
     private Database db;
+
+    /** List of tables in the database. */
     private HashMap<String, Table> tables;
+
+    /** The PageFormat to use when placing a Record into a Page. */
     private PageFormat pageFormat;
+
+    /** The RecordFormat to use when writing a Record. */
     private RecordFormat recordFormat;
 
-    public AccessManager() {
+    /**
+     * Creates a new AccessManager.
+     * @param givenDB Database info to access.
+     * @param givenPageFormat PageFormat to access.
+     * @param givenRecordFormat RecordFormat to access.
+     */
+    public AccessManager(final Database givenDB,
+            final PageFormat givenPageFormat,
+            final RecordFormat givenRecordFormat) {
+        // Create a new Collection of Tables
         tables = new HashMap<String, Table>();
+
+        // Assign constructor values
+        db = givenDB;
+        pageFormat = givenPageFormat;
+        recordFormat = givenRecordFormat;
     }
 
-    public void createTable(String tableName, Field[] fields) {
+    /**
+     * Creates a new Table.
+     * @param tableName Name of the new table.
+     * @param fields Array of Fields to use.
+     */
+    public final void createTable(final String tableName,
+            final Field[] fields) {
         Table table = new Table(fields);
 
         tables.put(tableName, table);
     }
 
-    public boolean tableExists(String tableName) {
+    /**
+     * Checks whether a table exists in the database.
+     * @param tableName Name of the table.
+     * @return True or false depending on the existence of the table.
+     */
+    public final boolean tableExists(final String tableName) {
         return tables.contains(tableName);
     }
 
-    public void deleteTable(String tableName) {
-        Table table = tables.get(tableName);
+    /**
+     * Deletes a table.
+     * @param tableName Name of the table to delete.
+     * @throws DBMSException on any error.
+     */
+    public final void deleteTable(final String tableName) throws DBMSException {
+        Table table = getTable(tableName);
 
         table.delete();
 
@@ -27,33 +67,67 @@ public class AccessManager implements AccessManagerInterface {
         tables.remove(tableName);
     }
 
-    public Record readRecord(String tableName, int rid) {
+    /**
+     * Reads and returns a record.
+     * @param tableName Name of the table to search.
+     * @param rid Record ID to read.
+     * @return The record that matches the ID given.
+     * @throws DBMSException on any error.
+     */
+    public final Record readRecord(final String tableName,
+            final int rid) throws DBMSException {
         Table table = getTable(tableName);
 
         return table.readRecord(rid, recordFormat);
     }
 
-    public void writeRecord(String tableName, int rid, Record record) {
+    /**
+     * Writes a given Record to its Table.
+     * @param rid ID of the Record.
+     * @param record Record to write.
+     * @throws DBMSException on any error.
+     */
+    public void writeRecord(final String tableName,
+            final int rid,
+            final Record record) throws DBMSException {
         Table table = getTable(tableName);
 
         table.writeRecord(rid, record, recordFormat);
     }
 
-    public void deleteRecord(String tableName, int rid) {
+    /**
+     * Deletes a record.
+     * @param tableName Name of the table.
+     * @param rid Record ID to delete.
+     * @throws DBMSException on any error.
+     */
+    public final void deleteRecord(final String tableName,
+            final int rid) throws DBMSException {
         Table table = getTable(tableName);
 
         table.deleteRecord(rid, recordFormat);
     }
 
-    public void setRecordFormat(RecordFormat format) {
+    /**
+     * Sets the RecordFormat when serializing it.
+     * @param format RecordFormat to use.
+     */
+    public final void setRecordFormat(final RecordFormat format) {
         recordFormat = format;
     }
 
-    public void setPageFormat(PageFormat format) {
+    /**
+     * Sets the PageFormat for when saving a Record to a Page.
+     * @param format PageFormat to use.
+     */
+    public final void setPageFormat(final PageFormat format) {
         pageFormat = format;
     }
 
-    public void close() {
+    /**
+     * Closes the database to ensure everything is saved.
+     */
+    public final void close() {
         // Write all schema and mapping from records to pages to the first
         // Page.
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -64,11 +138,17 @@ public class AccessManager implements AccessManagerInterface {
 
     }
 
-    private Table getTable(String name) {
+    /**
+     * Helper to check if a table exists and return it.
+     * @param name Name of the table.
+     * @return Table that matches.
+     * @throws DBMSException on any error.
+     */
+    private Table getTable(final String name) throws DBMSException {
         Table table = tables.get(tableName);
 
         if (table == null) {
-            throw DBMSException("Table " + tableName + " does not exist.")
+            throw DBMSException("Table " + tableName + " does not exist.");
         }
 
         return table;
