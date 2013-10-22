@@ -2,8 +2,8 @@
  * Main interface to the DBMS.
  */
 public class AccessManager implements AccessManagerInterface {
-    /** Database connection info to use. */
-    private Database db;
+    /** Name of the database. */
+    private String dbName;
 
     /** List of tables in the database. */
     private HashMap<String, Table> tables;
@@ -16,18 +16,24 @@ public class AccessManager implements AccessManagerInterface {
 
     /**
      * Creates a new AccessManager.
-     * @param givenDB Database info to access.
+     * @param givenDbName Database info to access.
      * @param givenPageFormat PageFormat to access.
      * @param givenRecordFormat RecordFormat to access.
      */
-    public AccessManager(final Database givenDB,
+    public AccessManager(final String givenDbName,
             final PageFormat givenPageFormat,
             final RecordFormat givenRecordFormat) {
-        // Create a new Collection of Tables
-        tables = givenDB.loadTables();
+        // Read in all the information from the first Page
+        Page page = DiskManager.readPage(0);
+
+        //
+        // Here we would read in all the serialized information regarding the
+        // database schema such as the list of tables in the database which
+        // contains all the mapping information and so on...
+        //
 
         // Assign constructor values
-        db = givenDB;
+        dbName = givenDbName;
         pageFormat = givenPageFormat;
         recordFormat = givenRecordFormat;
     }

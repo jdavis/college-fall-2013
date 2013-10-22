@@ -1,5 +1,5 @@
 /**
- * Class that abstracts away the disk management operations.
+ * Class that abstracts away the disk management operations in the DBMS.
  */
 public static class DiskManager {
     /**
