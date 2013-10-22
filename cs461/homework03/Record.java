@@ -2,11 +2,22 @@
  * Record class for the DBMS.
  */
 public class Record {
+    /** Record ID. */
+    private int rid;
+
     /** All the Fields of a Record. */
     private Fields[] fields;
 
     /** Values of a Record. */
     private Objects[] values;
+
+    /**
+     * Get the Record ID.
+     * @return Record ID.
+     */
+    public final int getRecordID() {
+        return rid;
+    }
 
     /**
      * Get all the Fields.

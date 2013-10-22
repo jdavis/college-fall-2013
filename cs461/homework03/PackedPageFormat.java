@@ -4,7 +4,7 @@
 public class PackedPageFormat implements PageFormat {
 
     @Override
-    public final byte[] writeRecord(final byte[][] recordBytes) {
+    public final byte[] writeRecords(final byte[][] recordBytes) {
         int length = 0;
         byte[] result;
 
@@ -25,7 +25,7 @@ public class PackedPageFormat implements PageFormat {
     }
 
     @Override
-    public final byte[][] readRecord(final byte[] bytes,
+    public final byte[][] readRecords(final byte[] bytes,
             final int nRecords,
             final int recordLength) {
         byte[][] result = new byte[nRecords][recordLength];

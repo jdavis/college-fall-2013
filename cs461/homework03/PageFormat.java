@@ -7,7 +7,7 @@ public interface PageFormat {
      * @param recordBytes Record to write.
      * @return Array of bytes.
      */
-    byte[] writeRecord(final byte[][] recordBytes);
+    byte[] writeRecords(final byte[][] recordBytes);
 
     /**
      * Reads Record bytes from an array of bytes.
@@ -16,7 +16,7 @@ public interface PageFormat {
      * @param recordLength Length of each Record.
      * @return Array of Record bytes.
      */
-    byte[][] readRecord(final byte[] bytes,
+    byte[][] readRecords(final byte[] bytes,
             final int nRecords,
             final int recordLength);
 }

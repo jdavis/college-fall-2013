@@ -59,6 +59,9 @@ public class Table {
 
             Page page = DiskManager.readPage(pid);
 
+            page.setPageFormat(pageFormat);
+            page.setRecordFormat(recordFormat);
+
             return page.retrieveRecord(rid);
         }
 
@@ -77,10 +80,17 @@ public class Table {
             int pid = recordToPage.get(rid);
 
             page = DiskManager.readPage(pid);
+
+            page.setPageFormat(pageFormat);
+            page.setRecordFormat(recordFormat);
+
             page.writeRecord(record);
         } else {
             // We need a Page with space
             page = nextAvailablePage();
+
+            page.setPageFormat(pageFormat);
+            page.setRecordFormat(recordFormat);
 
             // Save the Record to the Page
             page.writeRecord(record);
@@ -111,6 +121,9 @@ public class Table {
         // Read the Page from disk
         Page page = DiskManager.readPage(pid);
 
+        page.setPageFormat(pageFormat);
+        page.setRecordFormat(recordFormat);
+
         // Delete the Record
         page.deleteRecord(rid);
 
@@ -125,6 +138,10 @@ public class Table {
     private Page nextAvailablePage() {
         for (Integer pid : nonFullPages) {
             Page page = DiskManager.readPage(pid);
+
+            page.setPageFormat(pageFormat);
+            page.setRecordFormat(recordFormat);
+
             if (!page.isFull()) {
                 return page;
             }
