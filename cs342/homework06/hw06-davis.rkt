@@ -125,108 +125,164 @@
 ;consider implementing a function with the outline:
 (define (value-of-ast-node-program ast env)
   (cases program ast
-         (a-program (exprs) (last (map (lambda (x) (value-of x env)) exprs)))))
+         (a-program (exprs)
+                    (case-program env exprs))))
 
 (define (value-of-ast-node-expression ast env)
   (cases expression ast
          (num-expr (num)
-                   (num-val num))
+                   (case-num-expr env num))
 
          (up-expr (exp1)
-                  (let ([val1 (value-of exp1 env)])
-                    (step-val (up-step (num-val->n val1)))))
+                  (case-step-expr env up-step exp1))
 
          (down-expr (exp1)
-                  (let ([val1 (value-of exp1 env)])
-                    (step-val (down-step (num-val->n val1)))))
+                    (case-step-expr env down-step exp1))
 
          (left-expr (exp1)
-                    (let ([val1 (value-of exp1 env)])
-                      (step-val (left-step (num-val->n val1)))))
+                    (case-step-expr env left-step exp1))
 
          (right-expr (exp1)
-                    (let ([val1 (value-of exp1 env)])
-                      (step-val (right-step (num-val->n val1)))))
+                     (case-step-expr env right-step exp1))
 
          (point-expr (exp1 exp2)
-                     (let ([val1 (value-of exp1 env)]
-                           [val2 (value-of exp2 env)])
-                       (point-val
-                         (point
-                           (num-val->n val1)
-                           (num-val->n val2)))))
+                     (case-point-expr env exp1 exp2))
 
          (origin-expr (exp1)
-                      (let ([p (point-val->p (value-of exp1 env))])
-                        (bool-val
-                          (and (= 0 (point->x p))
-                               (= 0 (point->y p))))))
+                      (case-origin-expr env exp1))
 
          (if-expr (ifexp exp1 exp2)
-                  (let
-                    ([ifval (value-of ifexp env)]
-                     [val1 (value-of exp1 env)]
-                     [val2 (value-of exp2 env)])
-                    (if
-                      (bool-val->b ifval)
-                      val1
-                      val2)))
+                  (case-if-expr env ifexp exp1 exp2))
 
          (add-expr (exp1 exp2)
-                   (let
-                     ([val1 (value-of exp1 env)]
-                      [val2 (value-of exp2 env)])
-                     (step-val (add-steps val1 val2))))
+                   (case-add-expr env exp1 exp2))
 
          (move-expr (exp1 exp2 exps)
-                    (foldl
-                      (lambda (x1 x2) (move-helper env x1 x2))
-                      (value-of exp1 env)
-                      (cons exp2 exps)))
+                    (case-move-expr env exp1 exp2 exps))
+
          (line-expr (exp1 exp2 exp3)
-                    (letrec
-                      ([p1 (point-val->p (value-of exp1 env))]
-                       [x1 (point->x p1)]
-                       [y1 (point->y p1)]
-                       [p2 (point-val->p (value-of exp2 env))]
-                       [x2 (point->x p2)]
-                       [y2 (point->y p2)]
-                       [x (num-val->n (value-of exp3 env))]
-                       [slope (/ (- y2 y1) (- x2 x1))])
-                      (num-val
-                        (+
-                          (* slope x)
-                          (- y1 (* slope x1))))))
+                    (case-line-expr env exp1 exp2 exp3))
+
          (iden-expr (iden)
-                    (apply-env env iden))
+                    (case-iden-expr env iden))
+
          (block-expr (var-exprs exprs)
-                     (cond
-                       ((null? exprs) 0)
-                       (else
-                         (let
-                           ([scope (update-env var-exprs env)])
-                           (last (map (lambda (x) (value-of x scope)) exprs))))))))
+                     (case-block-expr env var-exprs exprs))))
 
 (define (value-of-ast-node-var ast env)
   (cases var-expr ast
-         (val (iden expr1)
-              (let
-                ([val1 (value-of expr1 env)])
-                (extend-env-wrapper iden val1 env #f)))
-         (final-val (iden expr1)
-              (let
-                ([val1 (value-of expr1 env)])
-                (extend-env-wrapper iden val1 env #t)))))
+         (val (iden exp1)
+              (case-val env iden exp1))
+         (final-val (iden exp1)
+                    (case-final-val env iden exp1))))
+;
+; Cases Helper Procedures
+;
 
-(define (update-env vars env)
+; Program
+
+(define (case-program env exprs)
+         (last
+           (map
+             (lambda (x) (value-of x env))
+             exprs)))
+
+; Expr
+
+(define (case-num-expr env num)
+  (num-val num))
+
+(define (case-step-expr env step-type exp1)
+  (let ([val1 (value-of exp1 env)])
+    (step-val (step-type (num-val->n val1)))))
+
+(define (case-point-expr env exp1 exp2)
+  (let ([val1 (value-of exp1 env)]
+        [val2 (value-of exp2 env)])
+    (point-val
+      (point
+        (num-val->n val1)
+        (num-val->n val2)))))
+
+(define (case-origin-expr env exp1)
+  (let ([p (point-val->p (value-of exp1 env))])
+    (bool-val
+      (and (= 0 (point->x p))
+           (= 0 (point->y p))))))
+
+(define (case-if-expr env ifexp exp1 exp2)
+  (let
+    ([ifval (value-of ifexp env)]
+     [val1 (value-of exp1 env)]
+     [val2 (value-of exp2 env)])
+    (if
+      (bool-val->b ifval)
+      val1
+      val2)))
+
+(define (case-add-expr env exp1 exp2)
+  (let
+    ([val1 (value-of exp1 env)]
+     [val2 (value-of exp2 env)])
+    (step-val (add-steps-helper val1 val2))))
+
+(define (case-move-expr env exp1 exp2 exps)
+  (foldl
+    (lambda (x1 x2) (move-helper env x1 x2))
+    (value-of exp1 env)
+    (cons exp2 exps)))
+
+(define (case-line-expr env exp1 exp2 exp3)
+  (letrec
+    ([p1 (point-val->p (value-of exp1 env))]
+     [x1 (point->x p1)]
+     [y1 (point->y p1)]
+     [p2 (point-val->p (value-of exp2 env))]
+     [x2 (point->x p2)]
+     [y2 (point->y p2)]
+     [x (num-val->n (value-of exp3 env))]
+     [slope (/ (- y2 y1) (- x2 x1))])
+    (num-val
+      (+
+        (* slope x)
+        (- y1 (* slope x1))))))
+
+(define (case-iden-expr env iden)
+  (apply-env env iden))
+
+(define (case-block-expr env var-exprs exprs)
+  (cond
+    ((null? exprs) 0)
+    (else
+      (let
+        ([scope (update-env-helper var-exprs env)])
+        (last (map (lambda (x) (value-of x scope)) exprs))))))
+
+; Var-expr
+
+(define (case-val env iden exp1)
+  (let
+    ([val1 (value-of exp1 env)])
+    (extend-env-wrapper iden val1 env #f)))
+
+(define (case-final-val env iden exp1)
+  (let
+    ([val1 (value-of exp1 env)])
+    (extend-env-wrapper iden val1 env #t)))
+
+;
+; General Helper Procedures
+;
+
+(define (update-env-helper vars env)
   (cond
     ((null? vars) env)
     (else
-      (update-env
+      (update-env-helper
         (cdr vars)
         (value-of (car vars) env)))))
 
-(define (add-steps exp1 exp2)
+(define (add-steps-helper exp1 exp2)
   (let
     ([st1 (step-val->st exp1)]
      [st2 (step-val->st exp2)]
