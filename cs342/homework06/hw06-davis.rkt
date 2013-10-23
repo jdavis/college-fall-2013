@@ -116,9 +116,16 @@
 
 (define (value-of ast env)
   (cond
-    ((program? ast) (value-of-ast-node-program ast env))
-    ((var-expr? ast) (value-of-ast-node-var ast env))
-    ((expression? ast) (value-of-ast-node-expression ast env))
+    ((program? ast)
+     (value-of-ast-node-program ast env))
+
+    ((var-expr? ast)
+     (value-of-ast-node-var ast env))
+
+    ((expression? ast)
+     (value-of-ast-node-expression ast env))
+
+    ; Error here possibly?
     (else 0)))
 
 ;for each different ast node type, e.g. <program>, <expr>, <var-expr> you might
@@ -175,11 +182,10 @@
               (case-val env iden exp1))
          (final-val (iden exp1)
                     (case-final-val env iden exp1))))
-;
-; Cases Helper Procedures
-;
 
-; Program
+;
+; Program Case Helper
+;
 
 (define (case-program env exprs)
          (last
@@ -187,7 +193,9 @@
              (lambda (x) (value-of x env))
              exprs)))
 
-; Expr
+;
+; Expr Case Helpers
+;
 
 (define (case-num-expr env num)
   (num-val num))
@@ -256,9 +264,14 @@
     (else
       (let
         ([scope (update-env-helper var-exprs env)])
-        (last (map (lambda (x) (value-of x scope)) exprs))))))
+        (last
+          (map
+            (lambda (x) (value-of x scope))
+            exprs))))))
 
-; Var-expr
+;
+; Var-expr Case Helpers
+;
 
 (define (case-val env iden exp1)
   (let
