@@ -201,7 +201,8 @@
   (num-val num))
 
 (define (case-step-expr env step-type exp1)
-  (let ([val1 (value-of exp1 env)])
+  (letrec
+    ([val1 (value-of exp1 env)])
     (step-val (step-type (num-val->n val1)))))
 
 (define (case-point-expr env exp1 exp2)
