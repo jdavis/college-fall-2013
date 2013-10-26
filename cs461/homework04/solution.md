@@ -165,6 +165,30 @@ Since `1,202 < 10,00 < 44,000`, using the B+ index is the fastest way to go.
 ### Part C
 Query: `sal > 200 ` and `age > 30` and `title = "CFO"`
 
+#### Solution
+
+There is no index on title, thus we must scan all the pages.
+
+##### B+ Index
+
+We know this from Part A:
+
+    Total Cost = 2 + 200 + 20,000 = 20,202
+
+##### Hash Index
+
+We know this from Part B:
+
+    Total Cost = 24,000 + 20,000 = 44,000
+
+##### Scanning (page 493)
+
+`Total Cost = 10,000 pages`
+
+##### B+ Index and Hash Index
+
+TODO
+
 ## Problem 2
 
 ### Part A
