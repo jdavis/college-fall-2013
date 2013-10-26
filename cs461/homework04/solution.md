@@ -36,20 +36,7 @@ Assumptions:
 6. As many data entries as possible are stored in a page.
 7. Reduction factor is .1
 
-### Part A
-Query: `sal > 100`
-
-#### Solution
-
-Total Cost:
-1. Cost of traversing from root to leaf +
-2. Cost of retrieving pages in sequence +
-3. Cost of retrieving pages that contain the data records
-
-##### Part One
-    Traversing from root to leaf = 2
-
-##### Part Two
+### Basic Statistics
     Number of records
         = (number of total pages relation uses * size of pages) / (size of
         record)
@@ -66,12 +53,33 @@ Total Cost:
         = ((2048 - 48) / 20)
         = 100
 
+    Records per page
+        = (page size / record size)
+        = ((2048 - 48) / 100)
+        = 20
+
+### Part A
+Query: `sal > 100`
+
+#### Solution
+
+##### Using B+ Index (pg 494)
+
+Total Cost:
+1. Cost of traversing from root to leaf +
+2. Cost of retrieving pages in sequence +
+3. Cost of retrieving pages that contain the data records
+
+###### Part One
+    Traversing from root to leaf = 2
+
+###### Part Two
     Retrieving page in sequence
         = (number of matching records) / (entries per page)
         = 20,000 / 100
         = 200
 
-##### Part Three
+###### Part Three
 
 Now we just need to retrieve the records. According to the given info, for `sal`
 the index is dense and unclustered. This means that the tuples aren't in the
@@ -80,12 +88,79 @@ same order as the entries and we might need to read every page once.
     Retrieving pages that contain data records
         = 20,000
 
-##### Final Answer
+###### B+ Index Cost
 
 `Total Cost = 2 + 200 + 20,000 = 20,202`
 
+##### Scanning (page 493)
+
+`Total Cost = 10,000 pages`
+
+##### Final Answer
+
+Since `10,000 < 20,202`, just scanning all the pages and selecting when `sal >
+100` is more efficient.
+
 ### Part B
 Query: `age = 20`
+
+#### Solution
+
+##### Hash Index
+
+Total Cost:
+1. Cost of retrieving matching data entries +
+2. Cost of retrieving qualifying tuples
+
+###### Part One
+    Cost of retrieving matching data entries
+    = (matching entries * hash index read)
+    = (20,000 * 1.2)
+    = 24,000
+
+###### Part Two
+Each entry could point to a different page and since there are 20,000 matching
+records, we might have to read 20,000 pages.
+
+###### Hash Index Cost
+`Total Cost = 24,000 + 20,000 = 44,000`
+
+##### Using B+ Index (pg 494)
+
+Total Cost:
+1. Cost of traversing from root to leaf +
+2. Cost of retrieving pages in sequence +
+3. Cost of retrieving pages that contain the data records
+
+###### Part One
+    Cost of traversing from root to leaf
+    = 2
+
+###### Part Two
+    Retrieving pages in sequence
+    = (number of matching records) / (entries per page)
+    = (20,000 / 100)
+    = 200
+
+###### Part Three
+Since our index is clustered on (age, sal), we will have multiple records on a
+page. Thus
+
+    Retrieving pages that contain data records
+    = (number of matching records) / (records per page)
+    = 20,000 / 20
+    = 1,000
+
+###### B+ Index Cost
+`Total Cost = 2 + 200 + 1,000 = 1,202`
+
+##### Scanning
+
+`Total Cost = 10,000 pages`
+
+##### Final Answer
+
+Since `1,202 < 10,00 < 44,000`, using the B+ index is the fastest way to go.
 
 ### Part C
 Query: `sal > 200 ` and `age > 30` and `title = "CFO"`
