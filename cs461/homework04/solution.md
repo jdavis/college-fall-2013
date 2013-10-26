@@ -34,15 +34,55 @@ Assumptions:
 5. 1.2 I/O needed to use hash index to find a data entry that satisfies the
    selection criterion.
 6. As many data entries as possible are stored in a page.
+7. Reduction factor is .1
 
 ### Part A
 Query: `sal > 100`
 
-Cost:
-    Total Cost =
-        Cost of traversing from root to leaf +
-        Cost of retrieving pages in sequence +
-        Cost of retrieving pages that have sal > 100
+#### Solution
+
+Total Cost:
+1. Cost of traversing from root to leaf +
+2. Cost of retrieving pages in sequence +
+3. Cost of retrieving pages that contain the data records
+
+##### Part One
+    Traversing from root to leaf = 2
+
+##### Part Two
+    Number of records
+        = (number of total pages relation uses * size of pages) / (size of
+        record)
+        = (10,000 * (2048 - 48)) / (100)
+        = 200,000 records
+
+    Number of matching records
+        = (number of records * reduction factor)
+        = 200,000 * .1
+        = 20,000 matching records
+
+    Entries per page
+        = (page size / entry size)
+        = ((2048 - 48) / 20)
+        = 100
+
+    Retrieving page in sequence
+        = (number of matching records) / (entries per page)
+        = 20,000 / 100
+        = 200
+
+##### Part Three
+
+Now we just need to retrieve the records. According to the given info, for `sal`
+the index is dense and unclustered. This means that the tuples aren't in the
+same order as the entries and we might need to read every page once.
+
+    Retrieving pages that contain data records
+        = 20,000
+
+##### Final Answer
+
+`Total Cost = 2 + 200 + 20,000 = 20,202`
 
 ### Part B
 Query: `age = 20`
