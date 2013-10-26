@@ -185,9 +185,49 @@ We know this from Part B:
 
 `Total Cost = 10,000 pages`
 
-##### B+ Index and Hash Index
+##### B+ Index and B+ Index
 
-TODO
+Total Cost:
+1. Cost of retrieving entries from first index +
+2. Cost of retrieving entries from second index
+3. Cost of retrieving records
+
+The first index we use is the B+ tree that is indexed on sal
+The second index that we use is the B+ tree that is indexed on (age, sal)
+
+###### Part One
+
+    Cost of retrieving entries for first index
+    = (cost to tree leaf) + (cost to read each entry)
+    = 2 + (number of matching records / entries per page)
+    = 2 + (20,000 / 100)
+    = 2 + 200
+    = 202
+
+###### Part Two
+
+    Cost of retrieving entries for second index
+    = (cost to tree leaf) + (cost to read each entry)
+    = 2 + (number of matching records / entries per page)
+    = 2 + (20,000 / 100)
+    = 2 + 200
+    = 202
+
+###### Part Three
+
+    Cost of retrieving records
+    = (number of matching records from after retrieving from index) / (records per page)
+    = (20,000 * .1) / (20)
+    = 100
+
+###### Total Cost
+
+`Total Cost = 202 + 202 + 100 = 504`
+
+#### Final Answer
+
+Since `504 < 20,202 < 10,000 < 44,000`, we know that using the combined B+ tree
+indexes gives us the fastest lookup time.
 
 ## Problem 2
 
