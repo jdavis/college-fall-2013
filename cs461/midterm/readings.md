@@ -13,6 +13,7 @@ Com S 461 Midterm
 
 ## DBMS Implementation
 
+- Chapter 8
 - Chapter 9
 
 ## Estimation & Optimization
