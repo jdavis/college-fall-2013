@@ -297,6 +297,26 @@ of buffer memory, we will optimize the cost of the join.
 
 What is the cheapest cost of joining R and S using a GRACE hash join?
 
+#### Solution
+
+    R = 1000
+    S = 200
+
+    Cost to partition
+        = 2 * R + 2 * S
+        = 2 * 1000 + 2 * 200
+        = 2400
+
+    Cost to probe
+        = R + S
+        = 1000 + 200
+        = 1200
+
+    Cost
+        = (cost to partition) + (cost to probe)
+        = 2400 + 1200
+        = 3600
+
 ### Part C
 
 What is the cheapest cost of joining R and S using a sort-merge join?
