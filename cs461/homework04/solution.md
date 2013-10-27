@@ -320,3 +320,26 @@ What is the cheapest cost of joining R and S using a GRACE hash join?
 ### Part C
 
 What is the cheapest cost of joining R and S using a sort-merge join?
+
+#### Solution
+
+    R = 1000
+    S = 200
+
+    Cost to sort R
+        = 2 * 2 * R
+        = 2 * 2 * 1000
+        = 4000
+
+    Cost to sort S (upper bound)
+        = 2 * 2 * S
+        = 2 * 2 * 200
+        = 800
+
+    Cost to merge S and R
+        = 1000 + 200
+
+    Total Cost
+        = (cost to sort R) + (cost to sort S) + (cost to merge)
+        = 4000 + 800 + (1000 + 200)
+        = 6000
