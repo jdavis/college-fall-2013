@@ -231,8 +231,6 @@ indexes gives us the fastest lookup time.
 
 ## Problem 2
 
-### Part A
-
 Consider join of R and S where R.a = S.b.
 
 Info:
@@ -244,11 +242,56 @@ Info:
 - Available memory is 52 pages.
 - Fudge factor is 1.1.
 
+Calculations:
+
+    Number of R pages
+        = (number of tuples) * (tuple size) / (page size)
+        = 10,000 * 400 / 4000
+        = 1000 pages
+
+    Number of S pages
+        = (number of tuples) * (tuple size) / (page size)
+        = 2,000 * 400 / 4000
+        = 200
+
+### Part A
 
 What is the cheapest cost of joining R and S using block nested loops join for
 the given amount of memory space?
 
 What should the number of memory pages be to minimize the cost?
+
+#### Solution
+
+##### R, S
+
+    B = 52
+    R = 1000
+    S = 200
+
+    Cost
+        = R + ceil(R/(B - 2)) * S
+        = 1000 + ceil(1000 / 50) * 200
+        = 5000
+
+##### S, R
+
+    B = 52
+    R = 1000
+    S = 200
+
+    Cost
+        = S + ceil(S/(B - 2)) * R
+        = 200 + ceil(200/50) * 1000
+        = 4200
+
+##### Final Answer
+
+Since `4200 < 5000`, using S as the outer and R as the inner is the most
+efficient.
+
+Like the notes say, it is optimal if `S = B - 2`. Therefore if we have 202 pages
+of buffer memory, we will optimize the cost of the join.
 
 ### Part B
 
