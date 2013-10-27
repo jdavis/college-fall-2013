@@ -233,6 +233,23 @@ indexes gives us the fastest lookup time.
 
 ### Part A
 
+Consider join of R and S where R.a = S.b.
+
+Info:
+- R contains 10,000 tuples, each tuple is 400 bytes long.
+- S contains 2,000 tuples, each tuple is 400 bytes long.
+- Page size is 4096 bytes (96 unusable), unpacked, bitmap page format is used.
+- Attribute b of S is the primary key for S.
+- Both relations are stored as simple heap files, no indexes.
+- Available memory is 52 pages.
+- Fudge factor is 1.1.
+
+
+What is the cheapest cost of joining R and S using block nested loops join for
+the given amount of memory space?
+
+What should the number of memory pages be to minimize the cost?
+
 ### Part B
 
 ### Part C
