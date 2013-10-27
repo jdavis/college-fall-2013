@@ -7,6 +7,7 @@ Due: Monday, Oct 28
 ## Problem 1
 
 Consider the relation Employee:
+
 - eid an integer
 - ename a string
 - sal an integer
@@ -14,17 +15,20 @@ Consider the relation Employee:
 - age an integer
 
 Other properties:
+
 1. Each Employee record is 100 bytes long
 2. Total Employee relation uses 10,000 pages
 3. Each index data entry is 20 bytes long
 
 Indexes using Alt 2:
+
 1. Hash index on eid
 2. Dense, unclustered B+ index on sal
 3. Hash index on age
 4. Dense, clustered B+ index on (age, sal)
 
 Assumptions:
+
 1. Data page can hold 20 Employee tuples. Each page can hold as many relations
    as possible. The relation is stored as a heap file.
 2. One disk I/O is needed to retrieve a page.
@@ -37,6 +41,7 @@ Assumptions:
 7. Reduction factor is .1
 
 ### Basic Statistics
+
     Number of records
         = (number of total pages relation uses * size of pages) / (size of
         record)
@@ -66,14 +71,17 @@ Query: `sal > 100`
 ##### Using B+ Index (pg 494)
 
 Total Cost:
+
 1. Cost of traversing from root to leaf +
 2. Cost of retrieving pages in sequence +
 3. Cost of retrieving pages that contain the data records
 
 ###### Part One
+
     Traversing from root to leaf = 2
 
 ###### Part Two
+
     Retrieving page in sequence
         = (number of matching records) / (entries per page)
         = 20,000 / 100
@@ -102,6 +110,7 @@ Since `10,000 < 20,202`, just scanning all the pages and selecting when `sal >
 100` is more efficient.
 
 ### Part B
+
 Query: `age = 20`
 
 #### Solution
@@ -109,40 +118,48 @@ Query: `age = 20`
 ##### Hash Index
 
 Total Cost:
+
 1. Cost of retrieving matching data entries +
 2. Cost of retrieving qualifying tuples
 
 ###### Part One
+
     Cost of retrieving matching data entries
     = (matching entries * hash index read)
     = (20,000 * 1.2)
     = 24,000
 
 ###### Part Two
+
 Each entry could point to a different page and since there are 20,000 matching
 records, we might have to read 20,000 pages.
 
 ###### Hash Index Cost
+
 `Total Cost = 24,000 + 20,000 = 44,000`
 
 ##### Using B+ Index (pg 494)
 
 Total Cost:
+
 1. Cost of traversing from root to leaf +
 2. Cost of retrieving pages in sequence +
 3. Cost of retrieving pages that contain the data records
 
 ###### Part One
+
     Cost of traversing from root to leaf
     = 2
 
 ###### Part Two
+
     Retrieving pages in sequence
     = (number of matching records) / (entries per page)
     = (20,000 / 100)
     = 200
 
 ###### Part Three
+
 Since our index is clustered on (age, sal), we will have multiple records on a
 page. Thus
 
@@ -152,6 +169,7 @@ page. Thus
     = 1,000
 
 ###### B+ Index Cost
+
 `Total Cost = 2 + 200 + 1,000 = 1,202`
 
 ##### Scanning
@@ -163,6 +181,7 @@ page. Thus
 Since `1,202 < 10,00 < 44,000`, using the B+ index is the fastest way to go.
 
 ### Part C
+
 Query: `sal > 200 ` and `age > 30` and `title = "CFO"`
 
 #### Solution
@@ -188,6 +207,7 @@ We know this from Part B:
 ##### B+ Index and B+ Index
 
 Total Cost:
+
 1. Cost of retrieving entries from first index +
 2. Cost of retrieving entries from second index
 3. Cost of retrieving records
@@ -234,6 +254,7 @@ indexes gives us the fastest lookup time.
 Consider join of R and S where R.a = S.b.
 
 Info:
+
 - R contains 10,000 tuples, each tuple is 400 bytes long.
 - S contains 2,000 tuples, each tuple is 400 bytes long.
 - Page size is 4096 bytes (96 unusable), unpacked, bitmap page format is used.
