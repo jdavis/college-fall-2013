@@ -295,4 +295,8 @@ of buffer memory, we will optimize the cost of the join.
 
 ### Part B
 
+What is the cheapest cost of joining R and S using a GRACE hash join?
+
 ### Part C
+
+What is the cheapest cost of joining R and S using a sort-merge join?
