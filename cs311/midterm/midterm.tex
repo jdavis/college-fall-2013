@@ -1,0 +1,111 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{changepage}
+\usepackage{lineno}
+\usepackage{algpseudocode}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newcommand{\hmwkTitle}{Midterm Appeal}
+\newcommand{\hmwkDueDate}{October 29, 2013}
+\newcommand{\hmwkClass}{CS311}
+\newcommand{\hmwkClassTime}{Section 3}
+\newcommand{\hmwkClassInstructor}{Professor Lathrop}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{\hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\section{Problem 8}
+
+\textbf{Part B}
+
+Use the master theorem to solve the recurrence to get an upper bound (Big O)
+running time of the algorithm.
+\\
+
+\textbf{Reasoning}
+
+Although the Skiena textbook that we are using doesn't mention it,
+\textit{Introduction to Algorithms} by Cormen, Leiserson, Rivest, and Stein
+mentions the idea of \textit{polynomially} bigger/smaller on page 94 of the
+third edition.
+\\
+
+In the first case, \(f(n)\) must be polynomially smaller than the function
+\(O(n^{\log_b a - \epsilon})\). Which means \(f(n)\) must be asymptotically
+smaller than \(n^{\log_b a}\) by a factor of some \(n^\epsilon\) and \(\epsilon >
+0\).
+\\
+
+In our case, \(f(n) = \Theta(1)\) and \(O(n^{1 - \epsilon})\). When I stated that:
+``\(\Theta(1) \in O(n^{1 - \epsilon})\) and polynomially bigger'' I was just making a more
+general statement in that \(\Theta(1)\) is smaller than the bigger \(O(n^1
+\cdot n^\epsilon)\) for any \(0 < \epsilon < 1\). I didn't give a \(\epsilon\)
+because there are an inifinite number of them and I felt that saying
+``polynomially bigger'' implies it.
+
+\section{Problem 10}
+
+\textbf{Part A}
+
+Give an example of a hash function \(h(x)\) that is guaranteed to give non
+contant look up performance if used in a hash table.
+\\
+
+\textbf{Reasoning}
+
+Altering the buckets that the items are stored in when using a hash table isn't
+the only way to destroy constant look up time. By using a hashing function that
+has an absurd complexity will also destroy the look up time. I just used the
+Fibonacci function because it very clearly runs in \(O(2^n)\). Thus when
+a lookup is called, it will hash the value once in exponential time, then see
+if it exists.
+
+\end{document}
