@@ -13,3 +13,4 @@ a.out
 *.dvi
 *.fdb_latexmk
 *.fls
+*.toc
