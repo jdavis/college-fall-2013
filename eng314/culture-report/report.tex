@@ -1,13 +1,124 @@
 \documentclass[11pt,a4paper,oneside]{report}
 
+\usepackage{fancyhdr}
+\usepackage{extramarks}
 \usepackage{pslatex,palatino,avant,graphicx,color}
 \usepackage[margin=2cm]{geometry}
+\usepackage{nameref}
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\firstxmark}
+\rhead{\lastxmark}
+
+\renewcommand{\contentsname}{Table of Contents}
+
+\newcommand{\enterReportPart}[1]{
+    \nobreak\extramarks{}{}\nobreak{}
+}
+
+\newcommand{\exitReportPart}[1]{
+    \nobreak\extramarks{\nameref{second}}{\nameref{third}}\nobreak{}
+}
+
+\newenvironment{reportPart}{
+    \enterReportPart{hi}
+}{
+    \exitReportPart{hi}
+}
+
+\title{
+    \textmd{\textbf{\Huge Employee Hitchhiker's Guide to the Cultures}}\\
+    \vspace{2in}
+    \vspace{0.1in}\Large{Employees of Disalvo Corporation: \textit{Don't Panic}}
+    \vspace{3in}
+}
+
+\author{
+    Shawn Hetrick
+    \\
+    Nick Ruhser
+    \\
+    Josh Davis
+    \vspace{1in}
+}
+
+\date{October 29, 2013}
+
+\pagenumbering{roman}
 
 \begin{document}
 
-\title{Practical Typesetting}
-\author{Name\\ Work}
-\date{October 29, 2013}
 \maketitle
+
+\setcounter{secnumdepth}{0}
+\setcounter{tocdepth}{3}
+
+
+{\Large \tableofcontents}
+
+
+\pagebreak
+
+\pagenumbering{arabic}
+
+\nobreak\extramarks{Introduction}{}\nobreak{}
+
+\begin{reportPart}
+    \section{Introduction}
+    Intro here..
+\end{reportPart}
+
+
+\section{Countries}\label{first}
+Countires!
+
+\begin{reportPart}
+    \subsection{Brazil}\label{second}
+    Brazil content.
+
+    \subsubsection{Communication}\label{third}
+    Communication here!
+
+    \subsubsection{Social \& Work Norms}\label{third}
+    Social and work norms here.
+
+    \subsubsection{Dining Etiquette}\label{third}
+    Dining here!
+\end{reportPart}
+
+\begin{reportPart}
+    \subsection{Russia}\label{second}
+    Russia content.
+
+    \subsubsection{Communication}\label{third}
+    Communication here!
+
+    \subsubsection{Social \& Work Norms}\label{third}
+    Social and work norms here.
+
+    \subsubsection{Dining Etiquette}\label{third}
+    Dining here!
+\end{reportPart}
+
+\begin{reportPart}
+    \subsection{South Africa}\label{second}
+    South Africa content.
+
+    \subsubsection{Communication}\label{third}
+    Communication here!
+
+    \subsubsection{Social \& Work Norms}\label{third}
+    Social and work norms here.
+
+    \subsubsection{Dining Etiquette}\label{third}
+    Dining here!
+\end{reportPart}
+
+\begin{reportPart}
+    \section{Conclusion}
+    Conclusion here..
+\end{reportPart}
 
 \end{document}
