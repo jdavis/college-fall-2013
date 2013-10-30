@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{changepage}
+\usepackage{lineno}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\setlength\parindent{0pt}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{Homework\ \#5}
+\newcommand{\hmwkDueDate}{November 11, 2013 at 4:30pm}
+\newcommand{\hmwkClass}{CS311}
+\newcommand{\hmwkClassTime}{Section 3}
+\newcommand{\hmwkClassInstructor}{Professor Lathrop}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Give algorithms for the following operations.
+    \\
+
+    \textbf{Solution}
+
+    Algorithms for each part are below.
+    \\
+
+    \textbf{Part A}
+
+    Give an algorithm that multiples two degree-1 polynomials with only three
+    multiply operations.
+    \\
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Function{MultiplySingleDegreePolynomials}{}
+            \State{} \Return{$0$}
+            \EndFunction{}
+        \end{algorithmic}
+        \caption{Multiply 1 degree polynomial}
+    \end{algorithm}
+
+    \textbf{Part B}
+
+    Give a divide-and-conquer algorithm for multiplying two polynomials of degree \(n\). Prove
+    using the master theorem that your algorithm runs in \(\Theta(n^{\log_2 3})\). You may assume
+    that \(n + 1\) is a power of 2.
+    \\
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Function{MultiplyNDegreePolynomials}{}
+            \State{} \Return{$0$}
+            \EndFunction{}
+        \end{algorithmic}
+        \caption{Multiply \(n\) degree polynomial}
+    \end{algorithm}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Give an \(O(\log n)\) time algorithm that computes the following function:
+    \\
+
+    \alg{MEDIAN-OF-TWO($l_1, l_2$)}
+
+    \begin{algorithmic}[1]
+        \Require \(l_1\) and \(l_2\) are two sorted lists of integers. Each
+        list has \(n\) elements (\(2n\) elements in total) and the value of
+        each element in the lists is unique.
+
+        \Ensure The value of the \(n^{th}\) smallest integer in the set of
+        \(2n\) integers is \(l_1\) and \(l_2\).
+    \end{algorithmic}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Give an \(O(n)\) average case running time algorithm that computes the
+    following:
+    \\
+
+    \alg{Kth-SMALLEST($list, k$)}
+
+    \begin{algorithmic}[1]
+        \Require An unsorted list \(list\) of unique integers and an integer \(k\)
+
+        \Ensure The value of the \(k^{th}\) smallest integer from the list
+    \end{algorithmic}
+\end{homeworkProblem}
+
+\end{document}
