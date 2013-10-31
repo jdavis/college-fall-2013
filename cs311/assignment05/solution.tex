@@ -178,14 +178,40 @@
 
     \solution
 
+    The algorithm is based off of \alg{QuickSort} and is often called
+    \alg{QuickSelect}.  The principle idea is to use the partitioning function
+    of \alg{QuickSort} because the element that is selected to be a partition
+    will be placed in its correct place in the list. The position then will tell
+    us where to look for the \(k\)th item.
+
     \begin{algorithm}[]
         \begin{algorithmic}[1]
             \Function{Kth-SMALLEST}{$list, k$}
-            \State{} \Return{$0$}
+                \State{} $index \gets \Call{Kth-SMALLEST-REC}{list, k, 0, list.length}$
+                \State{} \Return{$list[index]$}
+            \EndFunction{}
+            \\
+            \Function{QuickSelect}{$list, k, start, end$}
+                \If{$start >= end$}
+                    \State{} \Return{$end$}
+                \EndIf{}
+                \\
+                \State{} $partition \gets \Call{Partition}{list, k, start, end}$
+                \\
+                \If{$k < partition$}
+                    \State{} \Return{} \Call{QuickSelect}{$list, start, partition - 1$}
+                \ElsIf{$k > partition$}
+                    \State{} \Return{} \Call{QuickSelect}{$list, partition + 1, end$}
+                \EndIf{}
+                \\
+                \State{} \Return{$list[k]$}
             \EndFunction{}
         \end{algorithmic}
         \caption{Give the $k^{th}$ smallest integer from the list}
     \end{algorithm}
+
+    Where the \alg{Partition} algorithm is dependent on the type of
+    partitioning scheme used.
 \end{homeworkProblem}
 
 \pagebreak
