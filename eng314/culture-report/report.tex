@@ -6,7 +6,8 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{nameref}
 \usepackage{setspace}
-
+\usepackage[authoryear]{natbib}
+\usepackage{url}
 
 \pagestyle{fancy}
 
@@ -25,6 +26,7 @@
 \fancyfoot[LE,RO]{\thepage}
 
 \renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\chaptername}{}
 
 \title{
     \vspace{.1in}
@@ -182,6 +184,7 @@ table of times.  When you go out to eat in Brazil there are some very important
 customs that you should be aware of.
 
 \section{Dining Etiquette}
+
 Brazilian dining etiquette can be very different from the United States.
 Nearly everything you will eat will require the use of utensils
 (Herrington, p. 83). It isn’t polite to use your hands during dining, so
@@ -206,7 +209,7 @@ provided will ensure your success in Brazil.
 
 Traveling to Russia might be necessary for your position in this company.
 Russia has one of the top 10 economies based on gross domestic product (GDP)
-[cite]. Being successful on a international business trip means knowing the
+\citep*{russianGDP}. Being successful on a international business trip means knowing the
 country and the culture. This section of the report will focus on Russian
 culture. Specifically it will discuss communication, norms (social and work),
 and dining etiquette in the business setting.
@@ -219,44 +222,49 @@ peculiarities you might have being a foreigner.
 
 A first encounter you have while in Russia is quite different than here in the
 United States. Often Russians don’t smile when meeting a new person and
-accompany it with a handshake in a business setting.
+accompany it with a handshake in a business setting \citep*[pg.
+158]{cultureSmart}.
 
 Regarding the language you should speak, over half of the people in the top
 Russian companies can speak English. The number drops from there in other
 lesser companies but is still considerably high. Be aware that some people
 might translate their Russian into rude or direct English. Don’t be offended by
-this; it is merely a communication quirk of translation.
+this; it is merely a communication quirk of translation \citep*[pg.
+158]{cultureSmart}.
 
 When meeting someone, don’t be surprised to learn that they want to be called
 “Pasha” or “Sasha” if their name really is “Pavel” or “Alexander”,
 respectively. It is common practice to have nicknames that might not look
-anything like their given name.
+anything like their given name \citep{personalExperiences}.
 
 A rather humorous side-effect of this nicknaming is that some characters can
 have many names in Russian literature. The book The Brothers Karamazov by
 Fyodor Dostoevsky has a main character named Alexei Karamazov. Throughout the
 book, he is referred to by his real name or one of his 8 other nicknames:
 Alyosha, Alyoshka, Alyoshenka, Alyoshechka, Alexeichik, Lyosha, Lyoshenka.
-Getting use to all the nicknames takes a handful of chapters. [cite]
+Getting use to all the nicknames takes a handful of chapters
+\citep*{karamazov}.
 
 \section{Social \& Work Norms}
 
 Before talking about the social norms in Russia, it’ll be important to
 understand what a quintessential Russian is. A Russian is typically
-characterized as being incredibly patient, [page 70].
+characterized as being incredibly patient, very kind, accommodating,
+and very laid back \citep*[pg. 70]{cultureSmart}.
 
 Americans have a very well established “spatial bubble” when it comes to people
 we know and people we meet. In Russia, expect this bubble to be much smaller
 and closer to you. Since people will be closer to you their voices will be just
 as loud. Don’t be alarmed if it seems at first that a Russian is yelling at
-you. If the person is closer to you, it might just be the proximity.
+you. If the person is closer to you, it might just be the proximity
+\citep*[pg. 84]{cultureSmart}.
 
 When going to a meeting,  it is important to dress such that you fit in with
 the rest of your colleagues. Wearing appropriate clothing is almost as
 important as how you greet the person. It is important to wear dark clothing
 and a suit. Make sure your tie, shoes, socks, and everything else match the
 attire. Wearing too many colors might not be the best and might give off the
-impression of laziness.
+impression of laziness \citep*[pg. 148]{cultureSmart}.
 
 Humor in Russia, like in all places, will show up in conversations frequently.
 Russians are often attributed as being very good at black humor. Black humor is
@@ -265,14 +273,27 @@ disturbing effect.” To give an example of this, there is a book called The
 Master and Margarita written in sometime in the early 20th century. It centers
 around events in Moscow after Satan shows up with a witch and a black cat that
 enjoys drinking vodka and playing chess. It is full of black humor and is
-considered by some critics as being the best novels of the 20th century. [cite]
+considered by some critics as being the best novels of the 20th century \citep*{bulgakov}.
 
 \section{Dining Etiquette}
 
 Be sure to eat until you are stuffed. According to tradition, it is rude to the
 cook to refuse food. Toasting is another tradition that is strong in Russia.
 You can expect the host to start it. If you are at a loss of things to say, a
-few common ones include: “to your health” and “one for the road.”
+few common ones include: “to your health” and “one for the road.” You can
+expect to do a lot of drinking as well. Like with the food, it'll be considered
+rude to turn it down. If you are really against drinking, turn it down politely
+\citep*{russianDining1}.
+
+Your table manners are very important as well. As you might do in America,
+don't eat until everyone has received their food. It will be safe to eat when
+you see your host eating.
+
+When not holding the utensils, try to keep your hands visible. If you it feels
+awkward, just place your wrists on the top of the table and hold your hands
+\citep*{russianDining2}.
+
+
 
 \chapter{South Africa}
 
@@ -400,24 +421,24 @@ those cultures. We will layout the key points of each of these for Russia,
 South Africa, and Brazil. The information we have gathered comes from web
 sites, books, and personal experiences. These sources all provide up to date
 accurate information. In the culture is very different from the United
-States. \cite{cite1} \cite{cite2}
+States.
 
 \appendix
 
 \chapter{Brazil Bibliography}
 
-\bibliographystyle{plain}
-\bibliography{brazil}
+%\bibliographystyle{authordate1}
+%\bibliography{brazil}
 
 \chapter{Russia Bibliography}
 
-\bibliographystyle{plain}
+\bibliographystyle{authordate1}
 \bibliography{russia}
 
 \chapter{South Africa Bibliography}
 
-\bibliographystyle{plain}
-\bibliography{south-africa}
+%\bibliographystyle{authordate1}
+%\bibliography{south-africa}
 
 
 \end{document}
