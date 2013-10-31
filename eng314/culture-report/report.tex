@@ -6,7 +6,7 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{nameref}
 \usepackage{setspace}
-\usepackage[authoryear]{natbib}
+\usepackage[natbib=true,bibstyle=authoryear,citestyle=authoryear]{biblatex}
 \usepackage{url}
 
 \pagestyle{fancy}
@@ -27,6 +27,9 @@
 
 \renewcommand{\contentsname}{Table of Contents}
 \renewcommand{\chaptername}{}
+
+\addbibresource{russia}
+\addbibresource{brazil}
 
 \title{
     \vspace{.1in}
@@ -111,9 +114,9 @@ history of colonization. Originally, Brazil was a Portuguese colony.  The
 heavy demand for sugar lead to many Africans being bought and used a slave
 labor. The indigenous people were also enslaved and forced to produce sugar
 from sugar cane. In 1803, the Portuguese royal family fled to Brazil and
-created an independent country (Kagan, Ozment, \& Turner, p. 614). On
+created an independent country \citep*[pg. 614]{kagan}. On
 October 5, 1988, Brazil drafted and signed a constitution creating a
-federal republic (Central Intelligence Agency The World Factbook). Brazil
+federal republic \citep*{brazilCIA}. Brazil
 will continue to be an important part of the world economy and
 understanding the culture will lead to successful business ventures.
 
@@ -124,7 +127,7 @@ your business ventures in Brazil. Portuguese is the most commonly spoken
 language of Brazil. Speaking Spanish to Brazilians can be taken as an
 insult, as most Brazilians are proud of their native language.  Most of the
 upper management of Brazilian companies and educated individuals will be
-fluent in English (Herrington, p. 62). However it is most likely a good
+fluent in English \citep*[pg. 62]{herrington}. However it is most likely a good
 idea to have a translator present just to understand side conversations. It
 may be a good Idea to bring along your own translator. Translators are very
 expensive if you hire one in Brazil. Non-verbal communication is very
@@ -133,9 +136,9 @@ mean.
 
 Brazil, like many other cultures, has their own set of non-verbal communication
 gestures. The gesture to remember is to never give the OK sign with your thumb
-and index finger as it means asshole (Herrington, p. 76). Another gesture that
+and index finger as it means asshole \citep*[pg. 76]{herrington}. Another gesture that
 is inappropriate would be to slam your fist into your palm because it has a
-sexual connotation (Herrington, p. 76). Very much like the United States
+sexual connotation \citep*[pg. 76]{herrington}. Very much like the United States
 shrugging your shoulders, shaking your head and nodding all have the same
 meanings in Brazil.  Brazilians like to speak with one another at a much closer
 distance than you may be used to. This may make you uncomfortable, but if you
@@ -152,33 +155,33 @@ Brazilians. Titles are very important in the business culture of Brazil. It
 is imperative that you know the titles of the people you are meeting. ““A
 company’s chief executive is usually called the Presidente, Diretor
 superintendente is equivalent to a managing director or vice president of a
-division (Herrington, p. 75)”.  “Anyone with a college degree of any kind
-is referred to as Douctor or Doutora (Herrington, p. 75)”. When you first
+division \citep*[pg. 75]{herrington}”.  “Anyone with a college degree of any kind
+is referred to as Douctor or Doutora \citep*[pg. 75]{herrington}”. When you first
 arrive at the meeting it is a custom to shake everyone’s hand that is
 attending the meeting. Knowing and using the titles will help you appear
 professional. Dressing for the occasion will make you look professional.
 
 Professional dress in Brazil is very much like the United States. A suit and
-tie are very common for men and women (Herrington, p. 81). The one thing you
+tie are very common for men and women \citep*[pg. 81]{herrington}. The one thing you
 shouldn’t wear are shorts, they are taboo for work attire and are usually only
-found at the beach (Herrington, p. 81). Shoes are important as they are one of
-Brazil’s biggest industries (Central Intelligence Agency The World Factbook).
+found at the beach \citep*[pg. 81]{herrington}. Shoes are important as they are one of
+Brazil’s biggest industries \citep*{brazilCIA}.
 You should ensure that your shoes are in good condition and if possible
 Brazilian shoes would be an added bonus. Understanding the social norms of
 Brazil will help prepare you for what to experience outside the professional
 world.
 
 The beach, soccer, and bars are very integrated into Brazilian culture. The
-beaches will tend to be crowded year round (Herrington, p. 86). The Brazilians
+beaches will tend to be crowded year round \citep*[pg. 86]{herrington}. The Brazilians
 created the “dental floss” bathing suit and are very proud of it. Women at the
 beach will often wear much less clothing than an American may be used to. The
 beach is a great place to socialize and spend the day.  Soccer can be seen as a
-religion in Brazil (Herrington, p. 87). When Brazil makes it to the semi-finals
+religion in Brazil \citep*[pg. 87]{herrington}. When Brazil makes it to the semi-finals
 of the World Cup, Brazilian business will send their employees home to watch
-the game (Herrington, p. 87). Soccer will continue to be a major influence to
+the game \citep*[pg. 87]{herrington}. Soccer will continue to be a major influence to
 Brazilians and you should familiarize yourself with the sport. The bars in
 Brazil are less of a club scene and more of a quiet place to socialize. The
-bars are a home away from home for Brazilians (Herrington, p. 87). Brazil, like
+bars are a home away from home for Brazilians \citep*[pg. 87]{herrington}. Brazil, like
 most South American countries, runs on the 24 hour clock. See appendix for
 table of times.  When you go out to eat in Brazil there are some very important
 customs that you should be aware of.
@@ -187,11 +190,11 @@ customs that you should be aware of.
 
 Brazilian dining etiquette can be very different from the United States.
 Nearly everything you will eat will require the use of utensils
-(Herrington, p. 83). It isn’t polite to use your hands during dining, so
+\citep*[pg. 83]{herrington}. It isn’t polite to use your hands during dining, so
 try to refrain from using them. Lunch is typically the largest meal of the
-day (Herrington, p. 83). However, dinner will typically be the longest meal
+day \citep*[pg. 83]{herrington}. However, dinner will typically be the longest meal
 of the day and will begin around 8 or 9 P.M. and can last to the early
-morning hours (Herrington, p. 83). If invited to dinner with your business
+morning hours \citep*[pg. 83]{herrington}. If invited to dinner with your business
 partner, it is inappropriate to talk business over the meal and should be
 saved till after the meal. Most meals in Brazil will be centered on beef,
 pork, or seafood. Brazil has a very diverse spread of meals and will vary
@@ -425,20 +428,23 @@ States.
 
 \appendix
 
-\chapter{Brazil Bibliography}
+\printbibliography[
+    title={Brazil Bibliography},
+    keyword=brazil,
+    heading=bibnumbered
+]
 
-%\bibliographystyle{authordate1}
-%\bibliography{brazil}
+\printbibliography[
+    title={Russia Bibliography},
+    keyword=russia,
+    heading=bibnumbered
+]
 
-\chapter{Russia Bibliography}
-
-\bibliographystyle{authordate1}
-\bibliography{russia}
-
-\chapter{South Africa Bibliography}
-
-%\bibliographystyle{authordate1}
-%\bibliography{south-africa}
+\printbibliography[
+    title={South Africa Bibliography},
+    keyword=russia,
+    heading=bibnumbered
+]
 
 
 \end{document}
