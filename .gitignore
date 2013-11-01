@@ -16,3 +16,5 @@ a.out
 *.toc
 *.bbl
 *.blg
+*.bib
+*.xml
