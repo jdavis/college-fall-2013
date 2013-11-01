@@ -80,7 +80,7 @@
          (down-step (num) #t)
          (else #f)
          )
-       ) 
+       )
   )
 
 (define (left-step? st)
@@ -89,7 +89,7 @@
          (left-step (num) #t)
          (else #f)
          )
-       ) 
+       )
   )
 
 (define (right-step? st)
@@ -98,7 +98,7 @@
          (right-step (num) #t)
          (else #f)
          )
-       )  
+       )
   )
 
 
@@ -156,10 +156,10 @@
   (define (is-var-final? env)
     (cases environment env
       (empty-env () #f)
-      
-      (extend-env (sym val prev-env) 
+
+      (extend-env (sym val prev-env)
                   (is-var-final? prev-env))
-      
+
       (extend-env-final (stored-sym val prev-env)
                         (if (equal? sym stored-sym)
                             #t
@@ -168,7 +168,7 @@
                         )
       )
     )
-  
+
   (if (is-var-final? old-env)
       (sym-final-exception sym)
       (if final?
@@ -193,13 +193,13 @@
   (cases environment env
     (empty-env ()
                (no-binding-exception search-sym))
-    
+
     (extend-env (var val saved-env)
                 (if (eqv? search-sym var)
                     val
                     (apply-env saved-env search-sym))
                 )
-    
+
     (extend-env-final (var val saved-env)
                       (if (eqv? search-sym var)
                           val
