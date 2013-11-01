@@ -1,0 +1,239 @@
+                                     COM S 342
+                              Fall 2013 Homework 7
+
+Suggested reading: 
+    EOPL: 2.4 (refresh your memory on define-datatype)
+    EOPL: B.1-B.3 (about sllgen)
+    EOPL: 3.1-3.2 (implementation of language)
+    EOPL: 3.3 (implementation of procedures)
+
+In this homework you will be adding procedures and other new features to the language
+you implemented for the last homework (hw06).
+
+To refresh your memory on the syntax of the language:
+<program> ::=
+             <expr> <expr>*  "a-program"
+
+<expr> ::= 
+           number           "num-expr"
+        | up(<expr>)        "up-expr"
+        | down(<expr>)      "down-expr"
+        | left(<expr>)      "left-expr"  
+        | right(<expr>)     "right-expr"  
+           
+        | (<expr> <expr>)   "point-expr"
+        | + <expr> <expr>   "add-expr"
+        | origin? (<expr>)  "origin-expr"
+        | if (<expr>)
+           then <expr>
+           else <expr>       "if-expr" 
+           
+        | move (<expr> <expr> <expr>*)  "move-expr"
+        | identifier              "iden-expr"
+        | { <var-expr>* <expr>*} "block-expr" 
+        
+
+<var-expr> ::=
+               | val identifier = <expr>         "val"
+               | final val identifier = <expr>   "final-val"
+
+
+The implementation of our interpreter is spread out in 3 files:
+   - "hw07-lang.rkt" contains the lexical, grammar specification and the sllgen
+      boilerplate code
+   - "hw07-env-values.rkt" contains the expressed values and the environment
+   - "hw07-interpreter.rkt" contains the implementation of our interpreter.
+   + the tests are found in "hw07-tests.rkt" and "hw07-p5-tests.rkt" (see submission guidelines)
+                 
+You can look at the test suite called "original" in hw07-tests.rkt to refresh your
+memory on the semantics of the language.
+
+Recall that we invoked the interpreter for our language with the "run" function:
+> (run "42")
+(num-val 42)
+and expression in our language evaluates to one of the "expressed-val" found
+in hw07-env-values.rkt
+
+****Submission guidelines:
+    The success of p5 solution depends upon your solutions built from p1 - p4. So we require
+    you to create a directory p5, into which you first copy paste all your files containing
+    your solutions derived from p1 to p4 plus hw07-p5-tests.rkt :
+      hw07-env-values.rkt
+      hw07-interpreter.rkt
+      hw07-lang.rkt
+      hw07-p5-tests.rkt
+   And then modify the code under directory p5 for problem 5. When you archive your solution 
+   and submit it, your archived file should carry the following structure -
+
+      hw07-env-values.rkt  
+      hw07-interpreter.rkt
+      hw07-lang.rkt
+      hw07-tests.rkt
+      p5/
+         hw07-env-values.rkt    
+         hw07-interpreter.rkt
+         hw07-lang.rkt
+         hw07-p5-tests.rkt
+
+   The code files under directory p5, except for hw07-p5-tests.rkt, carries the same name as 
+   their counterparts in the parent directory, but they are changed from their counterparts
+   for problem 5 purposes;
+   This simply makes it a lot easier for us to grade your hw.   
+****
+        
+Since you will be working with an already existing implementation please
+comment any changes you make.
+
+When you add all these new features, the original semantics of the language
+have to remain intact, so whenever you test your implementation make sure
+you run the regression tests "original".                  
+
+;==============================================================================
+1. [20p] Program parameters
+
+The signature of the "run" function was changed to:
+(define (run program-string . argument-strings)
+...)
+
+This allows it to take one or more parameters. For more information, look at:
+
+http://docs.racket-lang.org/guide/lambda.html#(part._rest-args)
+
+It's very straightforward, argument-strings will be a list containing all
+the extra parameters, or '() if no additional parameters were specified.
+
+Modify the semantics of the run function such that run will take the program
+as a string, and then 0 or more strings representing program parameters that
+will be available during the execution of the program.
+
+Each parameter will be addressable with the variable name argX, where X is the
+zero-indexed position of the parameter.
+;we can still invoke our run function with no additional parameters
+> (run "42")
+(num-val 42)
+
+> (run "arg0" "up(3)")
+(step-val (up-step 3))
+
+The program parameters have to be valid programs in our language.
+
+;==============================================================================
+2. [20p] Anonymous function definitions
+
+Just like in racket, functions/procedures in our language are first class citizens
+and you can pass them as parameters, store them in variables or return them as
+the value of the program.
+
+We will implement a feature similar to the (lambda) expression in racket
+described by the grammar:
+
+<expr> ::= <original language>
+         | fun ( identifier* ) = <expr>    "fun-expr"
+         | call (<expr> <expr>*)           "fun-call-expr"
+         
+The "fun-expr" will create a function with 0 or more parameters that has the 
+body <expr>
+
+For "fun-call-expr" , the first <expr> has to be a function, and the remainder
+of the <expr>s will be the parameters passed to the said function.
+
+You will have to implement support for the concept of closures and higher order
+procedures in the language.
+
+As mentioned in class, most important steps you will most likely have to take to implement this should include:
+  - add a new type of expressed value
+  - extend the grammar
+  - implement the new features in the value-of functions.
+
+See the tests for additional clarification on semantics.
+
+;==============================================================================
+3. [20p] Named function definitions
+
+Modify the syntax of the language to the following:
+
+<program> ::= 
+             <var-expr>;* <expr> <expr>*                "a-program"
+
+<var-expr> ::=
+               | val identifier = <expr>                "val"
+               | final val identifier = <expr>          "final-val"
+               | def identifier (identifier*) = <expr>  "fun-def"
+    
+The "fun-def" <var-expr> allows the declaration of named functions. It is mostly
+a syntactic sugar for assigning anonymous functions to variables, so you
+should be able to use any named function just like you could an anonymous one.
+           
+With this new grammar specification, one can write an arbitrary number of variable
+and function definitions before writing the body of a program.
+
+> (run
+ "def named-fun(x) = x;
+  
+  #program body:
+  call(named-fun 42)
+ "
+)
+(num-val 42)
+
+;==============================================================================
+4. [20p] Lists
+
+Add the datatype "list" to the language. You may choose whatever syntax you want
+to create and manipulate the lists.
+
+But you have the following semantical restrictions:
+   - lists can hold any type of valid values of your language, including other lists;
+   - provide at least two primitives which are semantically similar to car and cdr.
+
+You will have to write a few test cases in the "p4" test-suite for your new language
+features.
+
+
+===============================================================================
+5. Named recursive procedures [20p]
+
+You will have to modify the semantics of procedure definitions in such a way that
+they support recursive calls.
+
+**Note**
+  The success of p5 solution depends upon your solutions built from p1 - p4. So we require
+  you to create a directory p5, into which you first copy paste all your files containing
+  your solutions derived from p1 to p4 plus hw07-p5-tests.rkt :
+      hw07-env-values.rkt
+      hw07-interpreter.rkt
+      hw07-lang.rkt
+      hw07-p5-tests.rkt
+  And then modify the code under directory p5 for problem 5. When you archive your solution 
+  and submit it, your archived file should carry the following structure -
+
+      hw07-env-values.rkt  
+      hw07-interpreter.rkt
+      hw07-lang.rkt
+      hw07-tests.rkt
+      p5/
+         hw07-env-values.rkt    (changed from the same name file in parent directory)
+         hw07-interpreter.rkt
+         hw07-lang.rkt
+         hw07-p5-tests.rkt
+
+   The code files under directory p5, except for hw07-p5-tests.rkt, carried the same name as 
+   their counterparts in the parent directory, but they are changed from their counterparts
+   for problem 5 purposes;   
+**End-Of-Note**
+     
+  
+Modify the semantics of named function definitions to support recursive calls:
+
+> (run
+      "def a(p) = 
+        if(origin?(p))
+        then
+          42
+        else
+          call(a move(p down(1)));
+      
+      call(a (0 3))
+")
+(num-val 42)
+
