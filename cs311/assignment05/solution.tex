@@ -104,7 +104,7 @@
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
-            \Function{MultiplySingleDegreePolynomials}{}
+            \Function{MultiplySingleDegreePolynomials}{$a, b, c, d$}
             \State{} \Return{$0$}
             \EndFunction{}
         \end{algorithmic}
@@ -151,8 +151,36 @@
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
-            \Function{MEDIAN-OF-TWO}{$l_1, l_2$}
-            \State{} \Return{$0$}
+            \Function{Mid}{$x, y$}
+                \State{} \Return{$(y - x) / 2 + x$}
+            \EndFunction{}
+            \\
+            \Function{Median-Of-Two}{$l_1, l_2$}
+                \State{} $start1 \gets 0$
+                \State{} $start2 \gets 0$
+                \State{} $end1 \gets l_1.length$
+                \State{} $end2 \gets l_2.length$
+                \State{} $mid1 \gets \Call{Mid}{start1, end1}$
+                \State{} $mid2 \gets \Call{Mid}{start2, end2}$
+                \\
+                \While{$mid1 < end1$ and $mid2 < e2$}
+                    \If{$l1[mid1] < l2[mid2]$}
+                        \State{} $start1 \gets mid1$
+                        \State{} $end2 \gets mid2$
+                    \Else{}
+                        \State{} $end1 \gets mid1$
+                        \State{} $start2 \gets mid2$
+                    \EndIf
+                    \\
+                    \State{} $mid1 \gets \Call{Mid}{start1, end1}$
+                    \State{} $mid2 \gets \Call{Mid}{start2, end2}$
+                \EndWhile
+                \\
+                \If{$mid1 \geq end1$}
+                    \State{} \Return{$l1[mid1]$}
+                \Else{}
+                    \State{} \Return{$l2[mid2]$}
+                \EndIf
             \EndFunction{}
         \end{algorithmic}
         \caption{Value of the \(n^{th}\) smallest integer in either list}
