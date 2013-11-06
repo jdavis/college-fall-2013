@@ -11,6 +11,10 @@
 \usepackage{lineno}
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
 
 \topmargin=-0.45in
 \evensidemargin=0in
@@ -413,10 +417,65 @@
     \(G'\) by adding a weight of \(k\) to every edge of \(G\). Does \(P\)
     describe a shortest path from \(s\) to \(t\) in \(G'\)? Prove the statement
     or give a counterexample.
+    \\
 
-    \begin{proof}
+    \textbf{Counterexample}
 
-    \end{proof}
+    \(P\) still does not necessarily describe a shortest path from \(s\) to
+    \(t\) in \(G'\).  This is weight added to each path is dependent on how
+    many sections are in the path. If we were to let \(k = 5\) and add it to
+    each path, a path that has 1 edge will have 5 added to it, but a path with
+    2 edges will get 10 added to it. This is illustrated in the below example.
+    \\
+
+    The first figure, Figure~\ref{fig:graph1} is \(G\) and that path is the
+    three edges straight across the line of nodes, from \(s\) to \(t\) to \(u\)
+    then to \(v\). However the second graph is Figure~\ref{fig:graph2} has had
+    \(k\) added to each edge, the shortest path is now the single edge from
+    \(s\) to \(v\).
+    \\
+
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[->,>=stealth,node distance=3cm,very
+            thick,node/.style={circle,fill=blue!10,draw}]
+
+            \node[node] (s) {s};
+            \node[node] (t) [right of=s] {t};
+            \node[node] (u) [right of=t] {u};
+            \node[node] (v) [right of=u] {v};
+
+            \path[every node]
+
+            (s) edge node [above=4mm, right] {1} (t)
+                edge [bend right] node [above=4mm, right] {4} (v)
+            (t) edge node [above=4mm, right] {1} (u)
+            (u) edge node [above=4mm, right] {1} (v);
+        \end{tikzpicture}
+        \caption{The graph \(G\).}
+        \label{fig:graph1}
+
+        \vspace{.2in}
+
+        \begin{tikzpicture}[->,>=stealth,node distance=3cm,very
+            thick,node/.style={circle,fill=blue!10,draw}]
+
+            \node[node] (s) {s};
+            \node[node] (t) [right of=s] {t};
+            \node[node] (u) [right of=t] {u};
+            \node[node] (v) [right of=u] {v};
+
+            \path[every node]
+
+            (s) edge node [above=4mm, right] {6} (t)
+                edge [bend right] node [above=4mm, right] {9} (v)
+            (t) edge node [above=4mm, right] {6} (u)
+            (u) edge node [above=4mm, right] {6} (v);
+        \end{tikzpicture}
+        \caption{The graph \(G'\).}
+        \label{fig:graph2}
+    \end{figure}
+
 \end{homeworkProblem}
 
 \end{document}
