@@ -412,18 +412,54 @@
     Problem 6--7 from the text.
     \\
 
-    \solution
-    \\
-
     \textbf{Part A}
 
     Let \(T\) be a minimum spanning tree of a weighted graph \(G\). Construct a
     new graph \(G'\) by adding a weight of \(k\) to every edge of \(G\). Do the
     edges of \(T\) form a minimum spanning tree of \(G'\)? Prove the statement
     or give a counterexample.
+    \\
+
+    \solution
 
     \begin{proof}
+        We will prove that a minimal spanning tree \(T\) will still be a
+        minimal spanning tree even after adding a weight of \(k\) to every edge
+        in a graph.
+        \\
 
+        To prove this, we will use the fact that for any tree with \(\left\vert
+        V \right\vert\) number of vertices, the tree will have \(\left\vert V
+        \right\vert - 1\) edges.
+        \\
+
+        Now given \(T\) is a minimal spanning tree, we know that the property
+        of a minimal spanning tree tells us that the number of vertices, \(V\)
+        is then equal to \(V = \left\vert G.V \right\vert\). Given the above
+        fact, we then know that the number of edges in \(T\) is then \(E =
+        \left\vert G.V \right\vert -
+        1\).
+        \\
+
+        It then follows that for every such minimal spanning tree of the graph
+        \(G\), it is guaranteed to have \(E\) edges.
+        \\
+
+        By adding \(k\) to every edge weight in \(G\), overall we will be
+        adding \(\left\vert G.E \right\vert \cdot k\) total weight to the tree.
+        But for every possible spanning tree in \(G\), we will only be adding
+        \(E \cdot k\) weight to each spanning tree.
+        \\
+
+        Since every single spanning tree will have \(E\) edges and then \(E
+        \cdot k\) weight added to it, it then follows by the definition of a
+        minimal spanning tree that there cannot exist another spanning tree
+        that is smaller than our current minimal spanning tree \(T\) because
+        every single spanning tree has an increased weight of \(E \cdot k\).
+        \\
+
+        Thus since our minimal spanning tree is still minimal when adding \(k\)
+        to ever edge in \(G\) the proof is complete.
     \end{proof}
 
     \textbf{Part B}
