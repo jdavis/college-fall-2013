@@ -250,7 +250,7 @@
 
 \begin{homeworkProblem}
     Let \(T\) be a tree with \(n\) vertices. We say that a vertex \(v\) is a
-    \texttt{minimal separator of T} if its removal splits \(T\) into
+    \textit{minimal separator of T} if its removal splits \(T\) into
     two or more subtrees, each with at most \(n/2\) nodes.
     \\
 
@@ -340,15 +340,16 @@
     such that all other vertices in \(G\) can be reached by a directed path from \(v\).
     \\
 
-    \solution
-    \\
-
     \textbf{Part A}
 
     Give an \(O(n + m)\) algorithm to test whether a given vertex \(v\) is a
     mother of \(G\), where \(n = \left\vert V \right\vert\) and \(m =
     \left\vert E \right\vert\).
     \\
+
+    \solution
+
+    The algorithm is as follows:
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
@@ -363,6 +364,11 @@
 
     Give an \(O(n + m)\) algorithm to test whether a graph \(G\) contains a
     mother vertex.
+    \\
+
+    \solution
+
+    The algorithm is as follows:
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
@@ -381,10 +387,14 @@
     and a new edge \(e = (u, v)\) of weight \(w\) that we will add to \(G\).
     \\
 
-    \solution
-
     Give an \(O(n)\) algorithm to find the minimum spanning tree of the graph
     \(G + e\).
+    \\
+
+    \solution
+
+    The algorithm works as follows. \alg{AddMST} will look at which vertex
+    the new edge is being connected to. Then in order to maintain
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
@@ -423,6 +433,9 @@
     \(G'\) by adding a weight of \(k\) to every edge of \(G\). Does \(P\)
     describe a shortest path from \(s\) to \(t\) in \(G'\)? Prove the statement
     or give a counterexample.
+    \\
+
+    \solution
     \\
 
     \textbf{Counterexample}
