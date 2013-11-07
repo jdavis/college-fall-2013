@@ -259,7 +259,7 @@
 
     \textbf{Part A}
 
-    Show that ever finite tree has at least one minimal separator.
+    Show that every finite tree has at least one minimal separator.
 
     \begin{proof}
 
@@ -320,10 +320,16 @@
 
     Prove or disprove:
     \[
-        \exists v \in V \mid G = (V \setminus \{ v \}, E) \mbox{ is connected }
+        \exists v \in V \mid G' = (V \setminus \{ v \}, E) \mbox{ is connected }
     \]
 
     \solution
+    \\
+
+    \textbf{Counterexample}
+
+    The definition of a connected graph is one in which every vertex is
+    reachable from all other vertices.
 
 \end{homeworkProblem}
 
@@ -428,11 +434,11 @@
     2 edges will get 10 added to it. This is illustrated in the below example.
     \\
 
-    The first figure, Figure~\ref{fig:graph1} is \(G\) and that path is the
-    three edges straight across the line of nodes, from \(s\) to \(t\) then to
+    The first figure, Figure~\ref{fig:graph1} is \(G\) and that \(P\) is the
+    two edges straight across the line of nodes, from \(s\) to \(t\) then to
     \(u\). However the second graph is Figure~\ref{fig:graph2} has had \(k\)
-    added to each edge, the shortest path is now the single edge from \(s\) to
-    \(u\).
+    added to each edge, the shortest path, \(P\) is now the single edge from
+    \(s\) to \(u\).
     \\
 
     \begin{figure}[h]
