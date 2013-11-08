@@ -25,23 +25,23 @@ class Node:
 
 
 def reconstruct(t):
-    q = deque(t)
+    s = [x for x in t[::-1]]
 
-    return reconstruct_rec(q, '')
+    return reconstruct_rec(s, '')
 
 
-def reconstruct_rec(q, p):
-    root = Node(q.popleft())
+def reconstruct_rec(s, p):
+    root = Node(s.pop())
 
-    if len(q) != 0:
-        if root.value >= q[0]:
-            root.left = reconstruct_rec(q, root.value)
+    if len(s) != 0:
+        if root.value >= s[-1]:
+            root.left = reconstruct_rec(s, root.value)
     else:
         return root
 
-    if len(q) != 0:
-        if p >= q[0] or p == '':
-            root.right = reconstruct_rec(q, p)
+    if len(s) != 0:
+        if p >= s[-1] or p == '':
+            root.right = reconstruct_rec(s, p)
     else:
         return root
 
