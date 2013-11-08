@@ -36,14 +36,10 @@ def reconstruct_rec(s, p):
     if len(s) != 0:
         if root.value >= s[-1]:
             root.left = reconstruct_rec(s, root.value)
-    else:
-        return root
 
     if len(s) != 0:
         if p >= s[-1] or p == '':
             root.right = reconstruct_rec(s, p)
-    else:
-        return root
 
     return root
 

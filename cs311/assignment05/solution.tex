@@ -331,15 +331,11 @@
                     \If{$root.value \geq stack.peek()$}
                         \State{} $root.left \gets$ new \Call{BST-Reconstruction-Rec}{$stack, root.value$}
                     \EndIf{}
-                \Else
-                    \State{} \Return{root}
                 \EndIf{}
                 \If{$stack.size() \neq 0$}
                     \If{$parent \geq stack.peek()$ or $parent == null$}
                         \State{} $root.right \gets$ new \Call{BST-Reconstruction-Rec}{$stack, parent$}
                     \EndIf{}
-                \Else
-                    \State{} \Return{root}
                 \EndIf{}
                 \\
                 \State{} \Return{$root$}
