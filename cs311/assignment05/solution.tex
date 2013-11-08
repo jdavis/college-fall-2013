@@ -329,13 +329,13 @@
                 \\
                 \If{$stack.size() \neq 0$}
                     \If{$root.value \geq stack.peek()$}
-                        \State{} $root.left \gets$ new \Call{BST-Reconstruction-Rec}{$stack, root.value$}
+                        \State{} $root.left \gets$ \Call{BST-Reconstruction-Rec}{$stack, root.value$}
                     \EndIf{}
                 \EndIf{}
                 \\
                 \If{$stack.size() \neq 0$}
                     \If{$parent \geq stack.peek()$ or $parent == null$}
-                        \State{} $root.right \gets$ new \Call{BST-Reconstruction-Rec}{$stack, parent$}
+                        \State{} $root.right \gets$ \Call{BST-Reconstruction-Rec}{$stack, parent$}
                     \EndIf{}
                 \EndIf{}
                 \\
