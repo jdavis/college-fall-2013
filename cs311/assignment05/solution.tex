@@ -300,12 +300,48 @@
 
     \solution
 
-    Solution for the function is below:
+    The following algorithm works because a preorder listing of a binary tree
+    is recursive in nature. The first element off the queue will be the root
+    value.  The left value will then be the next item on the queue, as long as
+    it value is less than the current value.
+    \\
+
+    Next we check to make sure the queue isn't empty, if it isn't, then we
+    compare the value on the top of the queue to see if it is less than the
+    parent. If the item isn't less than the parent, then it must belong in
+    another subtree. If it does add continue the recursion.
+    \\
+
+    The algorithm also assumes that the queue works such that when initialized
+    with the array, the elements are popped off in an increasing order based on
+    the index of the array.
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
             \Function{BST-Reconstruction}{$traversal$}
-            \State{} \Return{$0$}
+                \State{} $partition \gets$ new \Call{Queue}{$traversal$}
+                \State{} \Return \Call{BST-Reconstruction-Rec}{$Q, null$}
+            \EndFunction{}
+            \\
+            \Function{BST-Reconstruction-Rec}{$Q, parent$}
+                \State{} $root \gets$ new \Call{Node}{$Q.dequeue()$}
+                \\
+                \If{$Q.size() \neq 0$}
+                    \If{$root.value \geq Q.peek()$}
+                        \State{} $root.left \gets$ new \Call{BST-Reconstruction-Rec}{$Q, root.value$}
+                    \EndIf{}
+                \Else
+                    \State{} \Return{root}
+                \EndIf{}
+                \If{$Q.size() \neq 0$}
+                    \If{$parent \geq Q.peek()$ or $parent == null$}
+                        \State{} $root.right \gets$ new \Call{BST-Reconstruction-Rec}{$Q, parent$}
+                    \EndIf{}
+                \Else
+                    \State{} \Return{root}
+                \EndIf{}
+                \\
+                \State{} \Return{$root$}
             \EndFunction{}
         \end{algorithmic}
         \caption{Binary search tree reconstruction}
