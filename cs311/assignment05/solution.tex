@@ -332,6 +332,7 @@
                         \State{} $root.left \gets$ new \Call{BST-Reconstruction-Rec}{$stack, root.value$}
                     \EndIf{}
                 \EndIf{}
+                \\
                 \If{$stack.size() \neq 0$}
                     \If{$parent \geq stack.peek()$ or $parent == null$}
                         \State{} $root.right \gets$ new \Call{BST-Reconstruction-Rec}{$stack, parent$}
