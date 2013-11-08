@@ -16,11 +16,33 @@
 ;value-of takes as a parameter an AST resulted from a call to the
 ;create-ast function.
 (define (run program-string . arguments)
-  (if (string? program-string)
-      (value-of (create-ast program-string) (empty-env))
-      (raise (string-append "expected a program as string, got: " (~a program-string)))
-      )
-  )
+  (define (create-arg-env env n args)
+    (cond
+      ((null? args) env)
+      ((not (string? (car args)))
+       (raise
+         (string-append
+           "argument should be a string, got: "
+           (~a (car args)))))
+      (else
+        (let
+          ([sym (~a "arg" n)]
+           [val (run (car args))])
+          (create-arg-env
+            (extend-env-wrapper (string->symbol sym) val env #t)
+            (+ n 1)
+            (cdr args))))))
+
+  (if (not (string? program-string))
+      (raise
+        (string-append "expected a program as string, got: " (~a program-string)))
+      (cond
+        ((null? arguments)
+         (value-of (create-ast program-string) (empty-env)))
+        (else
+          (value-of
+            (create-ast program-string)
+            (create-arg-env (empty-env) 0 arguments))))))
 
 (define (value-of ast env)
   (cond
