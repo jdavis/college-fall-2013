@@ -39,7 +39,7 @@ def reconstruct_rec(q, p):
         return root
 
     if len(q) != 0:
-        if q[0] < p or p == '':
+        if p >= q[0] or p == '':
             root.right = reconstruct_rec(q, p)
     else:
         return root
