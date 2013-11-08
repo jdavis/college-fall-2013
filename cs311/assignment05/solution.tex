@@ -312,30 +312,31 @@
     another subtree. If it does add continue the recursion.
     \\
 
-    The algorithm also assumes that the queue works such that when initialized
-    with the array, the elements are popped off in an increasing order based on
-    the index of the array.
+    The algorithm also assumes that the stack works such that when initialized
+    with an array, the elements are popped off from the beginning and added to
+    the beginning. Or in other words, the front of the array is the top of the
+    stack.
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
             \Function{BST-Reconstruction}{$traversal$}
-                \State{} $partition \gets$ new \Call{Queue}{$traversal$}
-                \State{} \Return \Call{BST-Reconstruction-Rec}{$Q, null$}
+                \State{} $stack \gets$ new \Call{Stack}{$traversal$}
+                \State{} \Return \Call{BST-Reconstruction-Rec}{$stack, null$}
             \EndFunction{}
             \\
-            \Function{BST-Reconstruction-Rec}{$Q, parent$}
-                \State{} $root \gets$ new \Call{Node}{$Q.dequeue()$}
+            \Function{BST-Reconstruction-Rec}{$stack, parent$}
+                \State{} $root \gets$ new \Call{Node}{$stack.pop()$}
                 \\
-                \If{$Q.size() \neq 0$}
-                    \If{$root.value \geq Q.peek()$}
-                        \State{} $root.left \gets$ new \Call{BST-Reconstruction-Rec}{$Q, root.value$}
+                \If{$stack.size() \neq 0$}
+                    \If{$root.value \geq stack.peek()$}
+                        \State{} $root.left \gets$ new \Call{BST-Reconstruction-Rec}{$stack, root.value$}
                     \EndIf{}
                 \Else
                     \State{} \Return{root}
                 \EndIf{}
-                \If{$Q.size() \neq 0$}
-                    \If{$parent \geq Q.peek()$ or $parent == null$}
-                        \State{} $root.right \gets$ new \Call{BST-Reconstruction-Rec}{$Q, parent$}
+                \If{$stack.size() \neq 0$}
+                    \If{$parent \geq stack.peek()$ or $parent == null$}
+                        \State{} $root.right \gets$ new \Call{BST-Reconstruction-Rec}{$stack, parent$}
                     \EndIf{}
                 \Else
                     \State{} \Return{root}
