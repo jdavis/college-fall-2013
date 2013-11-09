@@ -12,6 +12,7 @@
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tikz}
+\usepackage{hyperref}
 
 \usetikzlibrary{arrows}
 \usetikzlibrary{positioning}
@@ -40,6 +41,8 @@
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
 \setlength\parindent{0pt}
+
+\hypersetup{colorlinks=true}
 
 \newcommand{\enterProblemHeader}[1]{
     \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
@@ -211,7 +214,7 @@
     \solution
 
     The algorithm is based off of \alg{QuickSort} and is often called
-    \alg{QuickSelect}.  The principle idea is to use the partitioning function
+    \alg{QuickSelect}\(^{[1]}\).  The principle idea is to use the partitioning function
     of \alg{QuickSort} because the element that is selected to be a partition
     will be placed in its correct place in the list. The position then will tell
     us where to look for the \(k\)th item.
@@ -244,6 +247,11 @@
 
     Where the \alg{Partition} algorithm is dependent on the type of
     partitioning scheme used.
+    \\
+
+    \textbf{Reference}
+
+    \([1]\) Tim Roughgarden's lecture on Coursera.org: \url{https://class.coursera.org/algo-004/lecture/36}
 \end{homeworkProblem}
 
 \pagebreak
