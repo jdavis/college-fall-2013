@@ -1,7 +1,7 @@
 *.DS_Store
 *.sw[po]
 *.py[co]
-a.out
+*.out
 
 # Java junk
 *.class
