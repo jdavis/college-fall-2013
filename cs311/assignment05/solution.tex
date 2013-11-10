@@ -369,11 +369,63 @@
     \solution
     \\
 
-    \textbf{Counterexample}
+    According to the definition of a connected graph, this means that for any
+    two vertices, there exists a path from one to the other. A little more
+    formally:
 
-    The definition of a connected graph is one in which every vertex is
-    reachable from all other vertices.
+    \[
+        \forall u, v \in V \mid u \leadsto v
+    \]
 
+    \textbf{Note:} The symbol \(u \leadsto v\) means that there is a path from
+    \(u\) to \(v\).
+    \\
+
+    To prove that \(G\) is still connected after removal of a vertex \(v\),
+    let's do a proof by contradiction.
+
+    \begin{proof}
+        We will use a proof by contradiction to prove that for a graph \(G\),
+        that is connected and undirected, there exists a vertex \(v\) such that
+        when it is removed, it results in a graph \(G'\) that is still
+        connected.
+        \\
+
+        Assume for the sake of contradiction that when \(v\) is removed that
+        this results in a graph that is no longer a single component and is not
+        connected.
+        \\
+
+        First we select vertices \(v\) and \(u\) such that \(u \leadsto v\) is
+        the longest path in the graph \(G\).
+        \\
+
+        Now if we were to remove \(v\) from the graph \(G\), this would result in
+        multiple components because of our original assumption. This means that
+        there are two vertices, say \(s\) and \(t\), that are separated when
+        \(v\) is removed.
+        \\
+
+        If the separation causes multiple components to form, then if we were
+        to take the path \(u \leadsto v \leadsto s\) or \(u \leadsto v \leadsto
+        t\), both of which cross the gap, this would create a longer path than
+        \(u \leadsto v\).
+        \\
+
+        Thus since we assumed that \(u \leadsto v\) is the longest path, this
+        is a contradiction because it would no longer be the longer path.
+        \\
+
+        Since we have found a contradiction, this means that if we select \(v\)
+        such that it is at the end of the longest path of the graph \(G\), we
+        can safely remove it to ensure that \(G'\) is still connected. This
+        concludes the proof.
+    \end{proof}
+
+    \textbf{Reference}
+
+    Contradiction idea inspired by the proof in problem 4:
+    \url{http://dcg.epfl.ch/files/content/sites/dcg/files/Courses/Graph%20Theory%202011/problemset4sol_2011.pdf}
 \end{homeworkProblem}
 
 \pagebreak
