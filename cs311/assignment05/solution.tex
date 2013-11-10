@@ -109,14 +109,49 @@
     multiply operations.
     \\
 
+    The normal four multiply operation result obviously (by \alg{FOIL}) is:
+    \[
+        (ax + b)(cx + d) = acx^2 + (ad + bc) \cdot x + bd
+    \]
+
+    Since one of the multiplications is \((a + b)(c + d)\), this gives us the
+    following:
+    \[
+        \begin{split}
+            &(a + b) (c + d) = ac + (ad + bc) + bd
+            \\
+            &(a + b) (c + d) - ac - bd = (ad + bc)
+        \end{split}
+    \]
+
+    Substituation gives us:
+    \[
+        \begin{split}
+            (ax + b)(cx + d) &= ac \cdot x^2 + (ad + bc) \cdot x + bd
+            \\
+            &= ac \cdot x^2 + ((a + b)(c + d) - ac - bd) \cdot x + bd
+            \\
+            &= m_1 \cdot x^2 + (m_2 - m_1 - m_3) \cdot x + m_3
+        \end{split}
+    \]
+
+    where \(m_1 = ac\), \(m_2 = (a + b)(c + d)\) and \(m_3 = bd\). This gives
+    us the following algorithm:
+
     \begin{algorithm}[]
         \begin{algorithmic}[1]
             \Function{MultiplySingleDegreePolynomials}{$a, b, c, d$}
-            \State{} \Return{$0$}
+                \State{} $m_1 \gets a \cdot c$
+                \State{} $m_2 \gets (a + b) \cdot (c + d)$
+                \State{} $m_3 \gets b \cdot d$
+                \State{} \Return{$m_1, \: m_2 - m_1 - m_3, \: m_3$}
+                \Comment{Return the tuple of coefficients}
             \EndFunction{}
         \end{algorithmic}
         \caption{Multiply 1 degree polynomial}
     \end{algorithm}
+
+    \pagebreak
 
     \textbf{Part B}
 
@@ -163,24 +198,24 @@
             \EndFunction{}
             \\
             \Function{Median-Of-Two}{$l_1, l_2$}
-                \State{} $start1 \gets 0$
-                \State{} $start2 \gets 0$
-                \State{} $end1 \gets l_1.length$
-                \State{} $end2 \gets l_2.length$
-                \State{} $mid1 \gets \Call{Mid}{start1, end1}$
-                \State{} $mid2 \gets \Call{Mid}{start2, end2}$
+                \State{} $start_1 \gets 0$
+                \State{} $start_2 \gets 0$
+                \State{} $end_1 \gets l_1.length$
+                \State{} $end_2 \gets l_2.length$
+                \State{} $mid_1 \gets \Call{Mid}{start_1, end_1}$
+                \State{} $mid_2 \gets \Call{Mid}{start_2, end_2}$
                 \\
-                \While{$mid1 < end1$ and $mid2 < e2$}
-                    \If{$l1[mid1] < l2[mid2]$}
-                        \State{} $start1 \gets mid1$
-                        \State{} $end2 \gets mid2$
+                \While{$mid_1 < end_1$ and $mid_2 < e_2$}
+                    \If{$l_1[mid_1] < l_2[mid_2]$}
+                        \State{} $start_1 \gets mid_1$
+                        \State{} $end_2 \gets mid_2$
                     \Else{}
-                        \State{} $end1 \gets mid1$
-                        \State{} $start2 \gets mid2$
+                        \State{} $end_1 \gets mid_1$
+                        \State{} $start_2 \gets mid_2$
                     \EndIf
                     \\
-                    \State{} $mid1 \gets \Call{Mid}{start1, end1}$
-                    \State{} $mid2 \gets \Call{Mid}{start2, end2}$
+                    \State{} $mid_1 \gets \Call{Mid}{start_1, end_1}$
+                    \State{} $mid_2 \gets \Call{Mid}{start_2, end_2}$
                 \EndWhile
                 \\
                 \If{$mid1 \geq end1$}
@@ -517,7 +552,7 @@
                     \EndIf
                 \EndFor
                 \If{$sources = 1$}
-                    \Comment{A single source vertex means it contains a}
+                    \Comment{A single source vertex means it is a mother vertex}
                     \State{} \Return{\textbf{True}}
                 \Else
                     \State{} \Return{\textbf{False}}
