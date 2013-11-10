@@ -499,14 +499,12 @@
                     \State{} \Call{AddOutEdges}{$G', c, n$}
                     \Comment{Add out going edges to the node \(n\)}
                 \EndFor
-                \\
                 \State{} \Return{$G'$}
             \EndFunction{}
             \\
             \Function{ContainsAMother}{$G$}
                 \State{} $G' \gets \Call{StronglyConnectedComponentGraph}{G}$
                 \Comment{Runs in \(O(n + m)\) time}
-                \\
                 \State{} $sources \gets 0$
                 \ForAll{$v \in G'.V$}
                     \Comment{Iterate over all the vertices in the component graph}
@@ -514,7 +512,6 @@
                         \State{} $sources \gets sources + 1$
                     \EndIf
                 \EndFor
-                \\
                 \If{$sources = 1$}
                     \Comment{A single source vertex means it contains a}
                     \State{} \Return{\textbf{True}}
@@ -532,19 +529,21 @@
     edges only between each strongly-connected components.  This means that the
     entire graph is directed and acyclic. Therefore to find a \textit{mother
     vertex}, we need to check the new graph to see if it contains only a single
-    source vertex.
-    \\
-
-    The reason a single source vertex in a dag means it is a \textit{mother
-    vertex} is because if more than one exist, than that means that the \(n\)
-    source vertices can never reach each other and thus it isn't a
-    \textit{mother vertex}.
+    source vertex. The reason a single source vertex in a dag means it is a
+    \textit{mother vertex} is because if more than one exist, than that means
+    that the \(n\) source vertices can never reach each other and thus it isn't
+    a \textit{mother vertex}.
     \\
 
     \textbf{Reference}
 
-    Algorithm idea inspired by Problem 5:
-    \url{http://www.cs.sunysb.edu/~skiena/373/hw/keys/key3.pdf}
+    \begin{enumerate}
+        \item Algorithm idea inspired by Problem 5:
+            \url{http://www.cs.sunysb.edu/~skiena/373/hw/keys/key3.pdf}
+        \item Algorithm \alg{StronglyConnectedComponentGraph} inspired by
+            \textit{Introduction to Algorithms} by Cormen, Leiserson, Rivest,
+            and Stein, pg. 617:
+    \end{enumerate}
 \end{homeworkProblem}
 
 \pagebreak
