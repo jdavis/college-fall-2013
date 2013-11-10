@@ -513,6 +513,10 @@
         \caption{Add an edge to a given minimum spanning tree}
     \end{algorithm}
 
+    \textbf{Note:} The \(w()\) function just determines the weight for the
+    given edge.
+    \\
+
     The reason this works is because the algorithm \alg{BFS} determines the
     path \(u \leadsto v\) that is shortest. It then knows that adding the edge
     \(e = (u, v)\) would create a cycle. Instead, it finds the largest edge in
