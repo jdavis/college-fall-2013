@@ -120,9 +120,9 @@
 
     \textbf{Part B}
 
-    Give a divide-and-conquer algorithm for multiplying two polynomials of degree \(n\). Prove
-    using the master theorem that your algorithm runs in \(\Theta(n^{\log_2 3})\). You may assume
-    that \(n + 1\) is a power of 2.
+    Give a divide-and-conquer algorithm for multiplying two polynomials of
+    degree \(n\). Prove using the master theorem that your algorithm runs in
+    \(\Theta(n^{\log_2 3})\). You may assume that \(n + 1\) is a power of 2.
     \\
 
     \begin{algorithm}[]
@@ -488,17 +488,36 @@
 
     \solution
 
-    The algorithm works as follows. \alg{AddMST} will look at which vertex
-    the new edge is being connected to. Then in order to maintain
+    The algorithm is as follows:
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
             \Function{AddMST}{$T, e, G$}
-            \State{} \Return{$0$}
+                \State{} $u, v \gets \Call{Vertices}{e}$
+                \State{} \Call{BFS}{$T, u$}
+                \State{} $path \gets \Call{Create-Path}{u, v}$
+                \\
+                \State{} $largest \gets path[0]$
+                \ForAll{$edge \in path$}
+                    \If{$w(edge) > w(largest)$}
+                        \State{} $largest \gets edge$
+                    \EndIf
+                \EndFor
+                \\
+                \If{$w(e) < w(largest)$}
+                    \State{} \Call{RemoveEdge}{T, largest}
+                    \State{} \Call{AddEdge}{T, e}
+                \EndIf
             \EndFunction{}
         \end{algorithmic}
         \caption{Add an edge to a given minimum spanning tree}
     \end{algorithm}
+
+    The reason this works is because the algorithm \alg{BFS} determines the
+    path \(u \leadsto v\) that is shortest. It then knows that adding the edge
+    \(e = (u, v)\) would create a cycle. Instead, it finds the largest edge in
+    the existing path and removes that edge only if the given edge is smaller.
+    This ensures that the MST at the end is still minimal given the edge.
 \end{homeworkProblem}
 
 \pagebreak
