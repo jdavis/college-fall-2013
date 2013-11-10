@@ -517,11 +517,22 @@
     given edge.
     \\
 
+    \textbf{Reasoning}
+
     The reason this works is because the algorithm \alg{BFS} determines the
     path \(u \leadsto v\) that is shortest. It then knows that adding the edge
     \(e = (u, v)\) would create a cycle. Instead, it finds the largest edge in
     the existing path and removes that edge only if the given edge is smaller.
     This ensures that the MST at the end is still minimal given the edge.
+    \\
+
+    \textbf{Justification}
+
+    The justification for why it runs in \(O(n)\) time is because in a tree,
+    the number of edges is always one less that the number of vertices.
+    Therefore the run time of \alg{BFS} is \(O(n)\) and then we do one more
+    possible loop over the path which could be \(O(n)\) as well. This gives the
+    final runtime of roughly \(O(2n)\) which is of course still just \(O(n)\).
 \end{homeworkProblem}
 
 \pagebreak
