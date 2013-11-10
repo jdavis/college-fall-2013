@@ -448,12 +448,29 @@
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
-            \Function{IsMother}{$v, G$}
-            \State{} \Return{$0$}
+            \Function{IsMother}{$s, G$}
+                \State{} \Call{BFS}{$G, s$}
+                \\
+                \ForAll{$v \in G.V$}
+                    \If{\Call{Visited}{$v$} = \textbf{False}}
+                        \State{} \Return{\textbf{False}}
+                    \EndIf
+                \EndFor
+                \\
+                \State{} \Return{\textbf{True}}
             \EndFunction{}
         \end{algorithmic}
         \caption{Determine if a given vertex is a mother of a graph}
     \end{algorithm}
+
+    \textbf{Justification}
+
+    \alg{BFS} runs in \(O(n + m)\) time and it visits all the nodes that have a
+    path from the starting vertex. Thus when it is finished, we just need to see
+    if there are any such vertices that haven't been visited yet.
+    \\
+
+    \pagebreak
 
     \textbf{Part B}
 
@@ -467,12 +484,67 @@
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
+            \Function{StronglyConnectedComponentGraph}{$G$}
+                \State{} \Call{DFS}{$G$}
+                \Comment{\alg{DFS} runs in \(O(n + m)\) time}
+                \State{} $G^T \gets \Call{Transpose}{G}$
+                \Comment{\(G\) but with the edges reversed, runs in \(O(n + m)\) time}
+                \State{} \Call{DFS}{$G^T$}
+                \\
+                \State{} $G' \gets$ new \Call{Graph}{ }
+                \ForAll{$c \in \Call{Components}{G}$}
+                    \State{} $n \gets$ new \Call{Node}{ }
+                    \State{} \Call{AddNode}{$G', n$}
+                    \Comment{Represent each component as a single node}
+                    \State{} \Call{AddOutEdges}{$G', c, n$}
+                    \Comment{Add out going edges to the node \(n\)}
+                \EndFor
+                \\
+                \State{} \Return{$G'$}
+            \EndFunction{}
+            \\
             \Function{ContainsAMother}{$G$}
-            \State{} \Return{$0$}
+                \State{} $G' \gets \Call{StronglyConnectedComponentGraph}{G}$
+                \Comment{Runs in \(O(n + m)\) time}
+                \\
+                \State{} $sources \gets 0$
+                \ForAll{$v \in G'.V$}
+                    \Comment{Iterate over all the vertices in the component graph}
+                    \If{$\Call{In-Degree}{v} = 0$}
+                        \State{} $sources \gets sources + 1$
+                    \EndIf
+                \EndFor
+                \\
+                \If{$sources = 1$}
+                    \Comment{A single source vertex means it contains a}
+                    \State{} \Return{\textbf{True}}
+                \Else
+                    \State{} \Return{\textbf{False}}
+                \EndIf
             \EndFunction{}
         \end{algorithmic}
-        \caption{Determine if a given graph has a mother}
+        \caption{Determine if a given graph has a mother.}
     \end{algorithm}
+
+    \textbf{Reasoning}
+    The algorithm \alg{StronglyConnectedComponentGraph} returns a graph such
+    that all strongly-connected components are represented by a single vertex with
+    edges only between each strongly-connected components.  This means that the
+    entire graph is directed and acyclic. Therefore to find a \textit{mother
+    vertex}, we need to check the new graph to see if it contains only a single
+    source vertex.
+    \\
+
+    The reason a single source vertex in a dag means it is a \textit{mother
+    vertex} is because if more than one exist, than that means that the \(n\)
+    source vertices can never reach each other and thus it isn't a
+    \textit{mother vertex}.
+    \\
+
+    \textbf{Reference}
+
+    Algorithm idea inspired by Problem 5:
+    \url{http://www.cs.sunysb.edu/~skiena/373/hw/keys/key3.pdf}
 \end{homeworkProblem}
 
 \pagebreak
