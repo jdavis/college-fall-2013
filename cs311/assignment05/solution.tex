@@ -99,16 +99,14 @@
     Give algorithms for the following operations.
     \\
 
-    \solution
-
-    Algorithms for each part are below.
-    \\
 
     \textbf{Part A}
 
     Give an algorithm that multiples two degree-1 polynomials with only three
     multiply operations.
     \\
+
+    \solution
 
     The normal four multiply operation result obviously (by \alg{FOIL}) is:
     \[
@@ -145,7 +143,7 @@
                 \State{} $m_1 \gets a \cdot c$
                 \State{} $m_2 \gets (a + b) \cdot (c + d)$
                 \State{} $m_3 \gets b \cdot d$
-                \State{} \Return{$m_1, \: m_2 - m_1 - m_3, \: m_3$}
+                \State{} \Return{$(m_1, \: m_2 - m_1 - m_3, \: m_3)$}
                 \Comment{Return the tuple of coefficients}
             \EndFunction{}
         \end{algorithmic}
@@ -161,14 +159,69 @@
     \(\Theta(n^{\log_2 3})\). You may assume that \(n + 1\) is a power of 2.
     \\
 
+    \solution
+
     \begin{algorithm}[]
         \begin{algorithmic}[1]
-            \Function{MultiplyNDegreePolynomials}{}
-            \State{} \Return{$0$}
+            \Function{MultiplyNDegreePolynomials}{$p_1, p_2, n_0$}
+                \If{$n_0 = 0$}
+                    \State{} \Return{$p_1 \cdot p_2$}
+                \EndIf
+                \\
+                \State{} $n \gets n_0 / 2$
+                \State{} $a \gets p_1[0 \ldots n - 1]$
+                \State{} $b \gets p_1[n \ldots n_0]$
+                \State{} $c \gets p_2[0 \ldots n - 1]$
+                \State{} $d \gets p_2[n \ldots n_0]$
+                \\
+                \State{} $m_1 \gets \Call{MultiplyNDegreePolynomials}{a, b, n}$
+                \State{} $m_2 \gets \Call{MultiplyNDegreePolynomials}{c, d, n}$
+                \State{} $m_3 \gets \Call{MultiplyNDegreePolynomials}{a + b, c + d, n}$
+                \Comment{Sum of the two arrays linearly}
+                \\
+                \State{} // Shifting and combining runs in \(O(n)\) time
+                \State{} \Return{$\Call{Shift}{m_1, n_0} + \Call{Shift}{(m_2 - m_1 - m_3), n} + m_3$}
             \EndFunction{}
         \end{algorithmic}
         \caption{Multiply \(n\) degree polynomial}
     \end{algorithm}
+
+    \textbf{Proof of Running Time}
+
+    \begin{proof}
+        We will prove that the running time of the above algorithm is
+        \(\Theta(n^{\log_2 3})\) using the master method.
+        \\
+
+        The recurrence for the above algorithm is:
+
+        \[
+            T(n) = \left\{
+                \begin{array}{ll}
+                    1 & \quad n = 0 \\
+                    3 \cdot T(\frac{n}{2}) + O(n) & \quad n > 0
+                \end{array}
+            \right.
+        \]
+
+        We have \(a = 3\), \(b = 2\) and \(f(n) \in O(n)\). According to the Master
+        Method, this gives us:
+
+        \[
+            n^{\log_b a} = n^{\log_2 3} \in \Theta(n^{\log_2 3})
+        \]
+
+        This puts us in case 1 of the master method because \(f(n) \in O(g(n))\)
+        where \(f(n) \in O(n)\) and when \(\epsilon \approx 0.58\) because:
+
+        \[
+            g(n) = n^{\log_2 3 - \epsilon} = n^{\log_2 3 - \epsilon} = n^1 = n
+        \]
+
+        Given the master method, we then can determine the running time of our
+        recurrence to be \(T(n) \in \Theta(n^{\log_2 3})\).
+    \end{proof}
+
 \end{homeworkProblem}
 
 \pagebreak
