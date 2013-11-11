@@ -369,11 +369,45 @@
 
     Show an \(O(\left\vert{V}\right\vert)\) algorithm for identifying a minimal
     separator in a given tree.
+    \\
+
+    \solution
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
+            \Function{Visit}{$T, u$}
+                \ForAll{$v \in T.Adj[u]$}
+                    \If{$v.state = \text{unprocessed}$}
+                        \State{} $v.parent = u$
+                        \State{} \Call{Visit}{$T, v$}
+                    \EndIf
+                \EndFor
+                \State{} $u.state = \text{processed}$
+            \EndFunction{}
+            \\
             \Function{MinimalSeparator}{$T$}
-            \State{} \Return{$0$}
+                \ForAll{$v \in T.V$}
+                    \State{} $v.state = \text{unprocessed}$
+                    \State{} $v.parent = \textsc{Null}$
+                \EndFor
+                \\
+                \ForAll{$v \in T.V$}
+                    \If{$v.state = \text{unprocessed}$}
+                        \State{} \Call{Visit}{$T, v$}
+                    \EndIf
+                \EndFor
+                \\
+                \State{} $x \gets T.V[0]$
+                \State{} $y \gets x$
+                \While{$x \neq \textsc{Null}$}
+                    \State{} $y \gets x$
+                    \State{} $x \gets x.parent$
+                \EndWhile
+                \\
+                \State{} Recursively count children starting from the parent,
+                when children of a given node equals \(\left\vert T.V
+                \right\vert\), return that node.
+                \Comment{Counting children runs in \(O(\left\vert V \right\vert)\) time}
             \EndFunction{}
         \end{algorithmic}
         \caption{Identify a minimal separator in the given tree}
