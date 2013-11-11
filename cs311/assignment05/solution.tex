@@ -351,19 +351,55 @@
 \begin{homeworkProblem}
     Let \(T\) be a tree with \(n\) vertices. We say that a vertex \(v\) is a
     \textit{minimal separator of T} if its removal splits \(T\) into
-    two or more subtrees, each with at most \(n/2\) nodes.
-    \\
-
-    \solution
+    two or more subtrees, each with at most \(n/2\) vertices.
     \\
 
     \textbf{Part A}
 
     Show that every finite tree has at least one minimal separator.
+    \\
+
+    \solution
+    \\
 
     \begin{proof}
+        We will use induction to show that every finite tree has at
+        least one minimal separator.
+        \\
 
+        \textbf{Base} Consider the trees with \(n = 1\) and \(n = 2\) vertices.
+        These trees trivially have minimal separators because each vertex in
+        the base cases can be a minimal separator.
+        \\
+
+        \textbf{Step} We wish to show that for any tree composed of a finite
+        number of vertices still has at least one minimal separator.
+        \\
+
+        Now consider the trees \(T_i\) where \(k\) is some finite integer the
+        number of subtrees and \(T = \bigcup^k_{i = 1} T_i\) and where
+        \(\left\vert T \right\vert = n + 1\).
+        \\
+
+        By assuming the induction hypothesis, we can assume that every \(T_i\)
+        has a minimal separator.
+        \\
+
+        By waving our magic wand\(^{[1]}\), we can clearly see that the total tree will
+        always have a minimal separator. Thus this concludes our proof.
+        \\
+
+        Happy happy, joy joy. This proof is hard.
     \end{proof}
+
+    \textbf{Reference}
+
+    \begin{enumerate}
+        \item I could not figure out this proof, these people are smart:
+            \url{http://homes.cs.washington.edu/~jrl/papers/fhl-sicomp.pdf}
+    \end{enumerate}
+
+    \pagebreak
 
     \textbf{Part B}
 
