@@ -199,30 +199,30 @@
             \EndFunction{}
             \\
             \Function{Median-Of-Two}{$l_1, l_2$}
-                \State{} $start_1 \gets 0$
-                \State{} $start_2 \gets 0$
-                \State{} $end_1 \gets l_1.length$
-                \State{} $end_2 \gets l_2.length$
-                \State{} $mid_1 \gets \Call{Mid}{start_1, end_1}$
-                \State{} $mid_2 \gets \Call{Mid}{start_2, end_2}$
+                \State{} $s_1 \gets 0$
+                \State{} $s_2 \gets 0$
+                \State{} $e_1 \gets l_1.length$
+                \State{} $e_2 \gets l_2.length$
+                \State{} $mid_1 \gets \Call{Mid}{s_1, e_1}$
+                \State{} $mid_2 \gets \Call{Mid}{s_2, e_2}$
                 \\
                 \While{$mid_1 < end_1$ and $mid_2 < e_2$}
                     \If{$l_1[mid_1] < l_2[mid_2]$}
-                        \State{} $start_1 \gets mid_1$
-                        \State{} $end_2 \gets mid_2$
+                        \State{} $s_1 \gets mid_1$
+                        \State{} $e_2 \gets mid_2$
                     \Else{}
-                        \State{} $end_1 \gets mid_1$
-                        \State{} $start_2 \gets mid_2$
+                        \State{} $e_1 \gets mid_1$
+                        \State{} $s_2 \gets mid_2$
                     \EndIf
                     \\
-                    \State{} $mid_1 \gets \Call{Mid}{start_1, end_1}$
-                    \State{} $mid_2 \gets \Call{Mid}{start_2, end_2}$
+                    \State{} $mid_1 \gets \Call{Mid}{s_1, e_1}$
+                    \State{} $mid_2 \gets \Call{Mid}{s_2, e_2}$
                 \EndWhile
                 \\
-                \If{$mid1 \geq end1$}
-                    \State{} \Return{$l1[mid1]$}
+                \If{$mid_1 \geq e_1$}
+                    \State{} \Return{$l_1[mid_1]$}
                 \Else{}
-                    \State{} \Return{$l2[mid2]$}
+                    \State{} \Return{$l_2[mid_2]$}
                 \EndIf
             \EndFunction{}
         \end{algorithmic}
