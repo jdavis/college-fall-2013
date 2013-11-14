@@ -56,15 +56,14 @@
 (define (value-of-program prog env)
   (cases program prog
     (a-program
-     (expr rest-of-expressions)
+     (definitions expr rest-of-expressions)
      ;given a non-predicate function, andmap will apply the function
      ;to every element in the list and then return the value of
      ;applying the function on the last element.
-     (andmap (lambda (ex) (value-of ex env))
-             (flat-list expr rest-of-expressions))
-     )
-    )
-  )
+     (let
+        ([new-env (foldl value-of env definitions)])
+        (andmap (lambda (ex) (value-of ex new-env))
+                (flat-list expr rest-of-expressions))))))
 
 ;=================================== expr =======================================
 (define (value-of-expr ex env)
@@ -264,6 +263,10 @@
     (final-val
      (iden val-of-iden)
      (extend-env-wrapper iden (value-of val-of-iden env) env FINAL))
+
+    (fun-def
+      (name args body)
+      (extend-env-wrapper name (fun-val args body env) env FINAL))
 
     (else (raise (~a "value-of-var error: unimplemented expression: " v-ex)))
     )
