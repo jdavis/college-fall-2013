@@ -153,6 +153,44 @@
                list-of-expr)
        )
      )
+
+    (fun-expr
+      (args body)
+      (fun-val args body env))
+
+    (fun-call-expr
+      (fun params)
+      (letrec
+        ([parts (fun-val->proc (value-of fun env))]
+         [args (first parts)]
+         [body (second parts)]
+         [bound-env (third parts)])
+        (define (create-env args params env)
+          (cond
+            ((null? args) env)
+            (else
+              (create-env
+                (cdr args)
+                (cdr params)
+                (extend-env-wrapper (car args) (car params) env FINAL)))))
+        (cond
+          ((not (equal? (length args) (length params)))
+           (raise
+             (~a
+               "arity mismatch. expected "
+               (length args)
+               " arguments, received "
+               (length params))))
+          (else
+            (value-of
+              body
+              (create-env
+                args
+                (map
+                  (lambda (x) (value-of x env))
+                  params)
+                bound-env))))))
+
     (else (raise (~a "value-of-expr error: unimplemented expression: " ex)))
     )
   )
