@@ -36,6 +36,10 @@
     (expr ("{" (arbno var-expr) (arbno expr) "}") block-expr)
     (expr (identifier) iden-expr)
 
+    ; Anonymous Functions
+    (expr ("fun" "(" (arbno identifier) ")" "=" expr) fun-expr)
+    (expr ("call" "(" expr (arbno expr) ")") fun-call-expr)
+
     (var-expr ("val" identifier "=" expr) val)
     (var-expr ("final val" identifier "=" expr) final-val)
     )
