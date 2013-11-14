@@ -12,6 +12,10 @@
   (bool-val (b boolean?))
   (step-val (s step?))
   (point-val (p point?))
+  (fun-val
+      (ids (lambda (x) (andmap symbol? x)))
+      (body expr?)
+      (env environment?))
   )
 
 (define (invalid-args-exception fun-name expected-val actual-val)
@@ -56,6 +60,12 @@
     (else (invalid-args-exception "point-val->p" "point-val?" p))
     )
   )
+
+(define (fun-val->proc fun)
+  (or (expressed-val? fun) (invalid-args-exception "fun-val->proc" "expressed-val?" fun))
+  (cases expressed-val fun
+         (fun-val (args body env) (list args body env))
+         (else (invalid-args-exception "fun-val->proc" "fun-val?" fun))))
 
 ;==================================== step =====================================
 (define-datatype step step?
