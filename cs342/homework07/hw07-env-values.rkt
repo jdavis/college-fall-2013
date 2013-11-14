@@ -12,6 +12,8 @@
   (bool-val (b boolean?))
   (step-val (s step?))
   (point-val (p point?))
+  (list-val
+      (e (and (list? e) (lambda (x) (andmap expressed-val? x)))))
   (fun-val
       (ids (lambda (x) (andmap symbol? x)))
       (body expr?)
@@ -66,6 +68,12 @@
   (cases expressed-val fun
          (fun-val (args body env) (list args body env))
          (else (invalid-args-exception "fun-val->proc" "fun-val?" fun))))
+
+(define (list-val->list l)
+  (or (expressed-val? l) (invalid-args-exception "list-val->list" "expressed-val?" l))
+  (cases expressed-val l
+         (list-val (e) e)
+         (else (invalid-args-exception "list-val->list" "list-val?" l))))
 
 ;==================================== step =====================================
 (define-datatype step step?

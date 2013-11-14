@@ -190,6 +190,27 @@
                   params)
                 bound-env))))))
 
+    (list-expr
+      (vals)
+      (list-val
+        (map
+          (lambda (x) (value-of x env))
+          vals)))
+
+    (car-expr
+      (lst)
+      (let
+        ([l (list-val->list (value-of lst env))])
+        (cond
+          ((null? l)
+           (raise (~a "cannot take the car of an empty list: " l)))
+          (else
+            (car l)))))
+
+    (cdr-expr
+      (lst)
+      (list-val (cdr (list-val->list (value-of lst env)))))
+
     (else (raise (~a "value-of-expr error: unimplemented expression: " ex)))
     )
   )

@@ -24,12 +24,15 @@
       a-program)
 
     (expr (number) num-expr)
+
+    ; Steps/Points
     (expr ("up" "(" expr ")") up-expr)
     (expr ("down" "(" expr ")") down-expr)
     (expr ("left" "(" expr ")") left-expr)
     (expr ("right" "(" expr ")") right-expr)
     (expr ("(" expr expr ")") point-expr)
 
+    ; Basic Operations
     (expr ("+" expr expr) add-expr)
     (expr ("origin?" "(" expr ")") origin-expr)
     (expr ("if" "(" expr ")" "then" expr "else" expr ) if-expr)
@@ -42,6 +45,12 @@
     (expr ("fun" "(" (arbno identifier) ")" "=" expr) fun-expr)
     (expr ("call" "(" expr (arbno expr) ")") fun-call-expr)
 
+    ; List Expr
+    (expr ("[" (arbno expr) "]") list-expr)
+    (expr ("car" "(" expr ")") car-expr)
+    (expr ("cdr" "(" expr ")") cdr-expr)
+
+    ; Variables
     (var-expr ("val" identifier "=" expr) val)
     (var-expr ("final val" identifier "=" expr) final-val)
     (var-expr ("def" identifier "(" (arbno identifier) ")" "=" expr) fun-def)
