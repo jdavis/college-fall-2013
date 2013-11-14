@@ -20,8 +20,84 @@
   (test-suite
    "your own tests for the list datatype in your language"
    (test-case
-    "test 1."
+    "basic non-failure tests"
 
+    ; Basic list creation
+    (check-not-exn
+     (lambda ()
+       (run "[1 2 3 4]")))
+
+    ; Empty list
+    (check-not-exn
+     (lambda ()
+       (run "[]")))
+
+    ; Embedded lists
+    (check-not-exn
+     (lambda ()
+       (run "[ 1 2 [3 4] ]")))
+    )
+
+   (test-case
+    "equality tests"
+
+    ; Basic list
+    (check-equal?
+     (run "[1 2]")
+     (list-val (list (num-val 1) (num-val 2)))
+     )
+
+    ; Empty list
+    (check-equal?
+     (run "[]")
+     (list-val (list))
+     )
+
+   (test-case
+    "car operations"
+
+    ; Basic car
+    (check-equal?
+     (run "car ([1 2])")
+     (num-val 1)
+     )
+
+    ; Car as a list
+    (check-equal?
+     (run "car ([[1 2] 2])")
+     (list-val (list (num-val 1) (num-val 2)))
+     )
+    )
+
+   (test-case
+    "cdr operations"
+
+    ; Basic cdr
+    (check-equal?
+     (run "cdr ([[1 2] 2])")
+     (list-val (list (num-val 2)))
+     )
+
+    ; Empty cdr
+    (check-equal?
+     (run "cdr ([1])")
+     (list-val (list))
+     )
+    )
+
+   (test-case
+    "incorrect usage of lists"
+
+    ; Car of an empty list
+    (342-check-exn
+     (run "car ([])")
+     "cannot take the car of an empty list: ()")
+
+   ; Car of an invalid value
+    (342-check-exn
+     (run "car (2)")
+     "list-val->list, expected: list-val?, got: #(struct:num-val 2)")
+     )
     )
    )
   )
