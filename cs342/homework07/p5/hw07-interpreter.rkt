@@ -287,7 +287,7 @@
 
     (fun-def
       (name args body)
-      (extend-env-wrapper name (fun-val args body env) env FINAL))
+      (extend-env-rec name (fun-val args body env) env))
 
     (else (raise (~a "value-of-var error: unimplemented expression: " v-ex)))
     )

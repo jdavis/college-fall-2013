@@ -184,6 +184,12 @@
                             (is-var-final? prev-env)
                             )
                         )
+      (extend-env-rec (stored-sym val prev-env)
+                      (if (equal? sym stored-sym)
+                        #t
+                        (is-var-final? prev-env)
+                        )
+                      )
       )
     )
 
@@ -205,7 +211,11 @@
   (extend-env-final
    (bvar symbol?)
    (bval expressed-val?)
-   (saved-env environment?)))
+   (saved-env environment?))
+  (extend-env-rec
+    (fun-name symbol?)
+    (fun expressed-val?)
+    (saved-env environment?)))
 
 (define (apply-env env search-sym)
   (cases environment env
@@ -222,6 +232,10 @@
                       (if (eqv? search-sym var)
                           val
                           (apply-env saved-env search-sym)))
+    (extend-env-rec (fname fun saved-env)
+                    (if (eqv? search-sym fname)
+                      fun
+                      (apply-env saved-env search-sym)))
     )
   )
 
