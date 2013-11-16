@@ -184,8 +184,8 @@
                             (is-var-final? prev-env)
                             )
                         )
-      (extend-env-rec (stored-sym val prev-env)
-                      (if (equal? sym stored-sym)
+      (extend-env-rec (fname args body prev-env)
+                      (if (equal? sym fname)
                         #t
                         (is-var-final? prev-env)
                         )
@@ -214,7 +214,8 @@
    (saved-env environment?))
   (extend-env-rec
     (fun-name symbol?)
-    (fun expressed-val?)
+    (args (lambda (x) (andmap symbol? x)))
+    (body expr?)
     (saved-env environment?)))
 
 (define (apply-env env search-sym)
@@ -232,9 +233,9 @@
                       (if (eqv? search-sym var)
                           val
                           (apply-env saved-env search-sym)))
-    (extend-env-rec (fname fun saved-env)
+    (extend-env-rec (fname args body saved-env)
                     (if (eqv? search-sym fname)
-                      fun
+                      (fun-val args body (extend-env-rec fname args body saved-env))
                       (apply-env saved-env search-sym)))
     )
   )
