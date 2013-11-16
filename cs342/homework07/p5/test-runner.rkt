@@ -3,4 +3,5 @@
 (#%require "hw07-p5-tests.rkt")
 
 ; Run all the tests
-(test-all)
+(test p5)
+;(test-all)
