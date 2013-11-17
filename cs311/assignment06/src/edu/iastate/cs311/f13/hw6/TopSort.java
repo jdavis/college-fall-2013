@@ -3,19 +3,12 @@ package edu.iastate.cs311.f13.hw6;
 import java.util.HashMap;
 
 public class TopSort implements ITopologicalSortAlgorithms {
-    private int mTime;
     private HashMap<String,State> states = null;
     private HashMap<String,String> parents = null;
-    private HashMap<String,Integer> discoverTime = null;
-    private HashMap<String,Integer> finishTime = null;
 
     private void startingDFS() {
         states = new HashMap<String,State>();
         parents = new HashMap<String,String>();
-        discoverTime = new HashMap<String,Integer>();
-        finishTime = new HashMap<String,Integer>();
-
-        time = 0;
     }
 
 
@@ -43,11 +36,6 @@ public class TopSort implements ITopologicalSortAlgorithms {
         // Callback that we are starting on vertex u
         p.processDiscoveredVertex(u);
 
-        time += 1;
-
-        // Set the time that we discovered vertex u
-        discoverTime.put(u, time);
-
         // Update the state of vertex u
         states.put(u, State.PROCESSED);
 
@@ -65,9 +53,6 @@ public class TopSort implements ITopologicalSortAlgorithms {
                 dfsVisit(g, p, u);
             }
         }
-
-        // Store the time we finished visiting u
-        finishTime.put(u, time);
 
         // Update the state of u
         states.put(u, State.FINISHED);
