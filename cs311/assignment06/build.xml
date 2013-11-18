@@ -1,8 +1,8 @@
-<project name="311Homework6" default="dist" basedir=".">
-    <property name="src.dir"    value="src/"/>
-    <property name="test.dir"   value="test/"/>
-    <property name="lib.dir"    value="lib/"/>
-    <property name="dest.dir"   value="dest"/>
+<project name="311Homework6" default="build" basedir=".">
+    <property name="src.dir" value="src/"/>
+    <property name="test.dir" value="test/"/>
+    <property name="lib.dir" value="lib/"/>
+    <property name="dest.dir" value="dest"/>
 
     <presetdef name="javac">
         <javac includeantruntime="false" />
@@ -25,7 +25,7 @@
         <delete dir="${dest.dir}"/>
     </target>
 
-    <target name="compile" depends="init" description="compile the source " >
+    <target name="compile" depends="init">
         <javac srcdir="${src.dir}" destdir="${dest.dir}"/>
         <javac srcdir="${test.dir}" destdir="${dest.dir}"/>
     </target>
@@ -36,7 +36,7 @@
         </javac>
     </target>
 
-    <target name="dist" depends="compile" description="generate the distribution" >
+    <target name="build" depends="compile">
         <mkdir dir="${dest.dir}/lib"/>
     </target>
 
