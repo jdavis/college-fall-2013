@@ -1,6 +1,12 @@
 package edu.iastate.cs311.f13.hw6;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import edu.iastate.cs311.f13.hw6.IGraph.Pair;
+import edu.iastate.cs311.f13.hw6.IGraph;
 
 public class TopSort implements ITopologicalSortAlgorithms {
     private HashMap<String,State> states = null;
@@ -40,15 +46,15 @@ public class TopSort implements ITopologicalSortAlgorithms {
         states.put(u, State.PROCESSED);
 
         // Iterate over all the outgoing edges from v
-        for (Pair<String, String> e : g.getOutGoingEdges(v)) {
+        for (Pair<String, String> e : g.getOutgoingEdges(u)) {
             // Incident edge will be the second part of the pair
-            String v = e.second();
+            String v = e.second;
 
             // Callback that we are processing edge e
             p.processEdge(e);
 
             // If we haven't visited v yet, recursively visit it
-            if (state.get(v) == State.UNVISITED) {
+            if (states.get(v) == State.UNVISITED) {
                 parents.put(v, u);
                 dfsVisit(g, p, u);
             }
@@ -63,12 +69,30 @@ public class TopSort implements ITopologicalSortAlgorithms {
 
     @Override
     public List<String> topologicalSort(IGraph g) {
+        final ArrayList<String> result = new ArrayList<String>();
+
+        DFS(g, new ITopologicalSortAlgorithms.DFSCallback() {
+            @Override
+            public void processDiscoveredVertex(String v) { }
+
+            @Override
+            public void processExploredVertex(String v) {
+                result.add(v);
+            }
+
+            @Override
+            public void processEdge(Pair<String, String> e) { }
+        });
+
+        return result;
     }
 
     @Override
-    public int minScheduleLength(IGraph g, Map<String, Integer> jobDurations);
+    public int minScheduleLength(IGraph g, Map<String, Integer> jobDurations) {
+        return 0;
+    }
 
-    private Enum State {
+    private enum State {
         UNVISITED,
         PROCESSED,
         FINISHED,
