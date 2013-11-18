@@ -1,3 +1,5 @@
+package edu.iastate.cs311.f13.hw6;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -13,14 +15,14 @@ import org.junit.runners.Suite;
  */
 public class TestRunner {
 
-    public class MaxFlowTests {
+    public static class MaxFlowTests {
         @Test
         public void emptyTest() {
 
         }
     }
 
-    public class TopologicalTests {
+    public static class TopologicalTests {
         @Test
         public void emptyTest() {
 
