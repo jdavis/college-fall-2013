@@ -1,0 +1,50 @@
+<project name="311Homework6" default="dist" basedir=".">
+    <property name="src.dir"    value="src/"/>
+    <property name="test.dir"   value="test/"/>
+    <property name="lib.dir"    value="lib/"/>
+    <property name="dest.dir"   value="dest"/>
+
+    <presetdef name="javac">
+        <javac includeantruntime="false" />
+    </presetdef>
+
+    <path id="classpath.base">
+    </path>
+    <path id="classpath.test">
+        <pathelement location="${lib.dir}/junit.jar"/>
+        <pathelement location="${lib.dir}/hamcrest-core.jar"/>
+        <pathelement location="${test.dir}" />
+        <path refid="classpath.base" />
+    </path>
+
+    <target name="init">
+        <mkdir dir="${dest.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${dest.dir}"/>
+    </target>
+
+    <target name="compile" depends="init" description="compile the source " >
+        <javac srcdir="${src.dir}" destdir="${dest.dir}"/>
+        <javac srcdir="${test.dir}" destdir="${dest.dir}"/>
+    </target>
+
+    <target name="compile-test">
+        <javac srcdir="${test.dir}" verbose="${TALK}">
+            <classpath refid="classpath.test"/>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile" description="generate the distribution" >
+        <mkdir dir="${dest.dir}/lib"/>
+    </target>
+
+    <target name="test" depends="compile-test">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath refid="classpath.test" />
+            <formatter type="plain" usefile="false"/>
+            <test name="edu.iastate.cs311.f13.hw6.TestRunner"/>
+        </junit>
+    </target>
+</project>
