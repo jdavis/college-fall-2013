@@ -1,20 +1,19 @@
 <project name="311Homework6" default="build" basedir=".">
-    <property name="src.dir" value="src/"/>
-    <property name="test.dir" value="test/"/>
-    <property name="lib.dir" value="lib/"/>
-    <property name="dest.dir" value="dest"/>
+    <property name="src.dir" value="../src/"/>
+    <property name="test.dir" value="."/>
+    <property name="dest.dir" value="./dest"/>
 
     <presetdef name="javac">
-        <javac includeantruntime="false" />
+        <javac includeantruntime="false"/>
     </presetdef>
 
     <path id="classpath.base">
     </path>
     <path id="classpath.test">
-        <pathelement location="${lib.dir}/junit.jar"/>
-        <pathelement location="${lib.dir}/hamcrest-core.jar"/>
-        <pathelement location="${test.dir}" />
-        <path refid="classpath.base" />
+        <pathelement location="junit.jar"/>
+        <pathelement location="hamcrest-core.jar"/>
+        <pathelement location="${test.dir}"/>
+        <path refid="classpath.base"/>
     </path>
 
     <target name="init">
@@ -27,11 +26,11 @@
 
     <target name="compile" depends="init">
         <javac srcdir="${src.dir}" destdir="${dest.dir}"/>
-        <javac srcdir="${test.dir}" destdir="${dest.dir}"/>
     </target>
 
     <target name="compile-test">
         <javac srcdir="${test.dir}" verbose="${TALK}">
+            <include name="TestRunner.java" />
             <classpath refid="classpath.test"/>
         </javac>
     </target>
@@ -42,9 +41,9 @@
 
     <target name="test" depends="compile-test">
         <junit printsummary="yes" haltonfailure="no">
-            <classpath refid="classpath.test" />
+            <classpath refid="classpath.test"/>
             <formatter type="plain" usefile="false"/>
-            <test name="edu.iastate.cs311.f13.hw6.TestRunner"/>
+            <test name="TestRunner"/>
         </junit>
     </target>
 </project>

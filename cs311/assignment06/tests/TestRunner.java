@@ -1,5 +1,3 @@
-package edu.iastate.cs311.f13.hw6;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
