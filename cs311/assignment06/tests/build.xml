@@ -1,4 +1,10 @@
 <project name="311Homework6" default="build" basedir=".">
+    <!--
+         Replace "../src/" with the directory of your Java package.
+
+         It should be the same directory that edu/iastate/cs311/f13/hw6 lives.
+    -->
+
     <property name="src.dir" value="../src/"/>
     <property name="test.dir" value="."/>
     <property name="dest.dir" value="./dest"/>
@@ -24,7 +30,7 @@
         <delete dir="${dest.dir}"/>
     </target>
 
-    <target name="compile" depends="init">
+    <target name="build" depends="init">
         <javac srcdir="${src.dir}" destdir="${dest.dir}"/>
     </target>
 
@@ -33,10 +39,6 @@
             <include name="TestRunner.java" />
             <classpath refid="classpath.test"/>
         </javac>
-    </target>
-
-    <target name="build" depends="compile">
-        <mkdir dir="${dest.dir}/lib"/>
     </target>
 
     <target name="test" depends="compile-test">
