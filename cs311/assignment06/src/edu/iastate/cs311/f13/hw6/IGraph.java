@@ -22,10 +22,13 @@ public interface IGraph {
     public void deleteEdge(Pair<String, String> e);
 
     public class Pair<X, Y> {
+        /** First part of the pair. */
         public final X first;
+
+        /** Second part of the pair. */
         public final Y second;
 
-        public Pair(X first, Y second) {
+        public Pair(final X first, final Y second) {
             if (first == null || second == null)
                 throw new IllegalArgumentException();
             this.first = first;
@@ -33,7 +36,12 @@ public interface IGraph {
         }
 
         @Override
-        public boolean equals(Object other) {
+        public String toString() {
+            return "" + first + " -> " + second;
+        }
+
+        @Override
+        public final boolean equals(final Object other) {
             if (other == null)
                 return false;
             if (!(other instanceof Pair))
@@ -45,7 +53,7 @@ public interface IGraph {
         }
 
         @Override
-        public int hashCode() {
+        public final int hashCode() {
             return first.hashCode() + second.hashCode();
         }
     }

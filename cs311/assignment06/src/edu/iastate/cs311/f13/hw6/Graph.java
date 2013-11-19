@@ -1,29 +1,57 @@
 package edu.iastate.cs311.f13.hw6;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
+/**
+ * Implementation of IGraph interface.
+ */
 public class Graph implements IGraph {
-    public Collection<String> getVertices() {
-        return null;
+    /** Hashmap of all the edges in the graph. */
+    private HashMap<String, ArrayList<Pair<String, String>>> mData;
+
+    /**
+     * Create an empty Graph.
+     */
+    public Graph() {
+        mData = new HashMap<String, ArrayList<Pair<String, String>>>();
     }
 
-    public Collection<Pair<String, String>> getOutgoingEdges(String v) {
-        return null;
+    @Override
+    public final Collection<String> getVertices() {
+        return (Collection<String>) mData.keySet();
     }
 
-    public void addVertex(String v) {
-
+    @Override
+    public final Collection<Pair<String, String>> getOutgoingEdges(
+            final String v) {
+        return (Collection<Pair<String, String>>) mData.get(v);
     }
 
-    public void addEdge(Pair<String, String> e) {
-
+    @Override
+    public final void addVertex(final String v) {
+        mData.put(v, new ArrayList<Pair<String, String>>());
     }
 
-    public void deleteVertex(String v) {
+    @Override
+    public final void addEdge(final Pair<String, String> e) {
+        String v = e.first;
+        ArrayList<Pair<String, String>> edges = mData.get(v);
 
+        edges.add(e);
     }
 
-    public void deleteEdge(Pair<String, String> e) {
+    @Override
+    public final void deleteVertex(final String v) {
+        mData.remove(v);
+    }
 
+    @Override
+    public final void deleteEdge(final Pair<String, String> e) {
+        String v = e.first;
+        ArrayList<Pair<String, String>> edges = mData.get(v);
+
+        edges.remove(e);
     }
 }
