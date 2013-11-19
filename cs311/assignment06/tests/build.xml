@@ -4,8 +4,8 @@
 
          It should be the same directory that edu/iastate/cs311/f13/hw6 lives.
     -->
-
     <property name="src.dir" value="../src/"/>
+
     <property name="test.dir" value="."/>
     <property name="dest.dir" value="./dest"/>
 
@@ -19,6 +19,7 @@
         <pathelement location="junit.jar"/>
         <pathelement location="hamcrest-core.jar"/>
         <pathelement location="${test.dir}"/>
+        <pathelement location="${dest.dir}"/>
         <path refid="classpath.base"/>
     </path>
 
@@ -34,15 +35,15 @@
         <javac srcdir="${src.dir}" destdir="${dest.dir}"/>
     </target>
 
-    <target name="compile-test">
-        <javac srcdir="${test.dir}" verbose="${TALK}">
+    <target name="build-test" depends="init">
+        <javac srcdir="${test.dir}" destdir="${dest.dir}">
             <include name="TestRunner.java" />
             <classpath refid="classpath.test"/>
         </javac>
     </target>
 
-    <target name="test" depends="compile-test">
-        <junit printsummary="yes" haltonfailure="no">
+    <target name="test" depends="build,build-test">
+        <junit dir="${dest.dir}" printsummary="yes" haltonfailure="no">
             <classpath refid="classpath.test"/>
             <formatter type="plain" usefile="false"/>
             <test name="TestRunner"/>
