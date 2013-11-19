@@ -1,0 +1,3 @@
+[submodule "cs311/assignment06/tests"]
+	path = cs311/assignment06/tests
+	url = https://gist.github.com/7539406.git
