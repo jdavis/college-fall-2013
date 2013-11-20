@@ -14,15 +14,11 @@ public class TopologicalSort implements ITopologicalSortAlgorithms {
     /** Holds states for vertices. */
     private HashMap<String, State> states = null;
 
-    /** Holds parents of vertices. */
-    private HashMap<String, String> parents = null;
-
     /**
-     * Initializes our states and parents objects.
+     * Initializes our states object.
      */
     private void startingDFS() {
         states = new HashMap<String, State>();
-        parents = new HashMap<String, String>();
     }
 
 
@@ -31,10 +27,9 @@ public class TopologicalSort implements ITopologicalSortAlgorithms {
         // Reset all of our member variables
         startingDFS();
 
-        // Initailize state and parents of all the vertices
+        // Initailize state of all the vertices
         for (String u : g.getVertices()) {
             states.put(u, State.UNVISITED);
-            parents.put(u, null);
         }
 
         // Iterate over all the vertices
@@ -69,7 +64,6 @@ public class TopologicalSort implements ITopologicalSortAlgorithms {
 
             // If we haven't visited v yet, recursively visit it
             if (states.get(v) == State.UNVISITED) {
-                parents.put(v, u);
                 dfsVisit(g, p, v);
             }
         }
@@ -104,7 +98,60 @@ public class TopologicalSort implements ITopologicalSortAlgorithms {
     @Override
     public final int minScheduleLength(final IGraph g,
             final Map<String, Integer> jobDurations) {
-        return 0;
+        final HashMap<String, String> parents = new HashMap<String, String>();
+        final HashMap<String, Integer> depth = new HashMap<String, Integer>();
+        final HashMap<String, Integer> startTime = new HashMap<String, Integer>();
+        final HashMap<String, Integer> finishTime = new HashMap<String, Integer>();
+        final int[] time = new int[1];
+
+        time[0] = 0;
+
+        // Initailize parents of all the vertices
+        // Runs in O(V)
+        for (String u : g.getVertices()) {
+            parents.put(u, null);
+            depth.put(u, 0);
+        }
+
+        DFS(g, new ITopologicalSortAlgorithms.DFSCallback() {
+            private String previousParent = null;
+
+            @Override
+            public void processDiscoveredVertex(final String v) {
+                parents.put(v, previousParent);
+
+                if (previousParent != null) {
+                    depth.put(v, depth.get(previousParent) + 1);
+                }
+
+                previousParent = v;
+                time[0] += 1;
+                startTime.put(v, time[0]);
+            }
+
+            @Override
+            public void processExploredVertex(final String v) {
+                previousParent = parents.get(v);
+                time[0] += jobDurations.get(v);
+                finishTime.put(v, time[0]);
+            }
+
+            @Override
+            public void processEdge(final Pair<String, String> e) { }
+        });
+
+        System.out.println("Parents: " + parents);
+        System.out.println("Start time: " + startTime);
+        System.out.println("Finish time: " + finishTime);
+        System.out.println("Depth: " + depth);
+
+        int result = 0;
+
+        for (String u : g.getVertices()) {
+            result += jobDurations.get(u);
+        }
+
+        return result;
     }
 
     /**
