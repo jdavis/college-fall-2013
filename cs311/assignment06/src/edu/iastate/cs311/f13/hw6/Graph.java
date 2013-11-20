@@ -2,7 +2,9 @@ package edu.iastate.cs311.f13.hw6;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * Implementation of IGraph interface.
@@ -45,6 +47,20 @@ public class Graph implements IGraph {
     @Override
     public final void deleteVertex(final String v) {
         mData.remove(v);
+
+        Iterator it = mData.entrySet().iterator();
+
+        while (it.hasNext()) {
+            Entry entry = (Entry) it.next();
+            String u = (String) entry.getKey();
+
+            Pair<String, String> e = new Pair<String, String>(u, v);
+
+            ArrayList<Pair<String, String>> edges = (ArrayList<Pair<String, String>>) entry.getValue();
+            if (edges.contains(e)) {
+                edges.remove(e);
+            }
+        }
     }
 
     @Override
