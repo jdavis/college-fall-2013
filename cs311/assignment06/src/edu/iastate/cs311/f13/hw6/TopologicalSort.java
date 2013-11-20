@@ -2,8 +2,10 @@ package edu.iastate.cs311.f13.hw6;
 
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import edu.iastate.cs311.f13.hw6.IGraph.Pair;
 
@@ -98,60 +100,50 @@ public class TopologicalSort implements ITopologicalSortAlgorithms {
     @Override
     public final int minScheduleLength(final IGraph g,
             final Map<String, Integer> jobDurations) {
-        final HashMap<String, String> parents = new HashMap<String, String>();
-        final HashMap<String, Integer> depth = new HashMap<String, Integer>();
-        final HashMap<String, Integer> startTime = new HashMap<String, Integer>();
-        final HashMap<String, Integer> finishTime = new HashMap<String, Integer>();
-        final int[] time = new int[1];
-
-        time[0] = 0;
-
-        // Initailize parents of all the vertices
-        // Runs in O(V)
-        for (String u : g.getVertices()) {
-            parents.put(u, null);
-            depth.put(u, 0);
-        }
-
-        DFS(g, new ITopologicalSortAlgorithms.DFSCallback() {
-            private String previousParent = null;
-
-            @Override
-            public void processDiscoveredVertex(final String v) {
-                parents.put(v, previousParent);
-
-                if (previousParent != null) {
-                    depth.put(v, depth.get(previousParent) + 1);
-                }
-
-                previousParent = v;
-                time[0] += 1;
-                startTime.put(v, time[0]);
-            }
-
-            @Override
-            public void processExploredVertex(final String v) {
-                previousParent = parents.get(v);
-                time[0] += jobDurations.get(v);
-                finishTime.put(v, time[0]);
-            }
-
-            @Override
-            public void processEdge(final Pair<String, String> e) { }
-        });
-
-        System.out.println("Parents: " + parents);
-        System.out.println("Start time: " + startTime);
-        System.out.println("Finish time: " + finishTime);
-        System.out.println("Depth: " + depth);
+        List<String> topo = topologicalSort(g);
+        HashSet<String> visited = new HashSet<String>();
 
         int result = 0;
-
-        for (String u : g.getVertices()) {
-            result += jobDurations.get(u);
+        for (String v : g.getVertices()) {
+            if (!visited.contains(v)) {
+                int x = minScheduleLengthRec(g, jobDurations, visited, topo, v);
+                result = Math.max(result, x);
+            }
         }
 
         return result;
+    }
+
+    /**
+     * Helper function for minScheduleLength.
+     * @param g Graph to look through
+     * @param jobDurations Map for the length of each vertex
+     * @param visited All the nodes that have been visited so far
+     * @param topo One valid topological sort
+     * @param u Vertex to start at
+     * @return Minium schedule length for current vertex
+     */
+    private int minScheduleLengthRec(final IGraph g,
+            final Map<String, Integer> jobDurations,
+            final Set<String> visited,
+            final List<String> topo,
+            final String u) {
+        int total = jobDurations.get(u);
+        int max = total;
+
+        visited.add(u);
+
+        for (Pair<String, String> e : g.getOutgoingEdges(u)) {
+            // Incident edge will be the second part of the pair
+            String v = e.second;
+            int x = minScheduleLengthRec(g, jobDurations, visited, topo, v);
+
+            if (total + x > max) {
+                max = total + x;
+            }
+        }
+
+        return max;
     }
 
     /**
