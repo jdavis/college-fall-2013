@@ -1,25 +1,33 @@
 package edu.iastate.cs311.f13.hw6;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.iastate.cs311.f13.hw6.IGraph.Pair;
-import edu.iastate.cs311.f13.hw6.IGraph;
 
-public class TopSort implements ITopologicalSortAlgorithms {
-    private HashMap<String,State> states = null;
-    private HashMap<String,String> parents = null;
+/**
+ * Implementation of the ITopologicalSortAlgorithms interface.
+ */
+public class TopologicalSort implements ITopologicalSortAlgorithms {
+    /** Holds states for vertices. */
+    private HashMap<String, State> states = null;
 
+    /** Holds parents of vertices. */
+    private HashMap<String, String> parents = null;
+
+    /**
+     * Initializes our states and parents objects.
+     */
     private void startingDFS() {
-        states = new HashMap<String,State>();
-        parents = new HashMap<String,String>();
+        states = new HashMap<String, State>();
+        parents = new HashMap<String, String>();
     }
 
 
     @Override
-    public void DFS(IGraph g, DFSCallback p) {
+    public final void DFS(final IGraph g, final DFSCallback p) {
         // Reset all of our member variables
         startingDFS();
 
@@ -38,7 +46,13 @@ public class TopSort implements ITopologicalSortAlgorithms {
         }
     }
 
-    private void dfsVisit(IGraph g, DFSCallback p, String u) {
+    /**
+     * Visit a given vertex.
+     * @param g Graph to explore
+     * @param p Callback processor
+     * @param u Vertex to visit
+     */
+    private void dfsVisit(final IGraph g, final DFSCallback p, final String u) {
         // Callback that we are starting on vertex u
         p.processDiscoveredVertex(u);
 
@@ -56,7 +70,7 @@ public class TopSort implements ITopologicalSortAlgorithms {
             // If we haven't visited v yet, recursively visit it
             if (states.get(v) == State.UNVISITED) {
                 parents.put(v, u);
-                dfsVisit(g, p, u);
+                dfsVisit(g, p, v);
             }
         }
 
@@ -68,33 +82,42 @@ public class TopSort implements ITopologicalSortAlgorithms {
     }
 
     @Override
-    public List<String> topologicalSort(IGraph g) {
-        final ArrayList<String> result = new ArrayList<String>();
+    public final List<String> topologicalSort(final IGraph g) {
+        final LinkedList<String> result = new LinkedList<String>();
 
         DFS(g, new ITopologicalSortAlgorithms.DFSCallback() {
             @Override
-            public void processDiscoveredVertex(String v) { }
+            public void processDiscoveredVertex(final String v) { }
 
             @Override
-            public void processExploredVertex(String v) {
-                result.add(v);
+            public void processExploredVertex(final String v) {
+                result.addFirst(v);
             }
 
             @Override
-            public void processEdge(Pair<String, String> e) { }
+            public void processEdge(final Pair<String, String> e) { }
         });
 
         return result;
     }
 
     @Override
-    public int minScheduleLength(IGraph g, Map<String, Integer> jobDurations) {
+    public final int minScheduleLength(final IGraph g,
+            final Map<String, Integer> jobDurations) {
         return 0;
     }
 
+    /**
+     * Enum for states of vertices.
+     */
     private enum State {
+        /** Unvisited state. */
         UNVISITED,
+
+        /** Processed but not finished state. */
         PROCESSED,
+
+        /** Finished state. */
         FINISHED,
     }
 }
