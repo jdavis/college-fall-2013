@@ -23,9 +23,11 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
         states = new HashMap<String, State>();
     }
 
-
-    @Override
-    public final void DFS(final IGraph g, final DFSCallback p) {
+    /**
+     * Calculate depth first on a graph with a given starting node or null if
+     * starting doens't matter.
+     */
+    public final void DFS(final IGraph g, final String s, final DFSCallback p) {
         // Reset all of our member variables
         startingDFS();
 
@@ -34,13 +36,26 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
             states.put(u, State.UNVISITED);
         }
 
-        // Iterate over all the vertices
+        // Start with s if given
+        if (s != null) {
+            if (states.get(s) == State.UNVISITED) {
+                dfsVisit(g, p, s);
+            }
+        }
+
+        // Iterate over the rest of the vertices
         for (String u : g.getVertices()) {
             // If we haven't visited it, that means we can DFS from it
             if (states.get(u) == State.UNVISITED) {
                 dfsVisit(g, p, u);
             }
         }
+    }
+
+
+    @Override
+    public final void DFS(final IGraph g, final DFSCallback p) {
+        DFS(g, null, p);
     }
 
     /**
