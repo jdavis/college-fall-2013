@@ -13,6 +13,23 @@ public class Graph implements IGraph {
     /** Hashmap of all the edges in the graph. */
     private HashMap<String, ArrayList<Pair<String, String>>> mData;
 
+    @Override
+    public final String toString() {
+        String result = "";
+        Iterator it = mData.entrySet().iterator();
+
+        while (it.hasNext()) {
+            Entry entry = (Entry) it.next();
+            String u = (String) entry.getKey();
+
+
+            ArrayList<Pair<String, String>> edges = (ArrayList<Pair<String, String>>) entry.getValue();
+            result += u + " = " + edges + "\n";
+        }
+
+        return result;
+    }
+
     /**
      * Create an empty Graph.
      */
@@ -33,7 +50,9 @@ public class Graph implements IGraph {
 
     @Override
     public final void addVertex(final String v) {
-        mData.put(v, new ArrayList<Pair<String, String>>());
+        if (!mData.containsKey(v)) {
+            mData.put(v, new ArrayList<Pair<String, String>>());
+        }
     }
 
     @Override
@@ -41,7 +60,10 @@ public class Graph implements IGraph {
         String v = e.first;
         ArrayList<Pair<String, String>> edges = mData.get(v);
 
-        edges.add(e);
+        if (edges != null) {
+            edges.add(e);
+        }
+
     }
 
     @Override
