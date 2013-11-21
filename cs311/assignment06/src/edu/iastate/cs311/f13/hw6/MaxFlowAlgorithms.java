@@ -87,7 +87,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             final Map<Pair<String, String>, Integer> f,
             final Map<Pair<String, String>, Integer> c) {
 
-        System.out.println("Calculating residualGraph");
         HashMap<Pair<String, String>, Integer> result = new HashMap<Pair<String, String>, Integer>();
 
         for (Pair<String, String> e : c.keySet()) {
@@ -99,12 +98,11 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             }
 
             Pair<String, String> residual = new Pair<String, String>(e.second, e.first);
-            if (vu > 0 && c.containsKey(residual)) {
+            if (vu > 0) {
                 result.put(residual, vu);
             }
         }
 
-        System.out.println("Residual Costs: " + result);
         return result;
 
     }
@@ -127,8 +125,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             result.addEdge(e);
         }
 
-        System.out.println("Residual Graph: " + result);
-
         return result;
     }
 
@@ -137,7 +133,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             final String s,
             final String t,
             final Map<Pair<String, String>, Integer> c) {
-        System.out.println("Calculating maxFlow");
         Map<Pair<String, String>, Integer> f;
         HashMap<Pair<String, String>, Integer> result = new HashMap<Pair<String, String>, Integer>();
 
@@ -152,14 +147,11 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
         gR = residualGraph(result);
 
         while ((p = augmentedPath(gR, s, t)) != null) {
-            System.out.println("Path: " + p);
             int cost = Integer.MAX_VALUE;
 
             for (Pair<String, String> e : p) {
                 cost = Math.min(cost, f.get(e));
             }
-
-            System.out.println("MinCost: " + cost);
 
             for (Pair<String, String> e : p) {
                 if (c.containsKey(e)) {
@@ -172,8 +164,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
 
             f = residualCost(g, s, t, result, c);
             gR = residualGraph(f);
-
-            System.out.println("Result so far: " + result);
         }
 
         return result;
