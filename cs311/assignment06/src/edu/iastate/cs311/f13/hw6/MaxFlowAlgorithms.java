@@ -30,7 +30,7 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
 
         TopologicalSortAlgorithms topo = new TopologicalSortAlgorithms();
 
-        topo.DFS(g, new ITopologicalSortAlgorithms.DFSCallback() {
+        topo.DFS(g, s, new ITopologicalSortAlgorithms.DFSCallback() {
             private boolean didFind = false;
             private String previousParent = null;
 
@@ -49,10 +49,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             public void processEdge(final Pair<String, String> e) {
                 String v = e.first;
                 String u = e.second;
-
-                if (parents.get(u) == null) {
-                    parents.put(u, v);
-                }
             }
         });
 
@@ -67,7 +63,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             y = x;
             x = parents.get(x);
         }
-
 
         if (result.size() == 0) {
             return null;
@@ -177,6 +172,8 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
 
             f = residualCost(g, s, t, result, c);
             gR = residualGraph(f);
+
+            System.out.println("Result so far: " + result);
         }
 
         return result;
