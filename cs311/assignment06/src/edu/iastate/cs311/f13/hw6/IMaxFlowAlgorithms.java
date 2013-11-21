@@ -23,8 +23,10 @@ public interface IMaxFlowAlgorithms {
      *            g.
      * @return A maximal flow.
      */
-    public Map<Pair<String, String>, Integer> maxFlow(IGraph g, String s,
-            String t, Map<Pair<String, String>, Integer> edgeCapacities);
+    public Map<Pair<String, String>, Integer> maxFlow(IGraph g,
+            String s,
+            String t,
+            Map<Pair<String, String>, Integer> edgeCapacities);
 
     /**
      * Computes the maximal flow that can travel on g from s to t while

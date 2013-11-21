@@ -12,7 +12,7 @@ import edu.iastate.cs311.f13.hw6.IGraph.Pair;
 /**
  * Implementation of the ITopologicalSortAlgorithms interface.
  */
-public class TopologicalSort implements ITopologicalSortAlgorithms {
+public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
     /** Holds states for vertices. */
     private HashMap<String, State> states = null;
 
