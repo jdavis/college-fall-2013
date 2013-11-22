@@ -175,7 +175,45 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             final String s,
             final String t,
             final Map<String, Integer> vertexCapacities) {
-        return new HashMap<Pair<String, String>, Integer>();
+        // Transform the graph
+        IGraph gN = new Graph();
+        HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
+
+        for (String v : g.getVertices()) {
+            int capacity = vertexCapacities.get(v);
+
+            for (Pair<String, String> e : g.getOutgoingEdges(v)) {
+                String u = e.second;
+
+                String augVertex = v + " augmented " + u;
+
+                Pair<String, String> vToAug = new Pair<String, String>(v, augVertex);
+                Pair<String, String> augToU = new Pair<String, String>(augVertex, u);
+
+                c.put(vToAug, capacity);
+                c.put(augToU, capacity);
+
+                gN.addVertex(v);
+                gN.addVertex(augVertex);
+                gN.addVertex(u);
+
+                gN.addEdge(vToAug);
+                gN.addEdge(augToU);
+            }
+        }
+
+        // Add constraint on t output
+        String tN = t + " augmented ";
+        Pair<String, String> tToTN = new Pair<String, String>(t, tN);
+
+        gN.addVertex(t);
+        gN.addVertex(tN);
+
+        gN.addEdge(tToTN);
+
+        c.put(tToTN, vertexCapacities.get(t));
+
+        return maxFlow(gN, s, tN, c);
     }
 
     @Override
