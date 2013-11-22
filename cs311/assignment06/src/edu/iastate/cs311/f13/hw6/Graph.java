@@ -18,13 +18,14 @@ public class Graph implements IGraph {
         String result = "";
         Iterator it = mData.entrySet().iterator();
 
+        result += "Graph:\n";
         while (it.hasNext()) {
             Entry entry = (Entry) it.next();
             String u = (String) entry.getKey();
 
 
             ArrayList<Pair<String, String>> edges = (ArrayList<Pair<String, String>>) entry.getValue();
-            result += u + " = " + edges + "\n";
+            result += "\t" + u + " = " + edges + "\n";
         }
 
         return result;
