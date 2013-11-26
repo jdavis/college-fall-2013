@@ -1,19 +1,21 @@
 package edu.iastate.cs311.f13.hw6;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import edu.iastate.cs311.f13.hw6.Graph;
 import edu.iastate.cs311.f13.hw6.IGraph.Pair;
-import edu.iastate.cs311.f13.hw6.TopologicalSortAlgorithms;
 
 /**
  * Implementation of the IMaxFlowAlgorithms.
  */
 public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
+    /** Unit capacity of a graph. */
+    private static final int UNIT_CAPACITY = 1;
 
     /**
      * Helper method to return an augmented path if it exists.
@@ -220,6 +222,65 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
     public final Collection<List<String>> maxVertexDisjointPaths(final IGraph g,
             final String s,
             final String t) {
-        return null;
+        HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
+
+        for (String v : g.getVertices()) {
+            for (Pair<String, String> e : g.getOutgoingEdges(v)) {
+                c.put(e, UNIT_CAPACITY);
+            }
+        }
+
+        Map<Pair<String, String>, Integer> f = maxFlow(g, s, t, c);
+
+        IGraph gN = new Graph();
+
+        for (Pair<String, String> edge : f.keySet()) {
+            if (f.get(edge) == 0) continue;
+
+            gN.addVertex(edge.first);
+            gN.addVertex(edge.second);
+            gN.addEdge(edge);
+        }
+
+        System.out.println("Disjoint path old graph\n" + g);
+        System.out.println("Disjoint path new graph\n" + gN);
+
+        TopologicalSortAlgorithms topo = new TopologicalSortAlgorithms();
+
+        final ArrayList<List<String>> paths = new ArrayList<List<String>>();
+        final HashSet<String> visited = new HashSet<String>();
+
+        topo.DFS(gN, s, new ITopologicalSortAlgorithms.DFSCallback() {
+            private ArrayList<String> currentPath = null;
+
+            @Override
+            public void processDiscoveredVertex(final String v) {
+            }
+
+            @Override
+            public void processExploredVertex(final String v) {
+            }
+
+            @Override
+            public void processEdge(final Pair<String, String> e) {
+                String u = e.first;
+                String v = e.second;
+
+                if (currentPath == null) {
+                    currentPath = new ArrayList<String>();
+                    currentPath.add(u);
+                }
+
+                if (v.equals(t)) {
+                    currentPath.add(t);
+                    paths.add(currentPath);
+                    currentPath = null;
+                } else {
+                    currentPath.add(v);
+                }
+            }
+        });
+
+        return paths;
     }
 }
