@@ -242,9 +242,6 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             gN.addEdge(edge);
         }
 
-        System.out.println("Disjoint path old graph\n" + g);
-        System.out.println("Disjoint path new graph\n" + gN);
-
         TopologicalSortAlgorithms topo = new TopologicalSortAlgorithms();
 
         final ArrayList<List<String>> paths = new ArrayList<List<String>>();
@@ -254,12 +251,10 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             private ArrayList<String> currentPath = null;
 
             @Override
-            public void processDiscoveredVertex(final String v) {
-            }
+            public void processDiscoveredVertex(final String v) { }
 
             @Override
-            public void processExploredVertex(final String v) {
-            }
+            public void processExploredVertex(final String v) { }
 
             @Override
             public void processEdge(final Pair<String, String> e) {
