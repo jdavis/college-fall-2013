@@ -25,7 +25,11 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
 
     /**
      * Calculate depth first on a graph with a given starting node or null if
-     * starting doens't matter.
+     * starting doesn't matter.
+     *
+     * Complexity of this is the standard O(V + E) as according to CLRS. This
+     * is because every vertex is visited at least once and every edge is
+     * visited once.
      */
     public final void DFS(final IGraph g, final String s, final DFSCallback p) {
         // Reset all of our member variables
@@ -60,6 +64,9 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
 
     /**
      * Visit a given vertex.
+     *
+     * Helper method for DFS method.
+     *
      * @param g Graph to explore
      * @param p Callback processor
      * @param u Vertex to visit
@@ -92,16 +99,31 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
         p.processExploredVertex(u);
     }
 
+    /**
+     * Uses our DFS method previously implemented but uses a special callback.
+     *
+     * This method runs in O(V + E) time just like DFS. This is because
+     * inserting at the beginning of a LinkedList is constant time.
+     *
+     * @param g Graph to topologically sort
+     * @return A List of a valid topological sort
+     */
     @Override
     public final List<String> topologicalSort(final IGraph g) {
         final LinkedList<String> result = new LinkedList<String>();
 
+        // Use our standard DFS and pass in a custom callback
+        // We only need to use the processExploredVertex callback method
         DFS(g, new ITopologicalSortAlgorithms.DFSCallback() {
             @Override
             public void processDiscoveredVertex(final String v) { }
 
             @Override
             public void processExploredVertex(final String v) {
+                // By inserting a vertex at the beginning of our result, we
+                // ensure that we get a valid topological sort of the input
+                // graph. This is because processExploredVertex is only called
+                // once all of its children are visited.
                 result.addFirst(v);
             }
 
@@ -112,6 +134,22 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
         return result;
     }
 
+    /**
+     * Generates a valid topological sort and then traverses the DAG to
+     * calculate the max time of traversing the DAG.
+     *
+     * First it does a standard topological sort O(V + E), then it traverses
+     * the sort and determines the max to access the bottom of the DAG.
+     * Maximally, this traversal would run in O(V + E) as well, thus
+     * asymptotically, the entire method runs in:
+     *      O((V + E) + (V + E)) =
+     *                           = O(2V + * 2E)
+     *                           = O(V + E).
+     *
+     * @param g Graph to calculate over
+     * @param jobDurations Map of each job to a given integer duration
+     * @return Value of the minimum schedule length
+     */
     @Override
     public final int minScheduleLength(final IGraph g,
             final Map<String, Integer> jobDurations) {
@@ -119,6 +157,7 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
         HashSet<String> visited = new HashSet<String>();
 
         int result = 0;
+
         for (String v : g.getVertices()) {
             if (!visited.contains(v)) {
                 int x = minScheduleLengthRec(g, jobDurations, visited, topo, v);
@@ -131,6 +170,10 @@ public class TopologicalSortAlgorithms implements ITopologicalSortAlgorithms {
 
     /**
      * Helper function for minScheduleLength.
+     *
+     * Operates recursively until a given vertex has no more outgoing edges
+     * (thus at the bottom of the DAG).
+     *
      * @param g Graph to look through
      * @param jobDurations Map for the length of each vertex
      * @param visited All the nodes that have been visited so far
