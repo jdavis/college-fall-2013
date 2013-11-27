@@ -1,35 +1,35 @@
                                      COM S 342
                               Fall 2013 Homework 08
 
-Suggested reading: 
+Suggested reading:
     EOPL: 3.4 (recursive procedures)
     EOPL: 4.1 - 4.2 (description and implementation of explicit referencing)
-    
+
 In this homework you will be starting out with the version of the interpreter
 seen in the solution for homework 07 (with very minor modifications).
 
 You will need to modify the semantics of procedure definitions in such a way that
 they support recursive calls. And you will be adding C/C++ style references
 to the language.
-    
+
 ===============================================================================
 1. Named recursive procedures [20p]
 
 Modify the semantics of named function definitions to support recursive calls:
 
 > (run
-      "def a(p) = 
+      "def a(p) =
         if(origin?(p))
         then
           42
         else
           call(a move(p down(1)));
-      
+
       call(a (0 3))
 ")
 (num-val 42)
 
-You had this problem in hw07 - p5. For now, start from the initial implementation provided 
+You had this problem in hw07 - p5. For now, start from the initial implementation provided
 in hw08-interpreter.rkt and do it again.
 
 ===============================================================================
@@ -44,14 +44,14 @@ can call itself via the "self" keyword.
 
 > (run
       "val rf =
-      recfun (p) =  
+      recfun (p) =
         if(origin?(p))
         then
           42
         else
           #the function calls itself
           call(self move(p down(1)));
-      
+
       call(rf (0 3))
 ")
 (num-val 42)
@@ -121,7 +121,7 @@ Arrays should behave like normal pointers:
   val a = [2];
   #this will point to the first position of the array
   *a")
-(num-val 0) 
+(num-val 0)
 
 >(run "
   val a = [2];
