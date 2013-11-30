@@ -26,7 +26,9 @@
   (step-val (s step?))
   (point-val (p point?))
   (proc-val (p proc?))
-  (ref-val (r reference?))
+  (ref-val
+    (s (list-of expressed-val?))
+    (r reference?))
   )
 
 (define (invalid-args-exception fun-name expected-val actual-val)
@@ -75,10 +77,19 @@
 (define (ref-val->n r)
   (or (expressed-val? r) (invalid-args-exception "ref-val->n" "expressed-val?" r))
   (cases expressed-val r
-         (ref-val (val) val)
+         (ref-val (store val) val)
          (else (invalid-args-exception "ref-val->n" "ref-val?" r))
          )
   )
+
+(define (ref-val->store r)
+  (or (expressed-val? r) (invalid-args-exception "ref-val->n" "expressed-val?" r))
+  (cases expressed-val r
+         (ref-val (store val) store)
+         (else (invalid-args-exception "ref-val->n" "ref-val?" r))
+         )
+  )
+
 ;==================================== proc =====================================
 (define-datatype proc proc?
   (procedure
@@ -290,15 +301,16 @@
 
 ;; empty-store : () -> Store
 ;; Page: 111
-(define empty-store
-  (lambda () '()))
+(define (empty-store) '())
 
 ;; initialize-store! : () -> Store
 ;; usage: (initialize-store!) sets the-store to the empty-store
 ;; Page 111 & as discussed in class (see lecture notes)
-(define initialize-store!
-  (lambda ()
-    (set! the-store (empty-store))))
+(define (initialize-store!)
+    (set! the-store (empty-store)))
+
+(define (initialize-array!)
+    (set! the-store (empty-store)))
 
 ;; reference? : SchemeVal -> Bool
 ;; Page: 111
@@ -307,7 +319,7 @@
 
 ;; newref : ExpVal -> Ref -- malloc in C/C++
 ;; Page: 111
-(define (newref val)
+(define (newref val store)
   (let ((next-ref (length the-store)))
     (set! the-store
           (append the-store (list val)))
@@ -315,7 +327,7 @@
 
 ;; deref : Ref -> ExpVal -- value->string at certain reference
 ;; Page 111
-(define (deref ref)
+(define (deref ref store)
   (or (list? the-store) (raise "unitialized store"))
   (if (>= ref (length the-store))
       (report-invalid-reference ref)

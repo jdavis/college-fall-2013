@@ -150,12 +150,6 @@
      (proc-val (procedure vars-expr body-expr env))
      )
 
-    (recfun-expr
-      (vars-expr body-expr)
-      (let
-        ([rec-env (extend-env-rec 'self vars-expr body-expr env)])
-        (proc-val (procedure vars-expr body-expr rec-env))))
-
     (fun-call-expr
      (fun-exp argv-expr)
      (letrec
@@ -178,6 +172,20 @@
        )
      )
 
+    ;
+    ; Anonymous Recrusive Functions from Problem 2
+    ;
+
+    (recfun-expr
+      (vars-expr body-expr)
+      (let
+        ([rec-env (extend-env-rec 'self vars-expr body-expr env)])
+        (proc-val (procedure vars-expr body-expr rec-env))))
+
+    ;
+    ; Explicit References from Problem 3
+    ;
+
     (new-ref-expr
       (ref-expr)
       (let
@@ -192,18 +200,46 @@
 
     (set-ref-expr
       (ref-expr ref-value)
-      (let
-        ([rval (ref-val->n (value-of ref-expr env))]
+      (letrec
+        ([ref (value-of ref-expr env)]
+         [reference-index (ref-val->n ref)]
+         [reference-store (ref-val->store ref)]
          [val (value-of ref-value env)])
-      (setref! rval val)))
+        (setref! rval val)))
 
     (inc-ref-expr
       (ref-expr)
-        (ref-val (+ 1 (ref-val->n (value-of ref-expr env)))))
+        (ref-val
+          (+ (ref-val->n (value-of ref-expr env)) 1)
+          the-store))
 
     (dec-ref-expr
       (ref-expr)
-        (ref-val (- (ref-val->n (value-of ref-expr env)) 1)))
+        (ref-val
+          (- (ref-val->n (value-of ref-expr env)) 1)
+          the-store))
+
+    ;
+    ; Arrays from Problem 4
+    ;
+
+    (array-expr
+      (size-expr)
+      (let
+        ([size (num-val->n (value-of size-expr env))])
+      '()
+        )
+      )
+
+    (array-deref-expr
+      (exp1 exp2)
+      '()
+      )
+
+    (array-set-expr
+      (exp1 exp2 exp3)
+      '()
+      )
 
     (else (raise (to-string "value-of-expr error: unimplemented expression: " ex)))
     )
