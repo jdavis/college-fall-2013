@@ -148,6 +148,12 @@
      (proc-val (procedure vars-expr body-expr env))
      )
 
+    (recfun-expr
+      (vars-expr body-expr)
+      (let
+        ([rec-env (extend-env-rec 'self vars-expr body-expr env)])
+        (proc-val (procedure vars-expr body-expr rec-env))))
+
     (fun-call-expr
      (fun-exp argv-expr)
      (letrec
