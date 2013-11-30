@@ -37,6 +37,7 @@
     (expr (identifier) iden-expr)
 
     (expr ("fun" "(" (arbno identifier)")" "=" expr) fun-expr)
+    (expr ("recfun" "(" (arbno identifier)")" "=" expr) recfun-expr)
     (expr ("call" "(" expr (arbno expr)")") fun-call-expr)
 
     (var-expr ("val" identifier "=" expr) val)
