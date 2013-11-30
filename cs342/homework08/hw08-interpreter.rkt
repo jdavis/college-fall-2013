@@ -11,6 +11,8 @@
     (string->symbol (string-append "arg" (number->string index)))
     )
 
+
+  (initialize-store!)
   (or (string? program-string) (raise (to-string "expected a program as string, got: " program-string)))
 
   (for-each
@@ -175,6 +177,32 @@
        (value-of fun-body new-env)
        )
      )
+
+    (new-ref-expr
+      (ref-expr)
+      (let
+        ([val (value-of ref-expr env)])
+        (ref-val (newref val))))
+
+    (deref-expr
+      (ref-expr)
+      (deref (value-of ref-expr env)))
+
+    (set-ref-expr
+      (ref-expr ref-value)
+      (setref!
+        (value-of ref-expr env)
+        (value-of ref-value env)))
+
+    (inc-ref-expr
+      (ref-expr)
+      '()
+      )
+
+    (dec-ref-expr
+      (ref-expr)
+      '()
+      )
 
     (else (raise (to-string "value-of-expr error: unimplemented expression: " ex)))
     )
