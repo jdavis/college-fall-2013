@@ -4,3 +4,4 @@
 
 ; Run all the tests
 (test p1)
+(test p2)
