@@ -186,23 +186,24 @@
 
     (deref-expr
       (ref-expr)
-      (deref (value-of ref-expr env)))
+      (let
+        ([val (ref-val->n (value-of ref-expr env))])
+        (deref val)))
 
     (set-ref-expr
       (ref-expr ref-value)
-      (setref!
-        (value-of ref-expr env)
-        (value-of ref-value env)))
+      (let
+        ([rval (ref-val->n (value-of ref-expr env))]
+         [val (value-of ref-value env)])
+      (setref! rval val)))
 
     (inc-ref-expr
       (ref-expr)
-      '()
-      )
+        (ref-val (+ 1 (ref-val->n (value-of ref-expr env)))))
 
     (dec-ref-expr
       (ref-expr)
-      '()
-      )
+        (ref-val (- (ref-val->n (value-of ref-expr env)) 1)))
 
     (else (raise (to-string "value-of-expr error: unimplemented expression: " ex)))
     )

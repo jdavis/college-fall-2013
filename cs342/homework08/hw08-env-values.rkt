@@ -71,6 +71,14 @@
     (else (invalid-args-exception "proc-val->proc" "proc-val?" p))
     )
   )
+
+(define (ref-val->n r)
+  (or (expressed-val? r) (invalid-args-exception "ref-val->n" "expressed-val?" r))
+  (cases expressed-val r
+         (ref-val (val) val)
+         (else (invalid-args-exception "ref-val->n" "ref-val?" r))
+         )
+  )
 ;==================================== proc =====================================
 (define-datatype proc proc?
   (procedure
