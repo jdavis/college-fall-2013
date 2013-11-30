@@ -52,8 +52,8 @@
     (expr ("--" expr) dec-ref-expr)
 
     (expr ("[" expr "]") array-expr)
-    (expr ("*" "[" "]" expr "[" expr "]") array-deref-expr)
-    (expr ("set" "[" "]" expr "[" expr "]" ":=" expr) array-set-expr)
+    (expr ("*[]" expr "[" expr "]") array-deref-expr)
+    (expr ("set[]" expr "[" expr "]" ":=" expr) array-set-expr)
     )
   )
 
