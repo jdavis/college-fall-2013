@@ -26,6 +26,7 @@
   (step-val (s step?))
   (point-val (p point?))
   (proc-val (p proc?))
+  (ref-val (r reference?))
   )
 
 (define (invalid-args-exception fun-name expected-val actual-val)
