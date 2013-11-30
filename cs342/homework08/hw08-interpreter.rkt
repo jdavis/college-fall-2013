@@ -251,7 +251,9 @@
 
     (def-fun
       (fun-name fun-params body)
-      (extend-env-wrapper fun-name (proc-val (procedure fun-params body env)) env FINAL)
+      (let
+        ([rec-env (extend-env-rec fun-name fun-params body env)])
+        (extend-env-wrapper fun-name (proc-val (procedure fun-params body rec-env)) env FINAL))
       )
     (else (raise (to-string "value-of-var error: unimplemented expression: " v-ex)))
     )

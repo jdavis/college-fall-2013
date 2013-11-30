@@ -209,6 +209,8 @@
                             (is-var-final? prev-env)
                             )
                         )
+      (extend-env-rec (fname fargs fbody prev-env)
+                      (is-var-final? prev-env))
       )
     )
 
@@ -230,7 +232,12 @@
   (extend-env-final
    (bvar symbol?)
    (bval expressed-val?)
-   (saved-env environment?)))
+   (saved-env environment?))
+  (extend-env-rec
+    (fname symbol?)
+    (fargs (list-of symbol?))
+    (fbody expr?)
+    (saved-env environment?)))
 
 (define (apply-env env search-sym)
   (cases environment env
@@ -247,6 +254,10 @@
                       (if (eqv? search-sym var)
                           val
                           (apply-env saved-env search-sym)))
+    (extend-env-rec (fname fargs fbody saved-env)
+                    (if (eqv? search-sym fname)
+                      (proc-val (procedure fargs fbody env))
+                      (apply-env saved-env search-sym)))
     )
   )
 
