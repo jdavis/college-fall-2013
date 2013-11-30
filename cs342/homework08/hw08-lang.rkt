@@ -44,6 +44,11 @@
     (var-expr ("final val" identifier "=" expr) final-val)
     (var-expr ("def" identifier "(" (arbno identifier)")" "=" expr) def-fun)
 
+    (expr ("ref" "(" expr ")") new-ref-expr)
+    (expr ("*" expr) deref-expr)
+    (expr ("set" expr ":=" expr) set-ref-expr)
+    (expr ("++" expr) inc-ref-expr)
+    (expr ("--" expr) dec-ref-expr)
     )
   )
 
