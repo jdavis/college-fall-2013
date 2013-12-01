@@ -27,9 +27,7 @@
   (point-val (p point?))
   (proc-val (p proc?))
   (ref-val
-    (r reference?))
-  (array-val
-    (a (list-of expressed-val?))))
+    (r reference?)))
 
 (define (invalid-args-exception fun-name expected-val actual-val)
   (raise (to-string fun-name ", expected: " expected-val ", got: " actual-val) ))
@@ -79,14 +77,6 @@
   (cases expressed-val r
          (ref-val (val) val)
          (else (invalid-args-exception "ref-val->n" "ref-val?" r))
-         )
-  )
-
-(define (array-val->list a)
-  (or (expressed-val? a) (invalid-args-exception "array-val->list" "expressed-val?" a))
-  (cases expressed-val a
-         (array-val (a) a)
-         (else (invalid-args-exception "array-val->list" "array-val?" a))
          )
   )
 
@@ -310,7 +300,11 @@
     (set! the-store (empty-store)))
 
 (define (initialize-array n)
-    (build-list n (lambda (x) (num-val 0))))
+  (let
+    ([a (newref (num-val 0))])
+    (for ([i (in-range (- n 1))])
+         (newref (num-val 0)))
+    (ref-val a)))
 
 ;; reference? : SchemeVal -> Bool
 ;; Page: 111
@@ -327,21 +321,21 @@
 
 ;; deref : Ref -> ExpVal -- value->string at certain reference
 ;; Page 111
-(define (deref ref store)
-  (or (list? store) (raise "unitialized store"))
-  (if (>= ref (length store))
+(define (deref ref)
+  (or (list? the-store) (raise "unitialized store"))
+  (if (>= ref (length the-store))
       (report-invalid-reference ref)
-      (list-ref store ref)
+      (list-ref the-store ref)
       )
   )
 
 ;; setref! : Ref * ExpVal -> Unspecified -- backend of assignment
 ;; Page: 112
-(define (setref! ref val store)
-  (or (list? store) (raise "unitialized store"))
-  (if (>= ref (length store))
+(define (setref! ref val)
+  (or (list? the-store) (raise "unitialized store"))
+  (if (>= ref (length the-store))
       (report-invalid-reference ref)
-      (set! store
+      (set! the-store
             ;we map the old store to a new one where only the element on
             ;position 'ref' is changed. The exact same thing we did for the
             ;change-at-index problem in previous hw problem.
@@ -351,8 +345,8 @@
                        store-entry
                        )
                    )
-                 store
-                 (range (length store))))
+                 the-store
+                 (range (length the-store))))
       )
   )
 

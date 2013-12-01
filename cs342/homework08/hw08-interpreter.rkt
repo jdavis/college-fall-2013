@@ -196,29 +196,27 @@
       (ref-expr)
       (letrec
         ([ref (value-of ref-expr env)]
-         [val (ref-val->n ref)])
-        (deref val the-store)))
+         [index (ref-val->n ref)])
+        (deref index)))
 
     (set-ref-expr
       (ref-expr ref-value)
       (letrec
-        ([ref (value-of ref-expr env)]
-         [index (ref-val->n ref)]
+        ([index (ref-val->n (value-of ref-expr env))]
          [val (value-of ref-value env)])
-        (setref! index val the-store)))
+        (setref! index val)
+        the-store))
 
     (inc-ref-expr
       (ref-expr)
       (letrec
-        ([ref (value-of ref-expr env)]
-         [index (ref-val->n ref)])
+        ([index (ref-val->n (value-of ref-expr env))])
         (ref-val (+ index 1))))
 
     (dec-ref-expr
       (ref-expr)
       (letrec
-        ([ref (value-of ref-expr env)]
-         [index (ref-val->n ref)])
+        ([index (ref-val->n (value-of ref-expr env))])
         (ref-val (- index 1))))
 
     ;
@@ -229,25 +227,26 @@
       (size-expr)
       (letrec
         ([size (num-val->n (value-of size-expr env))]
-         [new-array (initialize-array size)])
-        (array-val new-array)))
+         [a (initialize-array size)])
+        a))
 
     (array-deref-expr
       (array-expr index-expr)
       (letrec
-        ([array (value-of array-expr env)]
-         [index (num-val->n (value-of index-expr env))]
-         [store (array-val->list array)])
-        (deref index store)))
+        ([array-value (value-of array-expr env)]
+         [array-start (ref-val->n array-value)]
+         [array-index (num-val->n (value-of index-expr env))])
+        (deref (+ array-start array-index))))
 
     (array-set-expr
       (array-expr index-expr val-expr)
       (letrec
-        ([ref (value-of array-expr env)]
-         [index (value-of index-expr env)]
-         [store (array-val->list ref)]
+        ([array-value (value-of array-expr env)]
+         [array-start (ref-val->n array-value)]
+         [array-index (num-val->n (value-of index-expr env))]
          [val (value-of val-expr env)])
-        (setref! index val store)))
+        (setref! (+ array-start array-index) val)
+        the-store))
 
     (else (raise (to-string "value-of-expr error: unimplemented expression: " ex)))
     )
