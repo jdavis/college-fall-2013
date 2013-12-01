@@ -27,9 +27,9 @@
   (point-val (p point?))
   (proc-val (p proc?))
   (ref-val
-    (s (list-of expressed-val?))
     (r reference?))
-  )
+  (array-val
+    (a (list-of expressed-val?))))
 
 (define (invalid-args-exception fun-name expected-val actual-val)
   (raise (to-string fun-name ", expected: " expected-val ", got: " actual-val) ))
@@ -77,16 +77,16 @@
 (define (ref-val->n r)
   (or (expressed-val? r) (invalid-args-exception "ref-val->n" "expressed-val?" r))
   (cases expressed-val r
-         (ref-val (store val) val)
+         (ref-val (val) val)
          (else (invalid-args-exception "ref-val->n" "ref-val?" r))
          )
   )
 
-(define (ref-val->store r)
-  (or (expressed-val? r) (invalid-args-exception "ref-val->n" "expressed-val?" r))
-  (cases expressed-val r
-         (ref-val (store val) store)
-         (else (invalid-args-exception "ref-val->n" "ref-val?" r))
+(define (array-val->list a)
+  (or (expressed-val? a) (invalid-args-exception "array-val->list" "expressed-val?" a))
+  (cases expressed-val a
+         (array-val (a) a)
+         (else (invalid-args-exception "array-val->list" "array-val?" a))
          )
   )
 
@@ -309,8 +309,8 @@
 (define (initialize-store!)
     (set! the-store (empty-store)))
 
-(define (initialize-array!)
-    (set! the-store (empty-store)))
+(define (initialize-array n)
+    (build-list n (lambda (x) (num-val 0))))
 
 ;; reference? : SchemeVal -> Bool
 ;; Page: 111
@@ -319,7 +319,7 @@
 
 ;; newref : ExpVal -> Ref -- malloc in C/C++
 ;; Page: 111
-(define (newref val store)
+(define (newref val)
   (let ((next-ref (length the-store)))
     (set! the-store
           (append the-store (list val)))
@@ -328,20 +328,20 @@
 ;; deref : Ref -> ExpVal -- value->string at certain reference
 ;; Page 111
 (define (deref ref store)
-  (or (list? the-store) (raise "unitialized store"))
-  (if (>= ref (length the-store))
+  (or (list? store) (raise "unitialized store"))
+  (if (>= ref (length store))
       (report-invalid-reference ref)
-      (list-ref the-store ref)
+      (list-ref store ref)
       )
   )
 
 ;; setref! : Ref * ExpVal -> Unspecified -- backend of assignment
 ;; Page: 112
-(define (setref! ref val)
-  (or (list? the-store) (raise "unitialized store"))
-  (if (>= ref (length the-store))
+(define (setref! ref val store)
+  (or (list? store) (raise "unitialized store"))
+  (if (>= ref (length store))
       (report-invalid-reference ref)
-      (set! the-store
+      (set! store
             ;we map the old store to a new one where only the element on
             ;position 'ref' is changed. The exact same thing we did for the
             ;change-at-index problem in previous hw problem.
@@ -351,8 +351,8 @@
                        store-entry
                        )
                    )
-                 the-store
-                 (range (length the-store))))
+                 store
+                 (range (length store))))
       )
   )
 
