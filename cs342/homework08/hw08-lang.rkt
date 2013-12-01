@@ -43,14 +43,17 @@
     (var-expr ("final val" identifier "=" expr) final-val)
     (var-expr ("def" identifier "(" (arbno identifier)")" "=" expr) def-fun)
 
+    ; Anonymous Function Recursion
     (expr ("recfun" "(" (arbno identifier)")" "=" expr) recfun-expr)
 
+    ; Explicit References
     (expr ("ref" "(" expr ")") new-ref-expr)
     (expr ("*" expr) deref-expr)
     (expr ("set" expr ":=" expr) set-ref-expr)
     (expr ("++" expr) inc-ref-expr)
     (expr ("--" expr) dec-ref-expr)
 
+    ; Arrays
     (expr ("[" expr "]") array-expr)
     (expr ("*[]" expr "[" expr "]") array-deref-expr)
     (expr ("set[]" expr "[" expr "]" ":=" expr) array-set-expr)
