@@ -230,7 +230,7 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
             final Map<String, Integer> c) {
         // Transform the graph
         IGraph gN = new Graph();
-        HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
+        HashMap<Pair<String, String>, Integer> f = new HashMap<Pair<String, String>, Integer>();
 
         // Iterate over all the vertices, creating our newly transformed graph
         for (String v : g.getVertices()) {
@@ -248,8 +248,8 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
                 Pair<String, String> vToAug = new Pair<String, String>(v, augVertex);
                 Pair<String, String> augToU = new Pair<String, String>(augVertex, u);
 
-                c.put(vToAug, capacity);
-                c.put(augToU, capacity);
+                f.put(vToAug, capacity);
+                f.put(augToU, capacity);
 
                 gN.addVertex(v);
                 gN.addVertex(augVertex);
@@ -269,10 +269,10 @@ public class MaxFlowAlgorithms implements IMaxFlowAlgorithms {
 
         gN.addEdge(tToTN);
 
-        c.put(tToTN, c.get(t));
+        f.put(tToTN, c.get(t));
 
         // Calculate the maxFlow normally with the new transformed graph
-        return maxFlow(gN, s, tN, c);
+        return maxFlow(gN, s, tN, f);
     }
 
     /**
