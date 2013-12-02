@@ -41,6 +41,32 @@ Schedule using Concurrency Control:
 
 > Correction: For problem 3a it should be Abort_{T2} not Abort_{T1}.
 
+### Part A
+
+S1: R_{T1}(X), W_{T2}(X), W_{T1}(X), Abort_{T2}, Commit_{T1}
+
+Classification:
+
+- Serializable?
+- Conflict-Serializable?
+- Recoverable?
+- Avoids-Cascading-Aborts?
+- Strict?
+
+### Part B
+
+S2: R_{T1}(X), R_{T2}(X), W_{T1}(X), W_{T2}(X), Commit_{T2}, Commit_{T1}
+
+Classification:
+
+- Serializable?
+- Conflict-Serializable?
+- Recoverable?
+- Avoids-Cascading-Aborts?
+- Strict?
+
 ## Problem 4
 
 ## Problem 5
+
+## Problem 6
