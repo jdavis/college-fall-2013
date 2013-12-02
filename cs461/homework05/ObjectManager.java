@@ -139,7 +139,11 @@ public class ObjectManager {
      * @param tid ID of the transaction
      */
     public void commit(final int tid) {
-
+        for (Object o : heldObjects.get(tid)) {
+            // Check the lock state of all objects
+            // If one is still being held, the commit can't proceed
+            // Release all locks held by transaction
+        }
     }
 
     /**
