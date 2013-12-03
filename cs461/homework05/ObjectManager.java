@@ -35,7 +35,7 @@ public class ObjectManager {
      *
      * @param tid ID of the transaction
      * @param o Object to write
-     * @return Object values that was read
+     * @return Object values that was read or null if read was blocked.
      */
     public Object read(final int tid, final Object o) {
         List<Integer> holds;
@@ -54,32 +54,21 @@ public class ObjectManager {
         TwoPhaseLockState state = lock.getState();
 
         if (state == TwoPhaseLockState.EXCLUSIVE) {
-            // Wait until the lock is released
-            while ((state = lock.getState()) == TwoPhaseLockState.EXCLUSIVE);
-        }
+            // Add ourselves to the suspenders
+            suspenders.get(o).add(tid);
 
-        if (state == TwoPhaseLockState.NONE) {
+            // Null because read was blocked
+            return null;
+        } else if (state == TwoPhaseLockState.SHARED) {
+            // Add ourselves to the holding list
+            holders.get(o).add(tid);
+        } else {
             // Set it to shared since we are reading
             lock.setState(TwoPhaseLockState.SHARED);
         }
 
-        // Read our object
-        result = dbManager.read(o);
-
-        // Finish reading
-        lock = locks.get(o);
-        holds = holders.get(o);
-        suspends = suspenders.get(o);
-
-        if (holds.size() == 0 && suspends.size() == 0) {
-            locks.remove(o);
-            holders.remove(o);
-            suspenders.remove(o);
-        } else if (holds.size() == 0) {
-            lock.setState(TwoPhaseLockState.NONE);
-        }
-
-        return result;
+        // Read and return our object
+        return dbManager.read(o);
     }
 
     /**
@@ -87,8 +76,9 @@ public class ObjectManager {
      *
      * @param tid ID of the transaction
      * @param o Object to write
+     * @return True if the write was allowed, false if it was blocked
      */
-    public void write(final int tid, final Object o) {
+    public boolean write(final int tid, final Object o) {
         List<Integer> holds;
         List<Integer> suspends;
         Object result;
@@ -105,32 +95,26 @@ public class ObjectManager {
         TwoPhaseLockState state = lock.getState();
 
         if (state == TwoPhaseLockState.EXCLUSIVE) {
-            // Wait until the lock is released
-            while ((state = lock.getState()) != TwoPhaseLockState.EXCLUSIVE);
+            // Add ourselves to the suspenders
+            suspenders.get(o).add(tid);
+
+            // False because write was blocked
+            return false;
+        } else if (state == TwoPhaseLockState.SHARED) {
+            // Add ourselves to the suspenders
+            suspenders.get(o).add(tid);
+
+            // False because write was blocked
+            return false;
+        } else {
+            // Set it to shared since we are writing
+            lock.setState(TwoPhaseLockState.EXCLUSIVE);
         }
 
-        if (state == TwoPhaseLockState.NONE) {
-            // Set it to shared since we are reading
-            lock.setState(TwoPhaseLockState.SHARED);
-        }
+        // Write our object and be done!
+        dbManager.write(o);
 
-        // Read our object
-        result = dbManager.read(o);
-
-        // Finish reading
-        lock = locks.get(o);
-        holds = holders.get(o);
-        suspends = suspenders.get(o);
-
-        if (holds.size() == 0 && suspends.size() == 0) {
-            locks.remove(o);
-            holders.remove(o);
-            suspenders.remove(o);
-        } else if (holds.size() == 0) {
-            lock.setState(TwoPhaseLockState.NONE);
-        }
-
-        return result;
+        return true;
     }
 
     /**
@@ -140,9 +124,7 @@ public class ObjectManager {
      */
     public void commit(final int tid) {
         for (Object o : heldObjects.get(tid)) {
-            // Check the lock state of all objects
-            // If one is still being held, the commit can't proceed
-            // Release all locks held by transaction
+            // Release all object locks for the given transaction
         }
     }
 
@@ -152,6 +134,8 @@ public class ObjectManager {
      * @param tid ID of the transaction
      */
     public void abort(final int tid) {
-
+        for (Object o : heldObjects.get(tid)) {
+            // Release all object locks for the given transaction
+        }
     }
 }
