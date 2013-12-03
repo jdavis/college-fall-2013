@@ -101,10 +101,6 @@ public class ObjectManager {
      * @return Object values that was read or null if read was blocked.
      */
     public Object read(final int tid, final Object o) {
-        List<Integer> holds;
-        List<Integer> suspends;
-        Object result;
-
         TwoPhaseLock lock = locks.get(o);
 
         // No reading going on, init all objects
@@ -142,10 +138,6 @@ public class ObjectManager {
      * @return True if the write was allowed, false if it was blocked
      */
     public boolean write(final int tid, final Object o) {
-        List<Integer> holds;
-        List<Integer> suspends;
-        Object result;
-
         TwoPhaseLock lock = locks.get(o);
 
         // No writing going on, init all objects
