@@ -47,11 +47,11 @@ S1: R_{T1}(X), W_{T2}(X), W_{T1}(X), Abort_{T2}, Commit_{T1}
 
 Classification:
 
-- Serializable?
-- Conflict-Serializable?
-- Recoverable?
-- Avoids-Cascading-Aborts?
-- Strict?
+- Serializable? Yes
+- Conflict-Serializable? No
+- Recoverable? Yes
+- Avoids-Cascading-Aborts? Yes
+- Strict? No
 
 ### Part B
 
@@ -59,11 +59,11 @@ S2: R_{T1}(X), R_{T2}(X), W_{T1}(X), W_{T2}(X), Commit_{T2}, Commit_{T1}
 
 Classification:
 
-- Serializable?
-- Conflict-Serializable?
-- Recoverable?
-- Avoids-Cascading-Aborts?
-- Strict?
+- Serializable? No
+- Conflict-Serializable? No
+- Recoverable? No
+- Avoids-Cascading-Aborts? Yes
+- Strict? Yes
 
 ## Problem 4
 
