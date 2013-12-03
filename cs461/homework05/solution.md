@@ -48,15 +48,16 @@ S1: R1(X), W2(X), W1(X), Abort(T2), Commit(T1)
 Classification:
 
 - Serializable?
-    - Yes
+    - Yes. Because it is identical to running T1 -> T2 or T2 -> T1 because of
+      the abort of T2.
 - Conflict-Serializable?
-    - No
+    - No. Not conflict equivalent to T1 -> T2 or T2 -> T1.
 - Recoverable?
-    - Yes
+    - Yes. T1 overwrites the value of X from T2 if it aborts.
 - Avoids-Cascading-Aborts?
-    - Yes
+    - Yes. T1 overwrites any value T2 wrote therefore the abort doesn't matter.
 - Strict?
-    - No
+    - No. W of X occurs in T2 before T1 commits (releases lock on X).
 
 ### Part B
 
@@ -65,15 +66,16 @@ S2: R1(X), R2(X), W1(X), W2(X), Commit(T2), Commit(T1)
 Classification:
 
 - Serializable?
-    - No
+    - No. RW conflict between X.
 - Conflict-Serializable?
-    - No
+    - No. Not conflict equivalent to T1 -> T2 or T2 -> T1.
 - Recoverable?
-    - No
+    - Yes. Aborting T2 just undoes the write on X, leaving it at the value T1
+      wrote. Aborting T1 doesn't matter for T2 because T2 wrote X last.
 - Avoids-Cascading-Aborts?
-    - Yes
+    - Yes.
 - Strict?
-    - Yes
+    - No. T2 reads X before T1 writes it after reading it.
 
 ## Problem 4
 
