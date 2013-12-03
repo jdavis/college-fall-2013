@@ -203,6 +203,7 @@ public class ObjectManager {
 An example of "blind write".
 
 Schedule:
+
     T1          T2
     R(X)
     W(X)
@@ -217,6 +218,7 @@ Schedule:
 Using Strict 2PL locks.
 
 Schedule using Concurrency Control:
+
     T1          T2
     R(X)
     W(X)
