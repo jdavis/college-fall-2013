@@ -77,6 +77,26 @@ Classification:
 
 ## Problem 4
 
+### Part A
+
+S1: R1(X), R2(Z), R1(Z), R3(X), R3(Y), W1(X), W3(Y), R2(Y), W2(Z), W2(Y)
+
+- Draw the Serializability Graph
+
+- Serializable?
+
+- If serializable, write down the equivalent serial schedule(s).
+
+### Part B
+
+S1: R1(X), R2(Z), R3(X), R1(Z), R2(Y), R3(Y), W1(X), W2(Z), W3(Y), W2(Y)
+
+- Draw the Serializability Graph
+
+- Serializable?
+
+- If serializable, write down the equivalent serial schedule(s).
+
 ## Problem 5
 
 ## Problem 6
