@@ -182,6 +182,15 @@
     \solution
     \\
 
+    \textit{Strategy:} When \(n = 1\), the strategy of starting at the lowest
+    floor and dropping it until it breaks. The value of \(c\) will be equal to
+    one less than the floor that it broke on.
+    \\
+
+    \textit{Largest Number:} The largest number of drops would of course be if we had
+    to drop it until we reach the top of the apartment or when \(c = h\).
+    \\
+
     \textbf{Part B}
 
     Let \(n = 2\). What dropping strategy for minimum value of \(c\)? What is
@@ -190,6 +199,23 @@
     \\
 
     \solution
+    \\
+
+    \textit{Strategy:} When \(n = 2\), the strategy of splitting the number of
+    floors in half until an egg cracks, then reverting back to the base case of
+    testing from the lowest known floor until we find when it cracks.
+    \\
+
+    It is very similar to binary search, we have a \(low\) and \(high\) values
+    that are initially \(low = 1\) and \(high = h\), then take the mid point.
+    If the egg doesn't crack, \(low = mid\) and then we repeat. When the egg
+    cracks, we set \(high = mid\) and start at \(low\) and go until \(high\).
+    \\
+
+    \textit{Largest Number:} The largest number of drops would be when \(c = \lceil h
+    / 2 \rceil \) because we would drop it once at \((h / 2)\) and it would break and
+    then require \((h / 2) - 1\) additional drops resulting in \(h / 2\) total
+    drops.
     \\
 
     \textbf{Part C}
