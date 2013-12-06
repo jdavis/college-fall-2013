@@ -112,13 +112,22 @@
         \begin{algorithmic}[1]
             \Function{NoThreeInLineFitness}{$n, board$}
                 \State{} $cost \gets 0$
+                \\
                 \ForAll{$i \in 1 \ldots n$}
                     \ForAll{$j \in 1 \ldots n$}
-                        \If{$null$}
-                            \State{} $largest \gets edge$
+                        \If{more than three horizontally at $i, j$}
+                            \State{} $cost \gets cost + 1$
+                        \EndIf
+                        \If{more than three vertically at $i, j$}
+                            \State{} $cost \gets cost + 1$
+                        \EndIf
+                        \If{more than three diagonally at $i, j$}
+                            \State{} $cost \gets cost + 1$
                         \EndIf
                     \EndFor
                 \EndFor
+                \\
+                \State{} \Return{$cost$}
             \EndFunction{}
         \end{algorithmic}
         \caption{Fitness algorithm}
