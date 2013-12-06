@@ -139,6 +139,71 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    Backtracking.
+    \\
+
+    \textbf{Part A}
+
+    Specify a set of partial candidates and a method for generating candidate
+    extension steps.
+    \\
+
+    \solution
+
+    We can start with an empty board and try going by one row at a time. If we
+    do this, we just need to try to place a dot if it isn't collinear with two
+    other dots. If we find a place that doesn't clash, we add it to our
+    solution and continue.
+    \\
+
+    \textbf{Part B}
+
+    Specify in pseudocode a method that efficiently determines whether a
+    partial candidate should be pruned.
+    \\
+
+    \solution
+
+    Pruning algorithm that takes in a candidate represented as the board and
+    the next position in the board to place a point in, \(i, j\):
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Function{ShouldPrune}{$board, i, j$}
+                \If{points in this row, \(i\)}
+                    \State{} \Return{$false$}
+                \EndIf
+
+                \If{points in diagonal from \(i, j\)}
+                    \State{} \Return{$false$}
+                \EndIf
+                \\
+                \State{} \Return{$true$}
+            \EndFunction{}
+        \end{algorithmic}
+        \caption{Backtracking pruning function}
+    \end{algorithm}
+
+    \textbf{Part C}
+
+    Given answers to (a) and (b), would a backtracking algorithm correctly
+    solve the decision variant of \alg{NoThreeInLine} for every \(n\)?
+    \\
+
+    \solution
+
+    It should for as long as \(n \geq 2\) and \(n \geq 3\). Other than that,
+    the backtracking algorithm will go back to the last place that wrorked if
+    it can't find one that does and go with it.
+    \\
+
+    \textbf{Reference}
+
+    \begin{enumerate}
+        \item Best explanation I could find of the problem: \\
+
+            \url{http://www.geeksforgeeks.org/backtracking-set-3-n-queen-problem/}
+    \end{enumerate}
 \end{homeworkProblem}
 
 \pagebreak
