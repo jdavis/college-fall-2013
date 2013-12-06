@@ -144,16 +144,114 @@
 \pagebreak
 
 \begin{homeworkProblem}
+    \solution
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Function{UnigramSegmentation}{$S, err$}
+                \State{} \Return{0}
+            \EndFunction{}
+        \end{algorithmic}
+        \caption{Unigram variant of sequence segmentation}
+    \end{algorithm}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
+    \solution
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Function{NGramSegementation}{$S, err$}
+                \State{} \Return{0}
+            \EndFunction{}
+        \end{algorithmic}
+        \caption{N-gram variant of sequence segmentation}
+    \end{algorithm}
 \end{homeworkProblem}
 
 \pagebreak
 
 \begin{homeworkProblem}
+    \alg{CountBooleanParenthesizations{($e$)}}
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Require A sequence called \(e\) of \(T, F, \vee, \wedge, \mathbin{\oplus}\) symbols.
+
+            \Ensure Number of ways to parenthsize \(e\) to be \(true\).
+        \end{algorithmic}
+    \end{algorithm}
+
+    \solution
+
+    First let \(n\) be the number of values of \(T\) and \(F\) that appear in
+    \(e\). This means that there are \(n - 1\) operators in \(e\). Let these
+    values be \(v_i\) and the operators be \(o_i\) for \(i = 1 \ldots n\).
+    \\
+
+    Now we can create two recurrence functions to calculate our dynamic
+    programming solution.
+    \\
+
+    Let \alg{True($i, j$)} be the number of ways to parenthsize \(e\) such that
+    it evaluates to true and let \alg{False($i, j$)} be the number of ways to
+    parenthsize such that it evaluates to false.
+    \\
+
+    We can then define \alg{True($i, j$)} and \alg{False($i, j$)} where \(i\)
+    is the beginning of the parenthsization and \(j\) is the end as such:
+
+    \[
+        T(i, j) = \sum\limits_{k=i}^j \left\{
+            \begin{array}{ll}
+                (T(i, k) + F(i, k)) + (T(k + 1, j) + F(k + 1, j)) - F(i, k) \cdot F(k + 1, j) & \quad o_k = \vee
+                \\
+                T(i, k) \cdot T(k + 1, j) & \quad o_k = \wedge
+                \\
+                T(i, k) \cdot F(k + 1, j) + F(i, k) \cdot T(k + 1, j) & \quad o_k = \mathbin{\oplus}
+            \end{array}
+        \right.
+    \]
+
+    The reasoning is below:
+
+    \begin{enumerate}
+        \item \textbf{\(\vee\)}: We find the times each operand can be true by
+            totaling up the parenthesizations of each part of the expression
+            and just subtracting when \(\vee\) is false, which is only when
+            both are false.
+        \item \textbf{\(\wedge\)}: The number of true parenthesizations can
+            only be the product of the subproblems.
+        \item \textbf{\(\mathbin{\oplus}\)}: Since xor is only true when
+            neither are true or neither are false, we take the sum of each
+            product of the true and false for each subexpression.
+    \end{enumerate}
+
+    Similarly as above, we can now determine our \alg{False($i, j$)} by just
+    negating \alg{True($i, j$)}:
+
+    \[
+        F(i, j) = \sum\limits_{k=i}^j \left\{
+            \begin{array}{ll}
+                F(i, k) \cdot F(k + 1, j) & \quad o_k = \vee
+                \\
+                (T(i, k) + F(i, k)) + (T(k + 1, j) + F(k + 1, j)) - T(i, k) \cdot T(k + 1, j) & \quad o_k = \wedge
+                \\
+                T(i, k) \cdot T(k + 1, j) + F(i, k) \cdot F(k + 1, j) & \quad o_k = \mathbin{\oplus}
+            \end{array}
+        \right.
+    \]
+
+    \textbf{Reference}
+
+    \begin{enumerate}
+        \item Dynamic programming solution was greatly inspired by problem 6:
+            \url{http://courses.csail.mit.edu/6.006/fall10/handouts/dpproblems-sol.pdf}
+        \item I used it to learn more about dynamic programming. It certainly took awhile to
+            understand but it certainly helped a lot.
+    \end{enumerate}
 \end{homeworkProblem}
 
 \pagebreak
