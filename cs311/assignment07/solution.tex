@@ -396,6 +396,22 @@
 
     \solution
 
+    The dynamic programming algorithm is as follows:
+
+    \[
+        E(n, h) = \left\{
+            \begin{array}{ll}
+                0 & \quad \text{if } n = 0, k = 1
+                \\
+                \min\limits_{i = 1 \ldots n} \{ 1 + \max(E(n, h - i), E(n - 1, i - 1)) \}
+            \end{array}
+        \right.
+    \]
+
+    The reasoning is because it is the smallest over possible max values where
+    we check the value of when the egg doesn't break \(E(n, h - i)\), and when
+    the egg does break, \(E(n - 1, i - 1)\).
+
 \end{homeworkProblem}
 
 \end{document}
