@@ -139,7 +139,19 @@
     \\
 
     \solution
+
+    Say the possible solution that the algorithm were checking had all of the
+    points clustered in the top left of the board. The value returned by
+    \alg{NoThreeInLineFitness} would be quite high.
     \\
+
+    The problem is that it might continue searching for values with lots of
+    values clustered. Then given the chance of randomly selecting a worse or
+    similar valued solution, it might pick a distribution where all lines are
+    in a straight line. This would still have a high cost but be closer to the
+    actual solution.
+    \\
+
 
     \textbf{Part C}
 
@@ -150,6 +162,18 @@
     \\
 
     \solution
+
+    The strength is that the cost of when three are in a line will add up real
+    quickly to the cost, preventing it from being a good solution.
+    \\
+
+    The ones that are near aren't really that useful because they probably just
+    represent mild improvements over the current positioning.
+    \\
+
+    Just in my little experience, I feel that it would make the simulated
+    annealing algorithm more effective because it keeps bad solutions near each
+    other which makes it easier to not get trapped.
 \end{homeworkProblem}
 
 \pagebreak
