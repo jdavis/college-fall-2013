@@ -110,8 +110,15 @@
 
     \begin{algorithm}[]
         \begin{algorithmic}[1]
-            \Function{NoThreeInLine}{$a, b, c$}
-                \Return{0}
+            \Function{NoThreeInLineFitness}{$n, board$}
+                \State{} $cost \gets 0$
+                \ForAll{$i \in 1 \ldots n$}
+                    \ForAll{$j \in 1 \ldots n$}
+                        \If{$null$}
+                            \State{} $largest \gets edge$
+                        \EndIf
+                    \EndFor
+                \EndFor
             \EndFunction{}
         \end{algorithmic}
         \caption{Fitness algorithm}
