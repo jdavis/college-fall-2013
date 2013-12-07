@@ -207,6 +207,8 @@
                 Subgraph.
         \end{enumerate}
 
+        \textbf{Part One}
+
         First let's show that Dense Subgraph is \(\in\) NP. To prove that Dense
         Subgraph is \(\in\) NP, we must prove that there exists a verifier such
         that given a valid certificate \(c\), it can be verified
@@ -234,8 +236,27 @@
         runs in polynomial time, Dense Subgraph is \(\in\) NP.
         \\
 
+        \textbf{Part Two}
+
         Second we must show that a problem already in NP-complete is
         polynomially reducible to Dense Subgraph.
+        \\
+
+        Let us conside the \(CLIQUE\) problem, which tells us whether or not
+        there is a subgraph where every node in the subgraph is connected to
+        each other in the subgraph.
+        \\
+
+        Let \(M\) be a Turing machine that solves the \(CLIQUE\) problem. We can
+        then reduce \(CLIQUE\) to the Dense Subgraph, \(CLIQUE \leq_p\) Dense
+        Subgraph problem by constructing a new Turing machine called \(N\) that
+        is constructed as follows:
+
+        \(N = \)`` On input string \(\langle G, k, y \rangle\) where \(G\) is a graph and \(s\) and \(t\) are vertices:
+        \begin{enumerate}
+            \item Blah
+        \end{enumerate}
+
     \end{proof}
 \end{homeworkProblem}
 
@@ -256,8 +277,8 @@
     \end{algorithm}
 
     \solution
-        To prove that the Longest Path problem is in
-        NP-complete, we must first show the following:
+        To prove that the Longest Path problem is in NP-complete, we must first
+        show the following:
 
         \begin{enumerate}
             \item Longest Path Subgraph is \(\in\) NP
@@ -296,7 +317,7 @@
 
     This is a common mistake when first learning about the complexity classes.
     The reason is that \alg{PrimalityTesting($n$)}, actually \textit{doesn't}
-    run in \(O(n)\) time.
+    run in polynomial time, or \(O(n)\).
     \\
 
     The reason for this is because in order for it to be in P, it must run in
@@ -304,9 +325,10 @@
     value.
     \\
 
-    Thus the actual length of \(n\), let this be \(n_0\) is actually \(n_0 = 1
-    + \log_{10} n\) for any positive integer \(n\).  The number of values
-    actually tested for \alg{PrimalityTesting($n$)} is thus
+    Thus the actual length of \(n\), let this be \(n_0\), is actually \(n_0 = 1
+    + \log_{10} n\) for any positive integer \(n\). Thus in order for
+    \alg{PrimalityTesting($n$)} to run in polynomial time, it must run in
+    \(O(n_0) = O(\log n)\) time if \(n\) is the number to check.
 \end{homeworkProblem}
 
 \end{document}
