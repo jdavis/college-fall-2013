@@ -1,0 +1,312 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{changepage}
+\usepackage{lineno}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength{\floatsep}{100pt}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\algrenewcomment[1]{\hfill // #1}
+
+\setlength\parindent{0pt}
+
+\hypersetup{colorlinks=true}
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+\newenvironment{homeworkProblem}{
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+\newcommand{\hmwkTitle}{Homework\ \#8}
+\newcommand{\hmwkDueDate}{December 13, 2013 at 4:30pm}
+\newcommand{\hmwkClass}{CS311}
+\newcommand{\hmwkClassTime}{Section 3}
+\newcommand{\hmwkClassInstructor}{Professor Lathrop}
+\newcommand{\hmwkAuthorName}{Josh Davis}
+\newcommand{\solution}{{\large \bfseries Solution}}
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{}
+
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Prove or disprove: P \(\subseteq\) NP
+    \\
+
+    \solution
+
+    \begin{proof}
+        To prove that P \(\subseteq\) NP, lets first look at what it means to
+        be in P.
+        \\
+
+        A given problem \(A\) is in P if it can be solved/decided in
+        polynomial time. A given problem is in NP if it can be verified by
+        a verifier in polynomial time.
+        \\
+
+        Let \(A\) be a problem in P. This means that \(A\) can be solved by
+        an algorithm in polynomial time.
+        \\
+
+        Thus given a certificate \(c\) that is a solution to \(A\), it easily follows
+        that \(c\) can be verified to be a solution to \(A\) because \(c\) was originally
+        found in polynomial time because \(A\) is in P.
+        \\
+
+        Thus since \(A\) can be verified in polynomial time by such a verifier,
+        it proves that \(A\) is also in NP. This shows that \(P \subseteq
+        NP\) and thus concludes the proof.
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Consider the Hitting Set problem which is defined as:
+    \\
+
+    \textsc{\bfseries Hitting Set}
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Require A collection \(C\) of subsets of a set \(S\), a positive integer \(k\).
+
+            \Ensure Does \(S\) contain a subset \(S'\) such that \(\left\vert
+            S' \right\vert \leq k\) and each subset in \(C\) contains one
+            element from \(S'\)?
+        \end{algorithmic}
+    \end{algorithm}
+
+    \textbf{Part A}
+
+    Prove that Hitting Set \(in\) NP.
+
+    \begin{proof}
+        To prove that Hitting set \(in\) NP, we must prove that there exists a
+        verifier such that given a valid certificate \(c\), it can be verified
+        in polynomial time.
+        \\
+
+        Let \(V\) be such a verifier for the Hitting Set:
+        \\
+
+        \(V = \)`` On input \(\langle \langle C, k \rangle, c \rangle\):
+        \begin{enumerate}
+            \item
+        \end{enumerate}
+    \end{proof}
+
+    \textbf{Part B}
+
+    Prove that Hitting Set is hard for NP.
+
+    \begin{proof}
+    \end{proof}
+
+    \textbf{Part C}
+
+    Prove that Hitting Set is complete for NP.
+
+    \begin{proof}
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Show that the following problem is NP-complete.
+    \\
+
+    \textsc{\bfseries Dense Subgraph}
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Require A graph \(G\) and integers \(k\) and \(y\).
+
+            \Ensure Does \(G\) contain a subgraph with exactly \(k\) vertices
+            and at least \(y\) edges?
+        \end{algorithmic}
+    \end{algorithm}
+
+    \solution
+
+    \begin{proof}
+        To prove that the Dense Subgraph problem is in NP-complete, we must
+        first show the following:
+
+        \begin{enumerate}
+            \item Dense Subgraph is \(\in\) NP
+            \item And that every \(A\) in NP is polynomial time reducible
+                to Dense Subgraph. Or we can show that a problem already known
+                to be in NP-complete can be polynomially reduced to Dense
+                Subgraph.
+        \end{enumerate}
+
+        First let's show that Dense Subgraph is \(\in\) NP. To prove that Dense
+        Subgraph is \(\in\) NP, we must prove that there exists a verifier such
+        that given a valid certificate \(c\), it can be verified
+        in polynomial time.
+        \\
+
+        Let \(V\) be such a verifier for Dense Subgraph where \(c\) is a valid
+        certificate thus a subgraph:
+        \\
+
+        \(V = \)`` On input \(\langle \langle G, k, y \rangle, c \rangle\):
+        \begin{enumerate}
+            \item Decode the certificate \(c\) into a new graph, \(G'\).
+            \item Test that all nodes and edges in \(G'\) are in \(G\).
+            \item Count up the number of vertices in \(G'\) and check that
+                it equals \(k\).
+            \item Count up the number of edges in \(G'\) and check that
+                it equals \(y\).
+            \item If everything checks out, \(accept\), else \(reject\).''
+        \end{enumerate}
+
+        The verifier \(V\) thus runs in time less than \(O(V + E)\) where \(V =
+        \left\vert G.vertices \right\vert\) and \(E = \left\vert G.edges
+        \right\vert\) because \(G'\) is a subgraph of \(G\). Since the verifier
+        runs in polynomial time, Dense Subgraph is \(\in\) NP.
+        \\
+
+        Second we must show that a problem already in NP-complete is
+        polynomially reducible to Dense Subgraph.
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Show that the following problem is NP-complete:
+    \\
+
+    \textsc{\bfseries Longest Path}
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Require A graph \(G\) and positive integer \(k\).
+
+            \Ensure Does \(G\) contain a path that visits at least \(k\)
+            different vertices without visiting any vertex more than once?
+        \end{algorithmic}
+    \end{algorithm}
+
+    \solution
+        To prove that the Longest Path problem is in
+        NP-complete, we must first show the following:
+
+        \begin{enumerate}
+            \item Longest Path Subgraph is \(\in\) NP
+            \item That a problem already known to be in NP-complete can be
+                polynomially reducible to Longest Path.
+        \end{enumerate}
+
+    \begin{proof}
+    \end{proof}
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Why doesn't the following algorithm suffice to prove it is in P, since it
+    runs in \(O(n)\) time?
+
+    \begin{algorithm}[]
+        \begin{algorithmic}[1]
+            \Function{PrimalityTesting}{$n$}
+                \State{} $composite \gets false$
+                \\
+                \ForAll{$i \in 2 \ldots n - 1$}
+                    \If{$n \bmod i = 0$}
+                        \State{} $composite \gets true$
+                    \EndIf
+                \EndFor
+                \\
+                \State{} \Return{$composite$}
+            \EndFunction{}
+        \end{algorithmic}
+        \caption{Simple primality test}
+    \end{algorithm}
+
+    \solution
+
+    This is a common mistake when first learning about the complexity classes.
+    The reason is that \alg{PrimalityTesting($n$)}, actually \textit{doesn't}
+    run in \(O(n)\) time.
+    \\
+
+    The reason for this is because in order for it to be in P, it must run in
+    polynomial time with respect to the \textit{length} of \(n\), not the
+    value.
+    \\
+
+    Thus the actual length of \(n\), let this be \(n_0\) is actually \(n_0 = 1
+    + \log_{10} n\) for any positive integer \(n\).  The number of values
+    actually tested for \alg{PrimalityTesting($n$)} is thus
+\end{homeworkProblem}
+
+\end{document}
