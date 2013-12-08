@@ -205,10 +205,15 @@ Josh
         \(N = \)`` On input \(\langle G, k \rangle\)
         where \(G\) is a graph and \(k\) is a positve integer:
         \begin{enumerate}
-            \item Do it.
+            \item Let \(S = G.V\), the vertices in the graph \(G\).
+            \item Let \(C = G.E\) where each edge, \(e\), is a subset
+                consisting of just \(\{u, v\}\) where \((u, v) = e\).
+            \item Run \(M\) on the input \(\langle S, C, k \rangle\).
+            \item If \(M\) accepts, then \(accept\), else \(reject\).''
         \end{enumerate}
 
-        Justification.
+        This runs in polynomial time because it doesn't exceed polynomial time
+        in the amount of work done outside of \(M\).
         \\
 
         \textbf{Conclusion}
