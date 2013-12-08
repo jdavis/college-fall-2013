@@ -154,7 +154,7 @@ Josh
     Prove that Hitting Set \(in\) NP.
 
     \begin{proof}
-        To prove that Hitting set \(in\) NP, we must prove that there exists a
+        To prove that Hitting set in NP, we must prove that there exists a
         verifier such that given a valid certificate \(c\), it can be verified
         in polynomial time.
         \\
@@ -180,6 +180,23 @@ Josh
     Prove that Hitting Set is complete for NP.
 
     \begin{proof}
+        The qualifications for being NP-complete are the following:
+
+        \begin{enumerate}
+            \item The problem is in NP.
+            \item And that every \(A\) in NP is polynomial time reducible to
+                the problem. Or we can show that a problem already known to be
+                in NP-complete can be polynomially reduced to the problem.
+        \end{enumerate}
+
+        The thing to note is that the second item is also the qualifying
+        statement to be NP-hard.
+        \\
+
+        Considering the above note, the first part was solved in \textbf{Part
+        A}, and the second part was solved in \textbf{Part B}, by definition
+        this means that the Hitting Set problem is in NP-complete and we
+        conclude the proof.
     \end{proof}
 \end{homeworkProblem}
 
@@ -206,7 +223,7 @@ Josh
         first show the following:
 
         \begin{enumerate}
-            \item Dense Subgraph is \(\in\) NP
+            \item Dense Subgraph is in NP.
             \item And that every \(A\) in NP is polynomial time reducible
                 to Dense Subgraph. Or we can show that a problem already known
                 to be in NP-complete can be polynomially reduced to Dense
@@ -215,8 +232,8 @@ Josh
 
         \textbf{Part One}
 
-        First let's show that Dense Subgraph is \(\in\) NP. To prove that Dense
-        Subgraph is \(\in\) NP, we must prove that there exists a verifier such
+        First let's show that Dense Subgraph is in NP. To prove that Dense
+        Subgraph is in NP, we must prove that there exists a verifier such
         that given a valid certificate \(c\), it can be verified
         in polynomial time.
         \\
@@ -239,7 +256,7 @@ Josh
         The verifier \(V\) thus runs in time less than \(O(V + E)\) where \(V =
         \left\vert G.vertices \right\vert\) and \(E = \left\vert G.edges
         \right\vert\) because \(G'\) is a subgraph of \(G\). Since the verifier
-        runs in polynomial time, Dense Subgraph is \(\in\) NP.
+        runs in polynomial time, Dense Subgraph is in NP.
         \\
 
         \textbf{Part Two}
@@ -287,7 +304,7 @@ Josh
         show the following:
 
         \begin{enumerate}
-            \item Longest Path Subgraph is \(\in\) NP
+            \item Longest Path Subgraph is in NP.
             \item That a problem already known to be in NP-complete can be
                 polynomially reducible to Longest Path.
         \end{enumerate}
