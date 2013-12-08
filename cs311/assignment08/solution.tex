@@ -177,14 +177,51 @@ Josh
 
     Given the input, all calculates operate polynomially on the length of the
     input, thus the Hitting Set problem is in NP.
-    \\
+
+    \pagebreak
 
     \textbf{Part B}
 
     Prove that Hitting Set is hard for NP.
 
     \begin{proof}
+        To prove that the Hitting Set is NP-hard, we must show that a problem
+        already in NP-complete is polynomially reducible to the Hitting Set.
+        \\
+
+        Let us consider the \(VETEX-COVER\) problem, which tells us whether or
+        not there is a \(k\)-node vertex cover in the graph. \(VERTEX-COVER\)
+        is known to be NP-complete thus we can create a polynomial reduction
+        from it to the Hitting Set problem.
+        \\
+
+        Let \(M\) be a Turing machine that solves the \(VETEX-COVER\) problem.
+        We can then reduce \(VETEX-COVER\) to the Hitting Set, \(VETEX-COVER
+        \leq_p\) Hitting Set problem by constructing a new Turing machine
+        called \(N\) that is constructed as follows:
+        \\
+
+        \(N = \)`` On input \(\langle G, k \rangle\)
+        where \(G\) is a graph and \(k\) is a positve integer:
+        \begin{enumerate}
+            \item Do it.
+        \end{enumerate}
+
+        Justification.
+        \\
+
+        \textbf{Conclusion}
+
+        Since we have proven both conditions for NP-complete, the problem of
+        Hitting Set is thus NP-complete and this concludes the proof.
     \end{proof}
+
+    \textbf{Reference}
+
+    \begin{enumerate}
+        \item Vertex-Cover details from \textit{Introduction to the Theory of
+            Computation}, \(2nd\) edition, by Michael Sipser, pg. 288
+    \end{enumerate}
 
     \textbf{Part C}
 
@@ -273,25 +310,19 @@ Josh
         from it to the Dense Subgraph problem.
         \\
 
-        Let \(M\) be a Turing machine that solves the \(VETEX-COVER\) problem.
-        We can then reduce \(VETEX-COVER\) to the Dense Subgraph, \(VETEX-COVER
-        \leq_p\) Dense Subgraph problem by constructing a new Turing machine
-        called \(N\) that is constructed as follows:
+        Let \(N\) be a Turing machine that solves the Dense Subgraph problem.
+        We can then reduce \(VETEX-COVER\) to the Dense Subgraph, by
+        constructing a new Turing machine called \(N\) that solves the Dense
+        Subgraph problem as follows:
         \\
 
-        \(N = \)`` On input string \(\langle G, k, y \rangle\) where \(G\) is a
-        graph and \(k\) and \(y\) are integers:
+        \(N = \)`` On input string \(\langle G, k \rangle\) where \(G\) is a
+        graph and \(k\) is an integer:
         \begin{enumerate}
-            \item Run \(M\) on \(G\) and \(k\), the number of vertices we wish
-                to find a dense subgraph for.
-            \item Take this new subgraph, \(G'\) and count up the edges.
-            \item If the number of edges is at least \(y\), return \(true\),
-                else \(reject\).
+            \item TODO
         \end{enumerate}
 
-        After calling \(M\), this reduction runs in \(O(E)\) time where \(E =
-        \left\vert G'.edges \right\vert\).  Thus it is polynomial and thus we
-        have proven that Dense subgraph is NP-hard.
+        Justification.
         \\
 
         \textbf{Conclusion}
@@ -380,26 +411,13 @@ Josh
         called \(N\) that is constructed as follows:
         \\
 
-        \(N = \)`` On input string \(\langle G, k \rangle\) where \(G\) is a
-        graph and \(k\) is an integer:
+        \(N = \)`` On input string \(\langle G, s, t \rangle\) where \(G\) is a
+        graph and \(s\) and \(t\) are vertices:
         \begin{enumerate}
-            \item For all \(s \in G.vertices\):
-                \begin{enumerate}
-                        \item For all \(t \in G.vertices\):
-                            \begin{enumerate}
-                                \item Run \(M\) on \(\langle G, s, t \rangle\)
-                                    and store the result as \(p\).
-                                \item Count up the nodes in \(p\), if it equals
-                                    \(k\) then \(accept\), else continue.
-                            \end{enumerate}
-                \end{enumerate}
-            \item If we have reached this point, we know there can't be a
-                Longest path of length \(k\) and \(reject\).
+            \item TODO
         \end{enumerate}
 
-        After calling \(M\), this reduction runs in \(O(V^2)\) because
-        it iterates over all vertices in an embedded for loop.  Thus it is
-        polynomial and thus we have proven that Longest Path is NP-hard.
+        Justification
         \\
 
         \textbf{Conclusion}
