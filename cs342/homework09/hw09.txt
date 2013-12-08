@@ -1,20 +1,20 @@
                                      COM S 342
                               Fall 2013 Homework 09
 
-This homework consists of three questions. 
+This homework consists of three questions.
 After unzipping the compressed files, on the top level you will see
 
       hw09.txt
       \problem1
       \problem2
       \problem3
-      
+
 
 =========================== problem 1 & 2===============================
 Problems 1 & 2 are regarding implicit referencing and garbage collection.
 
 
-Suggested reading: 
+Suggested reading:
     EOPL: 4.3 - 4.4 (description and implementation of implicit referencing)
 
 In the previous homework you've added an explicit reference model to the language.
@@ -73,12 +73,12 @@ uncaught exception: "cannot assign a 'single-step-type value to a 'num-type valu
 2. Garbage-Collection [35p]
 
    Use the interpreter in the problem-2 folder to write your solution
-   
-Programming languages with implicit memory allocation and deallocation 
-free the programmer from having to worry about explicit memory management.
-This avoids two common errors: memory leaks and dangling references.   
 
-- A program is said to have leaked memory during its execution if there 
+Programming languages with implicit memory allocation and deallocation
+free the programmer from having to worry about explicit memory management.
+This avoids two common errors: memory leaks and dangling references.
+
+- A program is said to have leaked memory during its execution if there
   are certain memory locations that may not be reachable during the rest
   of that program's execution.
 
@@ -86,19 +86,19 @@ This avoids two common errors: memory leaks and dangling references.
   that has already been deallocated.
 
 In programming languages with explicit reference model, and where references
-(aka pointers) can be manipulated, detecting whether a program has leaked 
-memory is a 'hard' problem in general, because it is equivalent to finding 
+(aka pointers) can be manipulated, detecting whether a program has leaked
+memory is a 'hard' problem in general, because it is equivalent to finding
 out all memory locations accessed by the program in future.
 Note that references to arbitrary locations can be created in such languages.
 
-On the other hand, in programming languages with an implicit reference 
-model store locations that are not reachable via any variable in the 
-environment could be considered "leaked" or "garbage". All other 
-store locations are considered "live". Garbage collection is the process 
-of removing such garbage from the store. 
+On the other hand, in programming languages with an implicit reference
+model store locations that are not reachable via any variable in the
+environment could be considered "leaked" or "garbage". All other
+store locations are considered "live". Garbage collection is the process
+of removing such garbage from the store.
 
 In this problem, you will incrementally develop a prototype Mark-and-Sweep
-garbage collector, as discussed in class, for the programming language given. 
+garbage collector, as discussed in class, for the programming language given.
 Since later parts of this problem build on previous parts these have to be solved
 in the order in which they appear in the problem statement.
 
@@ -107,51 +107,51 @@ This language has an additional expression:
 Which sets the value pointed at by the reference identifier.
 
 a) (2.5 points)
-   Extend the store such that each location contains a 2-tuple 
+   Extend the store such that each location contains a 2-tuple
    (val, flag), where flag is a boolean (this is NOT an expressed
    value; it is the Scheme's boolean). OR you can maintain a separate
-   data structures that keeps track of these markings.   
-   
+   data structures that keeps track of these markings.
+
 b) (2,5 points)
    Implement a procedure "mark-all" that sets the "flag" for all locations
    in the store to #t
-   
+
    ;mark-all: () -> () (no input, don't care about output)
-   
+
 c) (5 points)
    Implement a procedure "clear-reachable" that takes an environment env
-   and sets all locations in the global store that are reachable from one or more 
+   and sets all locations in the global store that are reachable from one or more
    bindings in the environment to #f.
-   
+
    ; clear-reachable: Env -> ()  (don't care about output)
- 
+
 d) (15 points)
-   Implement a procedure "sweep" that takes an environment env and removes all 
+   Implement a procedure "sweep" that takes an environment env and removes all
    locations in the global store for which the flag is set to #t. This procedure
    will return an environment where all references have been updated.
-   
+
    ; sweep: Env -> Env
-   
-   Once you're done with b, c and d, write the following procedure in 
+
+   Once you're done with b, c and d, write the following procedure in
    your source file:
-   
+
    (define (gc env)
       (begin
         (mark-all)
         (clear-reachable env)
         (sweep env)))
-		
+
     This procedure initiates garbage collection.
-        
+
 e) (10 points)
    Define a global variable size_of_store and give it an initial value of 5.
    Modify the interpreter such that, if the store's size exceeds size_of_store,
    the procedure gc is invoked.
-   
+
    Note that you will not be able to call gc from newref as gc takes an environment
-   as an argument, which is not present in newref. 
-   
-   SUGGESTION (you are welcome to solve it differently): You may want to change the way 
+   as an argument, which is not present in newref.
+
+   SUGGESTION (you are welcome to solve it differently): You may want to change the way
    the environment is extended where, before extending it, it makes sure that a new
    location can be created. If not possible, then the gc procedure is called.
 
@@ -162,7 +162,7 @@ Sample program with debugging information:
 (run-debug "
 {
   {
-    val x = up(42) 
+    val x = up(42)
     x              #1
   }
   { #block2
@@ -189,7 +189,7 @@ Sample program with debugging information:
 
 ;we can see that when we evaluate line #1 of our program the store contains the
 ;value up(42) and the variable x points to its location
-[10s:iden-expr] 
+[10s:iden-expr]
 	store = {0:up(42)}
 	env   = {x=loc:0}
 	--
@@ -199,7 +199,7 @@ Sample program with debugging information:
 ;when we start evaluating #block2 we can see that the store still contains the
 ;value up(42), but the environment no longer contains a variable that references
 ;this value
-[13s:block-exp] 
+[13s:block-exp]
 	store = {0:up(42)}
 	env   = {}
 	--
@@ -210,7 +210,7 @@ Sample program with debugging information:
 ;and two references:
 ;     y --> loc:1 = down(3)
 ;     z --> loc:2 = (1 2)
-[28s:block-exp] 
+[28s:block-exp]
 	store = {0:up(42) 1:(1 2) 2:down(3)}
 	env   = {z=loc:2, y=loc:1}
 	--
@@ -219,7 +219,7 @@ Sample program with debugging information:
 
 ;............
 ;by the time we exit #block3 we have reached maximum storage capacity.
-[42e:iden-expr] 
+[42e:iden-expr]
 	store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
 	env   = {t2=loc:4, t1=loc:3, z=loc:2, y=loc:1}
 	--
@@ -228,7 +228,7 @@ Sample program with debugging information:
 
 ;when we enter #block4 we no longer have space in the store, but as you can see
 ;the only two locations that are still referenced are loc:1 and loc:2.
-[44s:block-exp] 
+[44s:block-exp]
 	store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
 	env   = {z=loc:2, y=loc:1}
 	--
@@ -240,7 +240,7 @@ STARTING GARBAGE COLLECTOR
 ;we've run garbage collection and added the new pair
 ;this-requires-gc = ref to loc:2. As you can see, the store now no longer contains
 ;the unreferenced values, and variable y now points to location 0 instead of 1.
-[49s:iden-expr] 
+[49s:iden-expr]
 	store = {0:(1 2) 1:down(3) 2:42}
 	env   = {this-requires-gc=loc:2, z=loc:1, y=loc:0}
 	--
@@ -257,7 +257,7 @@ Problem 3 is about to implement a static type checker.
 READING:
     ESSENTIALS OF PROGRAMMING LANGUAGES: Sections B.1-B.3
     ESSENTIALS OF PROGRAMMING LANGUAGES: Sections 7.1-7.3
-	
+
 ===============================================================================
 Let us take a look at Scheme; most people have already experienced
 the problem of calling "car" and "cdr" on a non-list datatype.
@@ -268,7 +268,7 @@ expected a list. This is the main purpose of static type checking,
 making sure that operations are not executed upon invalid types of data
 by validating these types *before* execution.
 
-How strict static type checking is solely determined by the language designers. 
+How strict static type checking is solely determined by the language designers.
 For instance, in most languages, standard arithmetic operators like +, *, -, /;
 work both on integers and floating point numbers, e.g:
 Java:    4 + 2;
@@ -308,7 +308,7 @@ The code from the first example is rather bloated, but it has the advantages:
   - it drastically reduces the amount of wrong input the function can receive
     (now the user can provide only, say values of x and y s.t. x > y)
   - the annotation serve as a partial documentation of the code
-  
+
 The code from the second example is easier to write and modify, but it
 doesn't offer any safety guarantees and implicit documentation.
 
@@ -327,30 +327,30 @@ annotations:
 <program> ::=
           <var-expr>;* <expr> <expr>* "a-program"
 
-<expr> ::= 
+<expr> ::=
            number           "num-expr"
         | up(<expr>)        "up-expr"
         | down(<expr>)      "down-expr"
-        | left(<expr>)      "left-expr"  
-        | right(<expr>)     "right-expr"  
-           
+        | left(<expr>)      "left-expr"
+        | right(<expr>)     "right-expr"
+
         | (<expr> <expr>)   "point-expr"
         | + <expr> <expr>   "add-expr"
         | origin? (<expr>)  "origin-expr"
         | if (<expr>)
            then <expr>
-           else <expr>       "if-expr" 
-           
+           else <expr>       "if-expr"
+
         | move (<expr> <expr> <expr>*)  "move-expr"
         | identifier                    "iden-expr"
         | { <var-expr>* <expr>*}        "block-expr"
-       
+
           ;every paramter has a specified type, and the function has a return type
           ;square brackets [] are not part of the language
         | fun ( [identifier : <type>]* ): <type> = <expr>    "fun-expr"
-       
+
         | call (<expr> <expr>*)                              "fun-call-expr"
-        
+
 
 <var-expr> ::=
             ;whenever we define a new variable we also specify its type
@@ -358,7 +358,7 @@ annotations:
 
             ;same as "fun-expr"
           | def identifier ( [identifier : <type>]* ): <type> = <expr>  "fun-def"
-		  
+
 As you can notice, there is a new non-terminal in the previous definition. A
 <type> described bellow (similar to the one described in section 7.1):
 
@@ -368,31 +368,31 @@ As you can notice, there is a new non-terminal in the previous definition. A
       | (<type>*) -> <type>   "proc-type"
       | point                 "point-type"
       | step                  "step-type"
-      ;for simplicity we will be working only with a type for a single step instead 
+      ;for simplicity we will be working only with a type for a single step instead
       ;of different types for each kind of step, even though the semantics of
       ;the move-expr demand strict typing rules.
 
 --------------------------
 The typing rules (see section 7.2 & posted lecture notes) for our expressions are:
-   
+
    "num-expr" produces values of type "int-type"
-   
+
    "up/down/left/right-expr" of the form:
     up/down/left/right(n)
-      n: int-type 
+      n: int-type
     returns values of type "step-type"
-   
+
    "point-expr" of the form:
       (x y)
       x: int-type
       y: int-type
     returns values of type "point-type"
-   
+
    "origin-expr" of the form:
     origin?(p-expr)
       p-expr: point-type
     returns values of the type "bool-type"
-   
+
    "if-exp" of the form:
     if (cond-exp) then-exp else else-exp
       cond-exp: bool-type
@@ -400,13 +400,13 @@ The typing rules (see section 7.2 & posted lecture notes) for our expressions ar
       else-exp: t
       Where type t can be any <type>
     returns values of type $t
-   
+
    "add-exp" of the form:
     + x y
       x: step-type
       y: step-type
    returns values of type "step-type"
-  
+
    "move-expr" of the form:
    move(p st rest-of-steps*)
      p:  point-type
@@ -421,27 +421,27 @@ The typing rules (see section 7.2 & posted lecture notes) for our expressions ar
      var-expr and expr can have any types
      last-expr: t
     returns a value of type $t
-    
+
     "fun-exp" of the form:
        fun (args arg-types): body-type = body-expr
        arg-types: list of any <type>
        body-type: any <type>
        body-expr: body-type
      returns a value of type "proc-type"
-     
+
     "fun-call-expr" of the form:
        call (proc arg-values*)
        proc: proc-type
        arg-values: types have to match $arg-types from the "fun-exp"
      returns the $body-type of the given proc
-     
+
      "val" of the form:
       val var-name: var-type = value
         var-type: t
         value: t
         where $t can be any type <type>
       return value type is undefined
-      
+
      "fun-def" of the form:
        def name(args arg-types): body-type = body-expr
        arg-types: list of any <type>
@@ -449,7 +449,7 @@ The typing rules (see section 7.2 & posted lecture notes) for our expressions ar
        body-expr: body-type
      return value type is undefined but the variable 'name will have to
      store a "proc-type" value.
-     
+
 Complete implementation of the procedure "check-types" which takes the program
 in string form and returns the type of the value to which the program evaluates,
 or an error message "type mismatch, expected: A actual: B"(a two arg function that
@@ -473,11 +473,11 @@ NOTES:
     Type checking and evaluation are independent steps, and soon enough you will realize
 	that it is easy to build an interpreter that first does type checking and then evaluation
 	once you've solved this homework.
-  
-  - all return values are symbols or lists of symbols, but you can use whatever 
+
+  - all return values are symbols or lists of symbols, but you can use whatever
     internal representation you see fit to solve the problem. You simply have to
     write the translation function (type->symbol t).
-  
-  - use (show-the-datatypes) inside \problem3\hw09-lang.rkt to see how the field types and count has 
+
+  - use (show-the-datatypes) inside \problem3\hw09-lang.rkt to see how the field types and count has
     been modified for the fun-expr, etc.
-  
+
