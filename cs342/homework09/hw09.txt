@@ -1,0 +1,483 @@
+                                     COM S 342
+                              Fall 2013 Homework 09
+
+This homework consists of three questions. 
+After unzipping the compressed files, on the top level you will see
+
+      hw09.txt
+      \problem1
+      \problem2
+      \problem3
+      
+
+=========================== problem 1 & 2===============================
+Problems 1 & 2 are regarding implicit referencing and garbage collection.
+
+
+Suggested reading: 
+    EOPL: 4.3 - 4.4 (description and implementation of implicit referencing)
+
+In the previous homework you've added an explicit reference model to the language.
+Recall that the operations possible were:
+<expr> ::= ref ( <expr> )                   "new-ref-expr"
+         | * <expr>                         "deref-expr"
+         | set <expr> := <expr>             "set-ref-expr"
+         | ++ <expr>                        "inc-ref-expr"
+         | -- <expr>                        "dec-ref-expr"
+
+References were values in our program and could be manipulated directly via
+the ++ and -- expressions.
+
+You are given an implicit reference model which has only one
+operation:
+<expr> ::= set (identifier <expr>)   "set-expr"
+
+The main difference between the two models is that now *all* variables store *references*
+to the values instead of the actual values. In consequence, the environment stores only
+references to the values and all referencing and dereferencing is done implicitly when trying
+to add/extract information form the environment.
+
+Search for the string $implicit in the 3 files containing the implementation of the
+interpreter to see the places where the semantics were modified to accommodate this
+new model.
+
+Solution structure:
+  there is a folder containing an interpreter for problem 1 & 2. Please add the changes
+  to the respective interpreter seeing as how the implementations for problem 1 and 2
+  might conflict.
+
+IMPORTANT:
+  you can now interpret program with the run-debug procedure which will print
+  out debug information along the execution of the program. Modifying the interpreter
+  might require you to modify the debugger as well in order to display the new
+  structure. As a rule of thumb, if you modify a data structure, e.g. environment
+  or store, you will have to modify the env->string and store->string procedures.
+===============================================================================
+1. Typed store [15p]
+
+Modify the semantics of set-exp in such a way that once a location in the store
+is created that location is given a type. Thereafter, you cannot store a value of
+any other type at that location.
+
+> (run
+"{
+   val aNum = 42
+   set (aNum up(42))
+   aNum
+  }"
+)
+uncaught exception: "cannot assign a 'single-step-type value to a 'num-type value reference."
+
+
+===============================================================================
+2. Garbage-Collection [35p]
+
+   Use the interpreter in the problem-2 folder to write your solution
+   
+Programming languages with implicit memory allocation and deallocation 
+free the programmer from having to worry about explicit memory management.
+This avoids two common errors: memory leaks and dangling references.   
+
+- A program is said to have leaked memory during its execution if there 
+  are certain memory locations that may not be reachable during the rest
+  of that program's execution.
+
+- A dangling reference is a reference that is pointing to a memory location
+  that has already been deallocated.
+
+In programming languages with explicit reference model, and where references
+(aka pointers) can be manipulated, detecting whether a program has leaked 
+memory is a 'hard' problem in general, because it is equivalent to finding 
+out all memory locations accessed by the program in future.
+Note that references to arbitrary locations can be created in such languages.
+
+On the other hand, in programming languages with an implicit reference 
+model store locations that are not reachable via any variable in the 
+environment could be considered "leaked" or "garbage". All other 
+store locations are considered "live". Garbage collection is the process 
+of removing such garbage from the store. 
+
+In this problem, you will incrementally develop a prototype Mark-and-Sweep
+garbage collector, as discussed in class, for the programming language given. 
+Since later parts of this problem build on previous parts these have to be solved
+in the order in which they appear in the problem statement.
+
+This language has an additional expression:
+<expr> ::= set (identifier <expr>)
+Which sets the value pointed at by the reference identifier.
+
+a) (2.5 points)
+   Extend the store such that each location contains a 2-tuple 
+   (val, flag), where flag is a boolean (this is NOT an expressed
+   value; it is the Scheme's boolean). OR you can maintain a separate
+   data structures that keeps track of these markings.   
+   
+b) (2,5 points)
+   Implement a procedure "mark-all" that sets the "flag" for all locations
+   in the store to #t
+   
+   ;mark-all: () -> () (no input, don't care about output)
+   
+c) (5 points)
+   Implement a procedure "clear-reachable" that takes an environment env
+   and sets all locations in the global store that are reachable from one or more 
+   bindings in the environment to #f.
+   
+   ; clear-reachable: Env -> ()  (don't care about output)
+ 
+d) (15 points)
+   Implement a procedure "sweep" that takes an environment env and removes all 
+   locations in the global store for which the flag is set to #t. This procedure
+   will return an environment where all references have been updated.
+   
+   ; sweep: Env -> Env
+   
+   Once you're done with b, c and d, write the following procedure in 
+   your source file:
+   
+   (define (gc env)
+      (begin
+        (mark-all)
+        (clear-reachable env)
+        (sweep env)))
+		
+    This procedure initiates garbage collection.
+        
+e) (10 points)
+   Define a global variable size_of_store and give it an initial value of 5.
+   Modify the interpreter such that, if the store's size exceeds size_of_store,
+   the procedure gc is invoked.
+   
+   Note that you will not be able to call gc from newref as gc takes an environment
+   as an argument, which is not present in newref. 
+   
+   SUGGESTION (you are welcome to solve it differently): You may want to change the way 
+   the environment is extended where, before extending it, it makes sure that a new
+   location can be created. If not possible, then the gc procedure is called.
+
+
+This problem does not contain any tests, the debugger will be verified manually;
+
+Sample program with debugging information:
+(run-debug "
+{
+  {
+    val x = up(42) 
+    x              #1
+  }
+  { #block2
+     val y = ( 1 2) #2
+     val z = down(3) #3
+
+     { #block3
+       val t1 = up(13) #4
+       val t2 = up(14) #5
+       #at this point our store should have 5 values in it
+       t2              #6
+     }
+     { #block4
+       #in this scope, the values referenced by t1 and t2 are no longer
+       #accessible so they should be available for garbage collection.
+       val this-requires-gc = 42  #7
+       this-requires-gc           #8
+     }
+  }
+}
+")
+;debug information from inconsequential expressions and the flags in the store
+;where omitted.
+
+;we can see that when we evaluate line #1 of our program the store contains the
+;value up(42) and the variable x points to its location
+[10s:iden-expr] 
+	store = {0:up(42)}
+	env   = {x=loc:0}
+	--
+	iden = x
+
+;.....
+;when we start evaluating #block2 we can see that the store still contains the
+;value up(42), but the environment no longer contains a variable that references
+;this value
+[13s:block-exp] 
+	store = {0:up(42)}
+	env   = {}
+	--
+   ...
+
+;....
+;when we start block 3 we can see that we still have the unreferenced value up(42)
+;and two references:
+;     y --> loc:1 = down(3)
+;     z --> loc:2 = (1 2)
+[28s:block-exp] 
+	store = {0:up(42) 1:(1 2) 2:down(3)}
+	env   = {z=loc:2, y=loc:1}
+	--
+	var declarations = (val t1 = up(13);val t2 = up(14))
+	expressions = (t2)
+
+;............
+;by the time we exit #block3 we have reached maximum storage capacity.
+[42e:iden-expr] 
+	store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
+	env   = {t2=loc:4, t1=loc:3, z=loc:2, y=loc:1}
+	--
+	iden = t2
+;.............
+
+;when we enter #block4 we no longer have space in the store, but as you can see
+;the only two locations that are still referenced are loc:1 and loc:2.
+[44s:block-exp] 
+	store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
+	env   = {z=loc:2, y=loc:1}
+	--
+	var declarations = (val this-requires-gc = 42)
+	expressions = (this-requires-gc)
+
+;........................
+STARTING GARBAGE COLLECTOR
+;we've run garbage collection and added the new pair
+;this-requires-gc = ref to loc:2. As you can see, the store now no longer contains
+;the unreferenced values, and variable y now points to location 0 instead of 1.
+[49s:iden-expr] 
+	store = {0:(1 2) 1:down(3) 2:42}
+	env   = {this-requires-gc=loc:2, z=loc:1, y=loc:0}
+	--
+	iden = this-requires-gc
+;.............
+;continuing execution
+(num-val 42)
+
+
+=================problem 3============================
+Problem 3 is about to implement a static type checker.
+
+
+READING:
+    ESSENTIALS OF PROGRAMMING LANGUAGES: Sections B.1-B.3
+    ESSENTIALS OF PROGRAMMING LANGUAGES: Sections 7.1-7.3
+	
+===============================================================================
+Let us take a look at Scheme; most people have already experienced
+the problem of calling "car" and "cdr" on a non-list datatype.
+This error was only revealed at runtime and, often, only for certain
+kinds of input. Imagine how much easier it would have been if every time
+you hit "Run" you would get an error telling you where in the program it
+expected a list. This is the main purpose of static type checking,
+making sure that operations are not executed upon invalid types of data
+by validating these types *before* execution.
+
+How strict static type checking is solely determined by the language designers. 
+For instance, in most languages, standard arithmetic operators like +, *, -, /;
+work both on integers and floating point numbers, e.g:
+Java:    4 + 2;
+         4.2 + 1 //addition between a floating point and an integer
+
+But the language ML has separate operators for integers and floating
+points:
+  4 + 2;;
+  4.2 +. 1.0;; (* notice the trailing period after the "+" sign *)
+  4 + 1.0;; (* invalid operation *)
+
+This extra type rule eliminates errors that are due to
+loss of precision when implicitly rounding floats to integers.
+
+---
+The major disadvantage of static type systems is that they require the
+programmer to write type annotations. For example, in Java:
+class Example{
+   String foo(int x, int y, String z){
+      String temp = "42";
+	  int fortyTwo = 42;
+      return z.substring(x, y) + temp;
+   }
+}
+
+While say, in an imaginary language called ut-Java (untyped-Java) this
+would look like:
+class Example{
+   foo(x, y, z){
+     temp = "42";
+	 fortyTwo = 42;
+     return z.substring(x, y) + temp;
+   }
+}
+
+The code from the first example is rather bloated, but it has the advantages:
+  - it drastically reduces the amount of wrong input the function can receive
+    (now the user can provide only, say values of x and y s.t. x > y)
+  - the annotation serve as a partial documentation of the code
+  
+The code from the second example is easier to write and modify, but it
+doesn't offer any safety guarantees and implicit documentation.
+
+===============================================================================
+problem 3 (50p)
+Currently, the interpreter for our language does semantic checks only at
+runtime (i.e. during the execution of the "value-of" procedure).
+The program "up((0 1))" is incorrect due to a type error, but we still have
+to evaluate the expression to detect said error. What we want to do
+is add an extra stage for interpretation, type checking, which can alert us
+of such errors before actually calculating the value of expressions.
+
+To that end we introduce the language from homework 7 with added type
+annotations:
+
+<program> ::=
+          <var-expr>;* <expr> <expr>* "a-program"
+
+<expr> ::= 
+           number           "num-expr"
+        | up(<expr>)        "up-expr"
+        | down(<expr>)      "down-expr"
+        | left(<expr>)      "left-expr"  
+        | right(<expr>)     "right-expr"  
+           
+        | (<expr> <expr>)   "point-expr"
+        | + <expr> <expr>   "add-expr"
+        | origin? (<expr>)  "origin-expr"
+        | if (<expr>)
+           then <expr>
+           else <expr>       "if-expr" 
+           
+        | move (<expr> <expr> <expr>*)  "move-expr"
+        | identifier                    "iden-expr"
+        | { <var-expr>* <expr>*}        "block-expr"
+       
+          ;every paramter has a specified type, and the function has a return type
+          ;square brackets [] are not part of the language
+        | fun ( [identifier : <type>]* ): <type> = <expr>    "fun-expr"
+       
+        | call (<expr> <expr>*)                              "fun-call-expr"
+        
+
+<var-expr> ::=
+            ;whenever we define a new variable we also specify its type
+          | val identifier : <type> = <expr>                            "val"
+
+            ;same as "fun-expr"
+          | def identifier ( [identifier : <type>]* ): <type> = <expr>  "fun-def"
+		  
+As you can notice, there is a new non-terminal in the previous definition. A
+<type> described bellow (similar to the one described in section 7.1):
+
+<type> ::=
+        int                   "int-type"
+      | bool                  "bool-type"
+      | (<type>*) -> <type>   "proc-type"
+      | point                 "point-type"
+      | step                  "step-type"
+      ;for simplicity we will be working only with a type for a single step instead 
+      ;of different types for each kind of step, even though the semantics of
+      ;the move-expr demand strict typing rules.
+
+--------------------------
+The typing rules (see section 7.2 & posted lecture notes) for our expressions are:
+   
+   "num-expr" produces values of type "int-type"
+   
+   "up/down/left/right-expr" of the form:
+    up/down/left/right(n)
+      n: int-type 
+    returns values of type "step-type"
+   
+   "point-expr" of the form:
+      (x y)
+      x: int-type
+      y: int-type
+    returns values of type "point-type"
+   
+   "origin-expr" of the form:
+    origin?(p-expr)
+      p-expr: point-type
+    returns values of the type "bool-type"
+   
+   "if-exp" of the form:
+    if (cond-exp) then-exp else else-exp
+      cond-exp: bool-type
+      then-exp: t
+      else-exp: t
+      Where type t can be any <type>
+    returns values of type $t
+   
+   "add-exp" of the form:
+    + x y
+      x: step-type
+      y: step-type
+   returns values of type "step-type"
+  
+   "move-expr" of the form:
+   move(p st rest-of-steps*)
+     p:  point-type
+     st: step-type
+     rest-of-steps: step-type
+   returns values of type "point-type"
+
+   "iden-expr" has the type of the value bound to it.
+
+   "block-expr" of the form:
+   {var-expr* expr* last-expr}
+     var-expr and expr can have any types
+     last-expr: t
+    returns a value of type $t
+    
+    "fun-exp" of the form:
+       fun (args arg-types): body-type = body-expr
+       arg-types: list of any <type>
+       body-type: any <type>
+       body-expr: body-type
+     returns a value of type "proc-type"
+     
+    "fun-call-expr" of the form:
+       call (proc arg-values*)
+       proc: proc-type
+       arg-values: types have to match $arg-types from the "fun-exp"
+     returns the $body-type of the given proc
+     
+     "val" of the form:
+      val var-name: var-type = value
+        var-type: t
+        value: t
+        where $t can be any type <type>
+      return value type is undefined
+      
+     "fun-def" of the form:
+       def name(args arg-types): body-type = body-expr
+       arg-types: list of any <type>
+       body-type: any <type>
+       body-expr: body-type
+     return value type is undefined but the variable 'name will have to
+     store a "proc-type" value.
+     
+Complete implementation of the procedure "check-types" which takes the program
+in string form and returns the type of the value to which the program evaluates,
+or an error message "type mismatch, expected: A actual: B"(a two arg function that
+displays this error can be found in the answer sheet)
+
+Examples:
+> (check-types "3")
+'int
+
+> (check-types "fun(): int = 42")
+'(() -> int)
+
+> (check-types "up(42)")
+'step
+
+> (check-types "+ (up(42) 3)")
+uncaught exception: "type mismatch. expected: step     actual: int"
+
+NOTES:
+  - the value-of function, expressed-value datatypes, environment have been completely removed.
+    Type checking and evaluation are independent steps, and soon enough you will realize
+	that it is easy to build an interpreter that first does type checking and then evaluation
+	once you've solved this homework.
+  
+  - all return values are symbols or lists of symbols, but you can use whatever 
+    internal representation you see fit to solve the problem. You simply have to
+    write the translation function (type->symbol t).
+  
+  - use (show-the-datatypes) inside \problem3\hw09-lang.rkt to see how the field types and count has 
+    been modified for the fun-expr, etc.
+  
