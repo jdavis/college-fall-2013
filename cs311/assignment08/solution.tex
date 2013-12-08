@@ -256,7 +256,7 @@ Josh
         polynomially reducible to Dense Subgraph.
         \\
 
-        Let us conside the \(VETEX-COVER\) problem, which tells us whether or
+        Let us consider the \(VETEX-COVER\) problem, which tells us whether or
         not there is a \(k\)-node vertex cover in the graph. \(VERTEX-COVER\)
         is known to be NP-complete thus we can create a polynomial reduction
         from it to the Dense Subgraph problem.
@@ -269,7 +269,7 @@ Josh
         \\
 
         \(N = \)`` On input string \(\langle G, k, y \rangle\) where \(G\) is a
-        graph and \(s\) and \(t\) are vertices:
+        graph and \(k\) and \(y\) are integers:
         \begin{enumerate}
             \item Run \(M\) on \(G\) and \(k\), the number of vertices we wish
                 to find a dense subgraph for.
@@ -314,17 +314,95 @@ Josh
     \end{algorithm}
 
     \solution
+
+    Prove that the Longest Path problem is NP-complete.
+
+    \begin{proof}
         To prove that the Longest Path problem is in NP-complete, we must first
         show the following:
 
         \begin{enumerate}
-            \item Longest Path Subgraph is in NP.
-            \item That a problem already known to be in NP-complete can be
-                polynomially reducible to Longest Path.
+            \item The problem is in NP.
+            \item The problem is in NP-hard.
         \end{enumerate}
 
-    \begin{proof}
+        \textbf{Part One}
+
+        First let's show that Longest Path is in NP. To prove that Longest Path
+        is in NP, we must prove that there exists a verifier such that given a
+        valid certificate \(c\), it can be verified in polynomial time.
+        \\
+
+        Let \(V\) be such a verifier for Longest Path where \(c\) is a valid
+        certificate thus a list of nodes along the path:
+        \\
+
+        \(V = \)`` On input \(\langle \langle G, k \rangle, c \rangle\):
+        \begin{enumerate}
+            \item Iterate over every node in the certficate \(c\) and check
+                that each node is in \(G\).
+            \item Count up the number of nodes in \(c\) and check that it
+                equals \(k\).
+            \item If everything checks out, \(accept\), else \(reject\).''
+        \end{enumerate}
+
+        Clearly this runs in polynomial time because it only iterates over the
+        list of nodes in the path of size \(k\) twice.
+
+        \pagebreak
+
+        \textbf{Part Two}
+
+        Second we must show that a problem already in NP-complete is
+        polynomially reducible to Longest Path.
+        \\
+
+        Let us consider the \(HAMPATH\) problem, which tells us whether or
+        not there is a path start at \(s\) and ending at \(t\) and going through
+        every vertex. \(HAMPATH\) is known to be NP-complete thus we can
+        create a polynomial reduction from it to the Longest Path problem.
+        \\
+
+        Let \(M\) be a Turing machine that solves the \(HAMPATH\) problem.
+        We can then reduce \(HAMPATH\) to the Longest Path, \(HAMPATH
+        \leq_p\) Longest PAth problem by constructing a new Turing machine
+        called \(N\) that is constructed as follows:
+        \\
+
+        \(N = \)`` On input string \(\langle G, k \rangle\) where \(G\) is a
+        graph and \(k\) is an integer:
+        \begin{enumerate}
+            \item For all \(s \in G.vertices\):
+                \begin{enumerate}
+                        \item For all \(t \in G.vertices\):
+                            \begin{enumerate}
+                                \item Run \(M\) on \(\langle G, s, t \rangle\)
+                                    and store the result as \(p\).
+                                \item Count up the nodes in \(p\), if it equals
+                                    \(k\) then \(accept\), else continue.
+                            \end{enumerate}
+                \end{enumerate}
+            \item If we have reached this point, we know there can't be a
+                Longest path of length \(k\) and \(reject\).
+        \end{enumerate}
+
+        After calling \(M\), this reduction runs in \(O(V^2)\) because
+        it iterates over all vertices in an embedded for loop.  Thus it is
+        polynomial and thus we have proven that Longest Path is NP-hard.
+        \\
+
+        \textbf{Conclusion}
+
+        Since we have proven both conditions for NP-complete, the problem of
+        Longest Path is thus NP-complete and this concludes the proof.
     \end{proof}
+
+    \textbf{Reference}
+
+    \begin{enumerate}
+        \item \(HAMPATH\) details from \textit{Introduction to the Theory of
+            Computation}, \(2nd\) edition, by Michael Sipser, pg. 260
+    \end{enumerate}
 \end{homeworkProblem}
 
 \pagebreak
