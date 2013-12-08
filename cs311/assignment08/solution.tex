@@ -399,25 +399,29 @@ Josh
         polynomially reducible to Longest Path.
         \\
 
-        Let us consider the \(HAMPATH\) problem, which tells us whether or
-        not there is a path start at \(s\) and ending at \(t\) and going through
-        every vertex. \(HAMPATH\) is known to be NP-complete thus we can
-        create a polynomial reduction from it to the Longest Path problem.
+        Let us consider the \(HAMPATH\) problem, which tells us whether or not
+        there is a path through the graph that visists each vertex only once.
+        \(HAMPATH\) is known to be NP-complete thus we can create a polynomial
+        reduction from it to the Longest Path problem.
         \\
 
-        Let \(M\) be a Turing machine that solves the \(HAMPATH\) problem.
-        We can then reduce \(HAMPATH\) to the Longest Path, \(HAMPATH
-        \leq_p\) Longest PAth problem by constructing a new Turing machine
-        called \(N\) that is constructed as follows:
+        Let \(M\) be a Turing machine that solves the Longest Path problem.
+        We can then reduce \(HAMPATH\) to the Longest Path by construct a new
+        TM \(N\) that is created as follows:
         \\
 
-        \(N = \)`` On input string \(\langle G, s, t \rangle\) where \(G\) is a
-        graph and \(s\) and \(t\) are vertices:
+        \(N = \)`` On input string \(\langle G \rangle\) where \(G\) is a
+        graph:
         \begin{enumerate}
-            \item TODO
+            \item Let \(k = \left\vert G.vertices \right\vert - 1\) because the
+                longest path in a \(HAMPATH\) problem \textem{must} be the
+                Hamiltonian Path as well.
+            \item Run \(M\) on the graph \(\langle G, k \rangle\).
+            \item If \(M\) accepts, then \(accept\), else \(reject\).''
         \end{enumerate}
 
-        Justification
+        Clearly this is polynomial because besides running \(M\), it only takes
+        constant time.
         \\
 
         \textbf{Conclusion}
