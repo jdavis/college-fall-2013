@@ -259,22 +259,45 @@ Josh
         polynomially reducible to Dense Subgraph.
         \\
 
-        Let us conside the \(CLIQUE\) problem, which tells us whether or not
-        there is a subgraph where every node in the subgraph is connected to
-        each other in the subgraph.
+        Let us conside the \(VETEX-COVER\) problem, which tells us whether or
+        not there is a \(k\)-node vertex cover in the graph. \(VERTEX-COVER\)
+        is known to be NP-complete thus we can create a polynomial reduction
+        from it to the Dense Subgraph problem.
         \\
 
-        Let \(M\) be a Turing machine that solves the \(CLIQUE\) problem. We can
-        then reduce \(CLIQUE\) to the Dense Subgraph, \(CLIQUE \leq_p\) Dense
-        Subgraph problem by constructing a new Turing machine called \(N\) that
-        is constructed as follows:
+        Let \(M\) be a Turing machine that solves the \(VETEX-COVER\) problem.
+        We can then reduce \(VETEX-COVER\) to the Dense Subgraph, \(VETEX-COVER
+        \leq_p\) Dense Subgraph problem by constructing a new Turing machine
+        called \(N\) that is constructed as follows:
+        \\
 
-        \(N = \)`` On input string \(\langle G, k, y \rangle\) where \(G\) is a graph and \(s\) and \(t\) are vertices:
+        \(N = \)`` On input string \(\langle G, k, y \rangle\) where \(G\) is a
+        graph and \(s\) and \(t\) are vertices:
         \begin{enumerate}
-            \item Blah
+            \item Run \(M\) on \(G\) and \(k\), the number of vertices we wish
+                to find a dense subgraph for.
+            \item Take this new subgraph, \(G'\) and count up the edges.
+            \item If the number of edges is at least \(y\), return \(true\),
+                else \(reject\).
         \end{enumerate}
 
+        After calling \(M\), this reduction runs in \(O(E)\) time where \(E =
+        \left\vert G'.edges \right\vert\).  Thus it is polynomial and thus we
+        have proven that Dense subgraph is NP-hard.
+        \\
+
+        \textbf{Conclusion}
+
+        Since we have proven both conditions for NP-complete, the problem of
+        Dense Subgraph is thus NP-complete and this concludes the proof.
     \end{proof}
+
+    \textbf{Reference}
+
+    \begin{enumerate}
+        \item Vertex-Cover details from \textit{Introduction to the Theory of
+            Computation}, \(2nd\) edition, by Michael Sipser, pg. 288
+    \end{enumerate}
 \end{homeworkProblem}
 
 \pagebreak
