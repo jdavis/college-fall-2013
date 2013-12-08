@@ -195,10 +195,11 @@ Josh
         from it to the Hitting Set problem.
         \\
 
-        Let \(M\) be a Turing machine that solves the \(VETEX-COVER\) problem.
+        Let \(M\) be a Turing machine that solves the Hitting Set problem.
         We can then reduce \(VETEX-COVER\) to the Hitting Set, \(VETEX-COVER
-        \leq_p\) Hitting Set problem by constructing a new Turing machine
-        called \(N\) that is constructed as follows:
+        \leq_p\) Hitting Set, problem by constructing a new Turing machine
+        called \(N\) that solves \(VERTEX-COVER\) and that is constructed as
+        follows:
         \\
 
         \(N = \)`` On input \(\langle G, k \rangle\)
@@ -310,19 +311,26 @@ Josh
         from it to the Dense Subgraph problem.
         \\
 
-        Let \(N\) be a Turing machine that solves the Dense Subgraph problem.
-        We can then reduce \(VETEX-COVER\) to the Dense Subgraph, by
-        constructing a new Turing machine called \(N\) that solves the Dense
-        Subgraph problem as follows:
+        Let \(M\) be a Turing machine that solves the Dense Subgraph problem.
+        We can then reduce \(VETEX-COVER\) to the Dense Subgraph,
+        \(VERTEX-COVER \leq_p\) Dense Subgraph, by constructing a new Turing
+        machine called \(N\) that solves the \(VERTEX-COVER\) problem as
+        follows:
         \\
 
         \(N = \)`` On input string \(\langle G, k \rangle\) where \(G\) is a
         graph and \(k\) is an integer:
         \begin{enumerate}
-            \item TODO
+            \item Let \(y\) be a value related to \(k\) that would make it
+                dense (there are a few different ways to define what makes a
+                graph dense, all can be ran in polynomial time, thus
+                irrelevant).
+            \item Run \(M\) on the input \(\langle G, k, y \rangle\).
+            \item If \(M\) accepts, then \(accept\), else \(reject\).''
         \end{enumerate}
 
-        Justification.
+        Clearly this is polynomial because the additional steps can be
+        performed in polynomial time outside of calling \(M\).
         \\
 
         \textbf{Conclusion}
@@ -406,17 +414,17 @@ Josh
         \\
 
         Let \(M\) be a Turing machine that solves the Longest Path problem.
-        We can then reduce \(HAMPATH\) to the Longest Path by construct a new
-        TM \(N\) that is created as follows:
+        We can then reduce \(HAMPATH\) to the Longest Path, \(HAMPATH \leq_p\)
+        Longest Path by construct a new TM \(N\) that is created as follows:
         \\
 
         \(N = \)`` On input string \(\langle G \rangle\) where \(G\) is a
         graph:
         \begin{enumerate}
             \item Let \(k = \left\vert G.vertices \right\vert - 1\) because the
-                longest path in a \(HAMPATH\) problem \textem{must} be the
+                longest path in a \(HAMPATH\) problem \textit{must} be the
                 Hamiltonian Path as well.
-            \item Run \(M\) on the graph \(\langle G, k \rangle\).
+            \item Run \(M\) on the input \(\langle G, k \rangle\).
             \item If \(M\) accepts, then \(accept\), else \(reject\).''
         \end{enumerate}
 
