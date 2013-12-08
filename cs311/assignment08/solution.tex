@@ -162,11 +162,22 @@ Josh
         Let \(V\) be such a verifier for the Hitting Set:
         \\
 
-        \(V = \)`` On input \(\langle \langle C, k \rangle, c \rangle\):
+        \(V = \)`` On input \(\langle \langle S, C, k \rangle, c \rangle\)
+        where \(S\) is the set and \(C\) is the collection of subsets and \(k\)
+        is a positve integer:
         \begin{enumerate}
-            \item
+            \item Decode the certifcate into a new set \(T\).
+            \item Check that \(T\) is a valid subset of \(S\).
+            \item Check that \(\left\vert T \right\vert \leq k\).
+            \item Check that for every subset in \(C\), there is at least
+                one item in \(C\) that is in \(T\).
+            \item If all the checks pass, \(accept\), else \(reject\).
         \end{enumerate}
     \end{proof}
+
+    Given the input, all calculates operate polynomially on the length of the
+    input, thus the Hitting Set problem is in NP.
+    \\
 
     \textbf{Part B}
 
