@@ -28,6 +28,17 @@
   (proc-val (p proc?))
   )
 
+(define (get-data-type d)
+  (cases expressed-val d
+         (num-val (x) 'num-type)
+         (bool-val (x) 'bool-type)
+         (step-val (x) 'single-step-type)
+         (point-val (x) 'point-type)
+         (proc-val (x) 'proc-type)))
+
+(define (report-invalid-set-ref-type type1 type2)
+  (raise (to-string "cannot assign a '" type1 " value to a '" type2 " value reference.")))
+
 (define (invalid-args-exception fun-name expected-val actual-val)
   (raise (to-string fun-name ", expected: " expected-val ", got: " actual-val) ))
 ;================================ expressed-val ===================================
