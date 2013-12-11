@@ -274,6 +274,7 @@
 ;; the-store: a Scheme variable containing the current state of the
 ;; store.  Initially set to a dummy value.
 (define the-store 'uninitialized)
+(define the-mark 'uninitialized)
 
 ;; empty-store : () -> Store
 ;; Page: 111
@@ -285,17 +286,17 @@
 ;; Page 111
 (define initialize-store!
   (lambda ()
-    (replace-store! (empty-store))))
+    (set! the-store (empty-store))
+    (set! the-mark (empty-store))))
 
-(define (replace-store! l)
-  (set! the-store l))
-
-(define (set-store-ref! ref val b)
-  (replace-store!
+(define (set-store-ref! ref b)
+  (displayln (~a "Setting ref " ref " with value " b))
+  (set!
+    the-mark
     (append
-      (take the-store ref)
-      (list (list val b))
-      (drop the-store (+ ref 1)))))
+      (take the-mark ref)
+      (list b)
+      (drop the-mark (+ ref 1)))))
 
 ;; reference? : SchemeVal -> Bool
 ;; Page: 111
@@ -309,7 +310,11 @@
     (set! the-store
           (append
             the-store
-            (list (list val '()))))
+            (list val)))
+    (set! the-mark
+          (append
+            the-mark
+            (list (list))))
     next-ref))
 
 ;; deref : Ref -> ExpVal -- value->string at certain reference
@@ -317,13 +322,8 @@
 (define (deref ref)
   (or (list? the-store) (raise "unitialized store"))
   (if (>= ref (length the-store))
-      (report-invalid-reference ref)
-      (begin
-        (match-let
-          ([(list val flag) (list-ref the-store ref)])
-          val
-          )
-        )
+    (report-invalid-reference ref)
+      (list-ref the-store ref)
       )
   )
 
@@ -335,19 +335,15 @@
   (or (list? the-store) (raise "unitialized store"))
   (if (>= ref (length the-store))
       (report-invalid-reference ref)
-      (let-values
-        ([(val flag) (list-ref the-store ref)])
-        flag
-        )
+      (list-ref the-mark ref)
       )
   )
 
 (define (mark-all)
-  (replace-store!
+  (set!
+    the-mark
     (map
-      (lambda
-        (i)
-        (list (car i) #t))
+      (lambda (i) #t)
       the-store)))
 
 (define (clear-reachable env)
@@ -356,7 +352,6 @@
 
          (extend-env (var val saved-env)
                     (set-store-ref!
-                      val
                       (deref val)
                       #f)
                     (clear-reachable saved-env))
