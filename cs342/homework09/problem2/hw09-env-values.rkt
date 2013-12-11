@@ -368,6 +368,15 @@
                       #f)
                     (clear-reachable saved-env))))
 
+(define (sweep env)
+  (list))
+
+(define (gc env)
+  (begin
+    (mark-all)
+    (clear-reachable env)
+    (sweep env)))
+
 ;; setref! : Ref * ExpVal -> Unspecified -- backend of assignment
 ;; Page: 112
 (define (setref! ref val)
