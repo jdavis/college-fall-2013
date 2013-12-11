@@ -285,7 +285,17 @@
 ;; Page 111
 (define initialize-store!
   (lambda ()
-    (set! the-store (empty-store))))
+    (replace-store! (empty-store))))
+
+(define (replace-store! l)
+  (set! the-store l))
+
+(define (set-store-ref! ref val b)
+  (replace-store!
+    (append
+      (take the-store ref)
+      (list (list val b))
+      (drop the-store (+ ref 1)))))
 
 ;; reference? : SchemeVal -> Bool
 ;; Page: 111
@@ -299,7 +309,7 @@
     (set! the-store
           (append
             the-store
-            (list (list val #t))))
+            (list (list val '()))))
     next-ref))
 
 ;; deref : Ref -> ExpVal -- value->string at certain reference
@@ -317,6 +327,10 @@
       )
   )
 
+;
+; Garbage Collection Code
+;
+
 (define (ref-flag ref)
   (or (list? the-store) (raise "unitialized store"))
   (if (>= ref (length the-store))
@@ -327,6 +341,32 @@
         )
       )
   )
+
+(define (mark-all)
+  (replace-store!
+    (map
+      (lambda
+        (i)
+        (list (car i) #t))
+      the-store)))
+
+(define (clear-reachable env)
+  (cases environment env
+         (empty-env () (list))
+
+         (extend-env (var val saved-env)
+                    (set-store-ref!
+                      val
+                      (deref val)
+                      #f)
+                    (clear-reachable saved-env))
+
+         (extend-env-final (var val saved-env)
+                    (set-store-ref!
+                      val
+                      (deref val)
+                      #f)
+                    (clear-reachable saved-env))))
 
 ;; setref! : Ref * ExpVal -> Unspecified -- backend of assignment
 ;; Page: 112
