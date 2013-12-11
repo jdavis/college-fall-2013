@@ -297,7 +297,9 @@
 (define (newref val)
   (let ((next-ref (length the-store)))
     (set! the-store
-          (append the-store (list val)))
+          (append
+            the-store
+            (list (list val #t))))
     next-ref))
 
 ;; deref : Ref -> ExpVal -- value->string at certain reference
@@ -306,7 +308,23 @@
   (or (list? the-store) (raise "unitialized store"))
   (if (>= ref (length the-store))
       (report-invalid-reference ref)
-      (list-ref the-store ref)
+      (begin
+        (match-let
+          ([(list val flag) (list-ref the-store ref)])
+          val
+          )
+        )
+      )
+  )
+
+(define (ref-flag ref)
+  (or (list? the-store) (raise "unitialized store"))
+  (if (>= ref (length the-store))
+      (report-invalid-reference ref)
+      (let-values
+        ([(val flag) (list-ref the-store ref)])
+        flag
+        )
       )
   )
 
