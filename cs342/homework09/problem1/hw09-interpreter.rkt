@@ -197,11 +197,16 @@
     ;$implicit
     (set-expr
      (var-name value-expr)
-     (let ([ref (apply-env env var-name)]
-           [val (value-of value-expr env)])
-       (setref! ref val)
-       ;have the setref expression return the value that was stored, this is not
-       ;necessary considering that setref relies on side effects
+     (letrec ([val (value-of value-expr env)]
+              [val-type (get-data-type val)]
+              [ref (apply-env env var-name)]
+              [ref-val (deref ref)]
+              [ref-val-type (get-data-type ref-val)])
+       (cond
+         ((eq? val-type ref-val-type)
+          (setref! ref val))
+         (else
+           (report-invalid-set-ref-type val-type ref-val-type)))
        val
        )
      )
