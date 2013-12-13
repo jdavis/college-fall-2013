@@ -289,8 +289,7 @@
     (set! the-store (empty-store))
     (set! the-mark (empty-store))))
 
-(define (set-store-ref! ref b)
-  (displayln (~a "Setting ref " ref " with value " b))
+(define (update-mark! ref b)
   (set!
     the-mark
     (append
@@ -331,6 +330,9 @@
 ; Garbage Collection Code
 ;
 
+; GC Global
+(define SIZE_OF_STORE 5)
+
 (define (ref-flag ref)
   (or (list? the-store) (raise "unitialized store"))
   (if (>= ref (length the-store))
@@ -351,15 +353,14 @@
          (empty-env () (list))
 
          (extend-env (var val saved-env)
-                    (set-store-ref!
-                      (deref val)
+                    (update-mark!
+                      val
                       #f)
                     (clear-reachable saved-env))
 
          (extend-env-final (var val saved-env)
-                    (set-store-ref!
+                    (update-mark!
                       val
-                      (deref val)
                       #f)
                     (clear-reachable saved-env))))
 
@@ -393,12 +394,10 @@
                          (sweep-rec
                            saved-env
                            swap
-                           (extend-env-wrapper
+                           (extend-env
                              var
                              (list-ref swap val)
-                             new-env
-                             #f)))
-                       )
+                             new-env))))
 
            (extend-env-final (var val saved-env)
                        (if (ref-flag val)
@@ -406,15 +405,16 @@
                          (sweep-rec
                            saved-env
                            swap
-                           (extend-env-wrapper
+                           (extend-env-final
                              var
                              (list-ref swap val)
-                             new-env
-                             #t))))))
-  (sweep-rec
-    env
-    (swap-refs 0 (list) (list))
-    (empty-env)))
+                             new-env))))))
+  (let
+    ([swap (swap-refs 0 (list) (list))])
+    (sweep-rec
+      env
+      (swap-refs 0 (list) (list))
+      (empty-env))))
 
 (define (gc env)
   (begin
