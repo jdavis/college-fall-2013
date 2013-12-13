@@ -15,7 +15,7 @@
 (define type-checking
   (test-suite
    "type checking"
-   
+
    suite-num
    suite-step
    suite-point
@@ -28,101 +28,101 @@
    suite-call
    suite-block
    suite-def
-   
+
    );end test-suite
   )
 
 (define suite-num
   (test-suite
    "num-expr"
-   
+
    (test-case
     "num-expr"
     (check-equal?
      (check-types "42")
      'int
      )
-    )   
+    )
    );end test-suite
   )
 
 (define suite-step
   (test-suite
    "single steps"
-   
+
    (test-case
     "single steps"
     (check-equal?
      (check-types "up(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "down(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "left(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "right(42)")
      'step
      )
-    
+
     (342-check-exn
      (check-types "up(up(42))")
      "type mismatch. expected: int     actual: step"
      )
-    
+
     (342-check-exn
      (check-types "up(down(42))")
      "type mismatch. expected: int     actual: step"
      )
-    
+
     (342-check-exn
      (check-types "up(left(42))")
      "type mismatch. expected: int     actual: step"
      )
-    
+
     (342-check-exn
      (check-types "up(right(42))")
      "type mismatch. expected: int     actual: step"
      )
-    )   
+    )
    );end test-suite
   )
 
 (define suite-point
   (test-suite
    "point-expr"
-   
+
    (test-case
     "point-expr"
     (check-equal?
      (check-types "(0 0)")
      'point
      )
-    
+
     (342-check-exn
      (check-types "(up(42) 0)")
      "type mismatch. expected: int     actual: step"
      )
-    
+
     (342-check-exn
      (check-types "(0 up(42))")
      "type mismatch. expected: int     actual: step"
      )
-    )   
+    )
    );end test-suite
   )
 
 (define suite-add
   (test-suite
    "add-expr"
-   
+
    (test-case
     "up steps"
     (check-equal?
@@ -130,7 +130,7 @@
      'step
      )
     )
-   
+
    (test-case
     "down steps"
     (check-equal?
@@ -138,7 +138,7 @@
      'step
      )
     )
-   
+
    (test-case
     "left steps"
     (check-equal?
@@ -146,7 +146,7 @@
      'step
      )
     )
-   
+
    (test-case
     "right steps"
     (check-equal?
@@ -154,57 +154,57 @@
      'step
      )
     )
-   
+
    (test-case
     "mixed steps"
     (check-equal?
      (check-types "+ left(42) right(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "+ left(42) up(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "+ left(42) down(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "+ right(42) left(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "+ right(42) up(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "+ right(42) left(42)")
      'step
      )
-    
+
     (check-equal?
      (check-types "+ right(42) down(42)")
      'step
      )
     )
-   
+
    (test-case
     "type errors"
     (342-check-exn
      (check-types "+ right(42) 42")
      "type mismatch. expected: step     actual: int"
      )
-    
+
     (342-check-exn
      (check-types "+ 42 right(42)")
      "type mismatch. expected: step     actual: int"
      )
-    
+
     (342-check-exn
      (check-types "+ 42 42")
      "type mismatch. expected: step     actual: int"
@@ -216,14 +216,14 @@
 (define suite-origin
   (test-suite
    "origin-expr"
-   
+
    (test-case
     "origin-expr"
     (check-equal?
      (check-types "origin?((42 42))")
      'bool
      )
-    
+
     (342-check-exn
      (check-types "origin?(42)")
      "type mismatch. expected: point     actual: int"
@@ -235,19 +235,19 @@
 (define suite-if
   (test-suite
    "if expr"
-   
+
    (test-case
     "if expr"
     (check-equal?
      (check-types
-      "if( origin?((42 42)) ) 
+      "if( origin?((42 42)) )
          then 42
          else 42
       ")
      'int
      )
     )
-   
+
    (test-case
     "if, incorrect usage"
     (342-check-exn
@@ -258,7 +258,7 @@
       ")
      "type mismatch. expected: bool     actual: int"
      )
-    
+
     (342-check-exn
      (check-types
       "if( origin?((42 42)) )
@@ -267,7 +267,7 @@
       ")
      "type mismatch. expected: point     actual: int"
      )
-    
+
     (342-check-exn
      (check-types
       "if( origin?((42 42)) )
@@ -276,7 +276,7 @@
       ")
      "type mismatch. expected: int     actual: point"
      )
-    
+
     )
    );end test-suite
   )
@@ -284,42 +284,42 @@
 (define suite-move
   (test-suite
    "move-expr"
-   
+
    (test-case
     "move expr"
     (check-equal?
      (check-types "move((42 42) up(42))")
      'point
      )
-    
+
     (check-equal?
      (check-types "move((42 42) down(42))")
      'point
      )
-    
+
     (check-equal?
      (check-types "move((42 42) left(42))")
      'point
      )
-    
+
     (check-equal?
      (check-types "move((42 42) right(42))")
      'point
      )
-    
+
     (check-equal?
      (check-types "move((42 42) right(42) left(42) down(42))")
      'point
      )
     )
-   
+
    (test-case
     "incorrect usage of move"
     (342-check-exn
      (check-types "move(42 up(42))")
      "type mismatch. expected: point     actual: int"
      )
-    
+
     (342-check-exn
      (check-types "move((0 0) 42)")
      "type mismatch. expected: step     actual: int"
@@ -331,39 +331,39 @@
 (define suite-val
   (test-suite
    "variable definitions"
-   
+
    (test-case
     "correct usage"
     (check-equal?
      (check-types "val x:int =42; x")
      'int
      )
-    
+
     (check-equal?
      (check-types "val x:bool = origin?((0 0)); x")
      'bool
      )
-    
+
     (check-equal?
      (check-types "val x:point = (42 30); x")
      'point
      )
-    ) 
-   
+    )
+
    (test-case
     "incorrect usage, variable definitions"
     (342-check-exn
      (check-types "val  x:int = (0 0); x")
      "type mismatch. expected: int     actual: point"
      )
-    
+
     (342-check-exn
      (check-types "val x: int = 42;
                    val y: bool = x;
                    x")
      "type mismatch. expected: bool     actual: int"
      )
-    
+
     )
    );end test-suite
   )
@@ -372,38 +372,38 @@
 (define suite-fun
   (test-suite
    "anonymous functions"
-   
+
    (test-case
     "correct usage"
     (check-equal?
      (check-types "fun():int = 42")
      '(() -> int)
      )
-    
+
     (check-equal?
      (check-types "fun(x:int y:bool):int = 42")
      '((int bool) -> int)
      )
-    
+
     (check-equal?
      (check-types "fun(x:int y:bool):int = 42")
      '((int bool) -> int)
      )
-    
+
     (check-equal?
      (check-types "val x:int =42;
                    fun():int = x")
      '(() -> int)
      )
-    
+
     (check-equal?
-     (check-types "fun(x:int y:bool):()->point = 
+     (check-types "fun(x:int y:bool):()->point =
                      fun ():point = (42 42)
                       ")
      '((int bool) -> (() -> point))
      )
     )
-   
+
    (test-case
     "incorrect usage of fun"
     (342-check-exn
@@ -412,14 +412,14 @@
       )
      "type mismatch. expected: bool     actual: int"
      )
-    
+
     (342-check-exn
      (check-types
       "fun(x:int):bool = x"
       )
      "type mismatch. expected: bool     actual: int"
      )
-    
+
     (342-check-exn
      (check-types
       "val x:int =42;
@@ -427,10 +427,10 @@
       )
      "type mismatch. expected: bool     actual: int"
      )
-    
+
     (342-check-exn
      (check-types
-      "fun(x:int y:bool):()->point = 
+      "fun(x:int y:bool):()->point =
              fun ():point = 42"
       )
      "type mismatch. expected: point     actual: int"
@@ -442,7 +442,7 @@
 (define suite-call
   (test-suite
    "fun-call-expr"
-   
+
    (test-case
     "call"
     (check-equal?
@@ -452,7 +452,7 @@
          )")
      'int
      )
-    
+
     (check-equal?
      (check-types
       "call(
@@ -461,7 +461,7 @@
          )")
      'int
      )
-    
+
     (check-equal?
      (check-types
       "call(
@@ -472,7 +472,7 @@
          )")
      'int
      )
-    
+
     (check-equal?
      (check-types
       "call(
@@ -482,7 +482,7 @@
      '(() -> bool)
      )
     )
-   
+
    (test-case
     "incorrect usage of call"
     (342-check-exn
@@ -493,7 +493,7 @@
          )")
      "arity mismatch. expected 0 arguments, received 1"
      )
-    
+
     (342-check-exn
      (check-types
       "call(
@@ -512,30 +512,30 @@
 (define suite-block
   (test-suite
    "block-expr"
-   
+
    (test-case
     "correct usage"
     (check-equal?
-     (check-types 
+     (check-types
       "{42}")
      'int
      )
-    
+
     (check-equal?
-     (check-types 
+     (check-types
       "{val x:int =42
         x
        }")
      'int
      )
-    )   
+    )
    );end test-suite
   )
 
 (define suite-def
   (test-suite
    "named function definitions"
-   
+
    (test-case
     "correct usage"
     (check-equal?
@@ -546,7 +546,7 @@
      '(() -> int)
      )
     )
-   
+
    (test-case
     "correct usage"
     (check-equal?
@@ -566,14 +566,14 @@
 (require rackunit/text-ui)
 
 (define (test suite)
-  (run-tests suite 'verbose)  
+  (run-tests suite 'verbose)
   )
 
 (define-syntax 342-check-exn
   (syntax-rules ()
     [ (342-check-exn expression exn-msg)
-      (check-equal? 
-       (with-handlers ([string? (lambda (err-msg) err-msg)]) 
+      (check-equal?
+       (with-handlers ([string? (lambda (err-msg) err-msg)])
          expression)
        exn-msg)
       ]

@@ -21,7 +21,7 @@
 ;================================= type-of =====================================
 ;===============================================================================
 (define (type-of ast tenv)
-  (cond 
+  (cond
     [(program? ast) (type-of-program ast tenv)]
     [(expr? ast) (type-of-expr ast tenv)]
     [(var-expr? ast) (type-of-var-expr ast tenv)]
@@ -39,22 +39,22 @@
   (cases expr ex
     ;a number has type int-type
     (num-expr (num) (int-type))
-    
+
     ;aside from having to return a point-type, the point-expr must verify
     ;that it was given two int-types.
     (point-expr
-     (x y) 
+     (x y)
      (let
          ([type-of-x (type-of x tenv)]
           [type-of-y (type-of y tenv)]
           [expected-type (int-type)])
-       
+
        (check-expected-type! type-of-x expected-type)
        (check-expected-type! type-of-y expected-type)
        'TO-BE-CONTINUED
        )
      )
-    
+
     (else (raise (to-string "No typing rules for the following <expr>: " ex)))
     )
   )

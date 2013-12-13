@@ -6,7 +6,7 @@
 
 ;same behaviour as the function ~a
 (define (to-string s . los)
-  (letrec 
+  (letrec
       ([lst (cons s los)]
        [lst-of-strings (map (lambda (s) (format "~a" s)) lst)])
     (foldr string-append "" lst-of-strings)
@@ -37,7 +37,7 @@
     (empty-tenv
      ()
      (no-binding-exception search-sym))
-    
+
     (extend-tenv
      (var val saved-env)
      (if (eqv? search-sym var)

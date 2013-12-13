@@ -12,7 +12,7 @@
     (comment ("#" (arbno (not #\newline))) skip)
     (number (digit (arbno digit)) number)
     (number ("-" digit (arbno digit)) number)
-    
+
     (identifier (letter (arbno (or letter digit "_" "-" "?"))) symbol)
     )
   )
@@ -20,32 +20,32 @@
 (define the-grammar
   '(
     (program ((arbno var-expr ";") expr (arbno expr)) a-program)
-    
+
     (expr (number) num-expr)
     (expr ("up" "(" expr ")") up-expr)
     (expr ("down" "(" expr ")") down-expr)
     (expr ("left" "(" expr ")") left-expr)
     (expr ("right" "(" expr ")") right-expr)
     (expr ("(" expr expr ")") point-expr)
-    
+
     (expr ("+" expr expr) add-expr)
     (expr ("origin?" "(" expr ")") origin-expr)
     (expr ("if" "(" expr ")" "then" expr "else" expr ) if-expr)
     (expr ("move" "(" expr expr (arbno expr) ")") move-expr)
-    
+
     (expr ("{" (arbno var-expr) (arbno expr) "}") block-expr)
     (expr (identifier) iden-expr)
-    
+
      ;modified to support type annotations
     (expr ("fun""(" (arbno identifier ":" type)")" ":" type "=" expr) fun-expr)
     (expr ("call" "(" expr (arbno expr)")") fun-call-expr)
-    
+
     ;modified to support type annotations
     (var-expr ("val" identifier ":" type "=" expr) val)
-    
+
     ;modified to support type annotations
     (var-expr ("def" identifier "(" (arbno identifier ":" type)")" ":" type "=" expr) def-fun)
-    
+
     ;these are the type annotation available in our language
     (type ("int") int-type)
     ;add the missing types here:
@@ -73,7 +73,7 @@
 ;you can use this function to find out more about how
 ;the string is broken up into tokens during parsing,
 ;this step is automatically included in the create-ast
-;function. This is a one-argument function that takes a 
+;function. This is a one-argument function that takes a
 ;string.
 (define just-scan
   (sllgen:make-string-scanner the-lexical-spec the-grammar))
