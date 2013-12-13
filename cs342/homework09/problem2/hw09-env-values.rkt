@@ -364,7 +364,22 @@
                     (clear-reachable saved-env))))
 
 (define (sweep env)
-  (list))
+  (define (sweep-rec store n new-env)
+    (cases environment env
+           (empty-env () new-env)
+
+           (extend-env (var val saved-env)
+                       (if (ref-flag val)
+                         (sweep-rec store new-env))
+                       )
+
+           (extend-env-final (var val saved-env)
+                             (set-store-ref!
+                               val
+                               (deref val)
+                               #f)
+                             (clear-reachable saved-env))))
+  (sweep-rec the-store 0 (empty-env))
 
 (define (gc env)
   (begin
