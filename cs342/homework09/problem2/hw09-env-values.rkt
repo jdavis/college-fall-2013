@@ -364,22 +364,57 @@
                     (clear-reachable saved-env))))
 
 (define (sweep env)
-  (define (sweep-rec store n new-env)
+  (define (swap-refs n new-locations new-store)
+    (cond
+      ((>= n (length the-store))
+           (set! the-store new-store)
+           new-locations)
+      ((ref-flag n)
+       (swap-refs
+         (+ 1 n)
+         new-locations
+         new-store))
+      (else
+        (swap-refs
+          (+ 1 n)
+          (append
+            new-locations
+            (list n))
+          (append
+            new-store
+            (list (deref n)))))))
+  (define (sweep-rec env swap new-env)
     (cases environment env
            (empty-env () new-env)
 
            (extend-env (var val saved-env)
                        (if (ref-flag val)
-                         (sweep-rec store new-env))
+                         (sweep-rec saved-env swap new-env)
+                         (sweep-rec
+                           saved-env
+                           swap
+                           (extend-env-wrapper
+                             var
+                             (list-ref swap val)
+                             new-env
+                             #f)))
                        )
 
            (extend-env-final (var val saved-env)
-                             (set-store-ref!
-                               val
-                               (deref val)
-                               #f)
-                             (clear-reachable saved-env))))
-  (sweep-rec the-store 0 (empty-env))
+                       (if (ref-flag val)
+                         (sweep-rec saved-env swap new-env)
+                         (sweep-rec
+                           saved-env
+                           swap
+                           (extend-env-wrapper
+                             var
+                             (list-ref swap val)
+                             new-env
+                             #t))))))
+  (sweep-rec
+    env
+    (swap-refs 0 (list) (list))
+    (empty-env)))
 
 (define (gc env)
   (begin
