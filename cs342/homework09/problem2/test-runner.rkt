@@ -28,6 +28,10 @@
 (clear-reachable env)
 (displayln (~a "The store after Clear-reachable " (map list the-store the-mark)))
 
+(displayln (~a "The store before Sweep " the-store))
+(sweep env)
+(displayln (~a "The store after Sweep " the-store))
+
 (#%require "hw09-interpreter.rkt")
 (run-debug "
 {
