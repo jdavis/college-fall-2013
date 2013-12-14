@@ -31,8 +31,16 @@
 
 ;================================= program =====================================
 (define (type-of-program prog tenv)
-  'UNIMPLEMENTED-TYPE-OF-PROGRAM
-  )
+  (cases program prog
+         (a-program (var-exprs expr exprs)
+                    (let
+                      ([new-tenv (foldl type-of tenv var-exprs)])
+                      (andmap
+                        (lambda (e) (type-of e new-tenv))
+                        (cons
+                          expr
+                          exprs)))
+  )))
 
 ;=================================== expr ======================================
 (define (type-of-expr ex tenv)
@@ -51,7 +59,7 @@
 
        (check-expected-type! type-of-x expected-type)
        (check-expected-type! type-of-y expected-type)
-       'TO-BE-CONTINUED
+       (point-type)
        )
      )
 
