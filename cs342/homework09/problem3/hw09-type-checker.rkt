@@ -56,14 +56,31 @@
      (x y)
      (let
          ([type-of-x (type-of x tenv)]
-          [type-of-y (type-of y tenv)]
-          [expected-type (int-type)])
-
-       (check-expected-type! type-of-x expected-type)
-       (check-expected-type! type-of-y expected-type)
+          [type-of-y (type-of y tenv)])
+       (check-expected-type! type-of-x (int-type))
+       (check-expected-type! type-of-y (int-type))
        (point-type)
        )
      )
+
+    (origin-expr
+      (x)
+      (let
+        ([type-of-x (type-of x tenv)])
+        (check-expected-type! type-of-x (point-type)))
+      (bool-type))
+
+    (if-expr
+      (x y z)
+     (let
+         ([type-of-x (type-of x tenv)]
+          [type-of-y (type-of y tenv)]
+          [type-of-z (type-of z tenv)])
+       (check-expected-type! type-of-x (bool-type))
+       (check-expected-type! type-of-y type-of-y)
+       (check-expected-type! type-of-z type-of-y)
+       type-of-y
+       )
 
     (up-expr
       (x)
