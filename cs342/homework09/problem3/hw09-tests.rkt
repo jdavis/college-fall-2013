@@ -256,7 +256,7 @@
          then 42
          else 42
       ")
-     "type mismatch. expected: bool     actual: int"
+     "type mismatch. expected: point     actual: int"
      )
 
     (342-check-exn
