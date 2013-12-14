@@ -40,7 +40,9 @@
                         (cons
                           expr
                           exprs)))
-  )))
+                    )
+         )
+  )
 
 ;=================================== expr ======================================
 (define (type-of-expr ex tenv)
@@ -62,6 +64,14 @@
        (point-type)
        )
      )
+
+    (up-expr
+      (x)
+      (let
+        ([type-of-x (type-of x tenv)]
+         [expected (int-type)])
+        (check-expected-type! type-of-x expected))
+      (step-type))
 
     (else (raise (to-string "No typing rules for the following <expr>: " ex)))
     )
@@ -90,6 +100,10 @@
 (define (type->symbol t)
   (cases type t
     (int-type () 'int)
+    (bool-type () 'bool)
+    (proc-type (type-args type) '(type-args -> type))
+    (step-type () 'step)
+    (point-type () 'point)
     (else 'NO-TYPE->SYMBOL-CONVERSION-AVAILABLE)
     )
   )
