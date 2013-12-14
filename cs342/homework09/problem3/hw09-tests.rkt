@@ -1,5 +1,5 @@
 #lang racket
-(#%provide type-checking)
+(#%provide (all-defined))
 (#%require rackunit)
 
 (#%require "hw09-type-checker.rkt")
