@@ -190,19 +190,19 @@ Sample program with debugging information:
 ;we can see that when we evaluate line #1 of our program the store contains the
 ;value up(42) and the variable x points to its location
 [10s:iden-expr]
-	store = {0:up(42)}
-	env   = {x=loc:0}
-	--
-	iden = x
+    store = {0:up(42)}
+    env   = {x=loc:0}
+    --
+    iden = x
 
 ;.....
 ;when we start evaluating #block2 we can see that the store still contains the
 ;value up(42), but the environment no longer contains a variable that references
 ;this value
 [13s:block-exp]
-	store = {0:up(42)}
-	env   = {}
-	--
+    store = {0:up(42)}
+    env   = {}
+    --
    ...
 
 ;....
@@ -211,29 +211,29 @@ Sample program with debugging information:
 ;     y --> loc:1 = down(3)
 ;     z --> loc:2 = (1 2)
 [28s:block-exp]
-	store = {0:up(42) 1:(1 2) 2:down(3)}
-	env   = {z=loc:2, y=loc:1}
-	--
-	var declarations = (val t1 = up(13);val t2 = up(14))
-	expressions = (t2)
+    store = {0:up(42) 1:(1 2) 2:down(3)}
+    env   = {z=loc:2, y=loc:1}
+    --
+    var declarations = (val t1 = up(13);val t2 = up(14))
+    expressions = (t2)
 
 ;............
 ;by the time we exit #block3 we have reached maximum storage capacity.
 [42e:iden-expr]
-	store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
-	env   = {t2=loc:4, t1=loc:3, z=loc:2, y=loc:1}
-	--
-	iden = t2
+    store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
+    env   = {t2=loc:4, t1=loc:3, z=loc:2, y=loc:1}
+    --
+    iden = t2
 ;.............
 
 ;when we enter #block4 we no longer have space in the store, but as you can see
 ;the only two locations that are still referenced are loc:1 and loc:2.
 [44s:block-exp]
-	store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
-	env   = {z=loc:2, y=loc:1}
-	--
-	var declarations = (val this-requires-gc = 42)
-	expressions = (this-requires-gc)
+    store = {0:up(42) 1:(1 2) 2:down(3) 3:up(13) 4:up(14)}
+    env   = {z=loc:2, y=loc:1}
+    --
+    var declarations = (val this-requires-gc = 42)
+    expressions = (this-requires-gc)
 
 ;........................
 STARTING GARBAGE COLLECTOR
@@ -241,10 +241,10 @@ STARTING GARBAGE COLLECTOR
 ;this-requires-gc = ref to loc:2. As you can see, the store now no longer contains
 ;the unreferenced values, and variable y now points to location 0 instead of 1.
 [49s:iden-expr]
-	store = {0:(1 2) 1:down(3) 2:42}
-	env   = {this-requires-gc=loc:2, z=loc:1, y=loc:0}
-	--
-	iden = this-requires-gc
+    store = {0:(1 2) 1:down(3) 2:42}
+    env   = {this-requires-gc=loc:2, z=loc:1, y=loc:0}
+    --
+    iden = this-requires-gc
 ;.............
 ;continuing execution
 (num-val 42)
@@ -289,7 +289,7 @@ programmer to write type annotations. For example, in Java:
 class Example{
    String foo(int x, int y, String z){
       String temp = "42";
-	  int fortyTwo = 42;
+      int fortyTwo = 42;
       return z.substring(x, y) + temp;
    }
 }
@@ -299,7 +299,7 @@ would look like:
 class Example{
    foo(x, y, z){
      temp = "42";
-	 fortyTwo = 42;
+     fortyTwo = 42;
      return z.substring(x, y) + temp;
    }
 }
@@ -471,8 +471,8 @@ uncaught exception: "type mismatch. expected: step     actual: int"
 NOTES:
   - the value-of function, expressed-value datatypes, environment have been completely removed.
     Type checking and evaluation are independent steps, and soon enough you will realize
-	that it is easy to build an interpreter that first does type checking and then evaluation
-	once you've solved this homework.
+    that it is easy to build an interpreter that first does type checking and then evaluation
+    once you've solved this homework.
 
   - all return values are symbols or lists of symbols, but you can use whatever
     internal representation you see fit to solve the problem. You simply have to
