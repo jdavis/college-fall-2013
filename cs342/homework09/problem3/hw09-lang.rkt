@@ -48,7 +48,10 @@
 
     ;these are the type annotation available in our language
     (type ("int") int-type)
-    ;add the missing types here:
+    (type ("bool") bool-type)
+    (type ("(" (arbno type) ")" "->" type) proc-type)
+    (type ("point") point-type)
+    (type ("step") step-type)
     )
   )
 
